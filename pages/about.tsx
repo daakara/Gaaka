@@ -15,7 +15,7 @@ export default function About() {
         <title>{t('about')} - GAAKA</title>
         <meta name="description" content="Learn about GAAKA's mission to support African artisans and preserve traditional craftsmanship while creating beautiful, functional home accessories." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/images/GAAKA.png" />
       </Head>
 
       <Header />
@@ -96,17 +96,17 @@ export default function About() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
                 <h2 className="text-3xl sm:text-4xl font-heading font-bold text-gray-900 mb-6">
-                  From Germany to Africa
+                  From Africa to Germany
                 </h2>
                 <div className="space-y-6">
                   <p className="text-lg text-gray-600 leading-relaxed">
-                    Founded in Germany by a team passionate about African culture and craftsmanship, GAAKA began as a mission to create meaningful connections between European consumers and African artisans.
+                    Founded by a Kenyan living in Germany, passionate about my culture and heritage, GAAKA began as a mission to create meaningful connections between Kenyan artisans and European consumers.
                   </p>
                   <p className="text-lg text-gray-600 leading-relaxed">
-                    Our founders traveled extensively across West and East Africa, building relationships with artisan communities and learning about traditional basket-making techniques that have been refined over centuries.
+                    I have traveled extensively across Kenya, building relationships with artisan communities and learning about traditional basket-making techniques that have been refined over generations.
                   </p>
                   <p className="text-lg text-gray-600 leading-relaxed">
-                    Today, we work with over 200 artisans across multiple African countries, providing them with steady income and helping preserve cultural traditions that might otherwise be lost to modernization.
+                    Today, I work with over 20 women primarily based in Nairobi, providing them with steady income and helping preserve cultural traditions that might otherwise be lost to modernization.
                   </p>
                 </div>
               </div>

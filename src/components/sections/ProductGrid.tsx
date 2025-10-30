@@ -228,7 +228,7 @@ export default function ProductGrid() {
                       </div>
                       <div>
                         <p className="text-xs font-bold text-gray-900">Handcrafted</p>
-                        <p className="text-xs text-gray-600">in Senegal</p>
+                        <p className="text-xs text-gray-600">in Kenya</p>
                       </div>
                     </div>
                   </div>

@@ -2,9 +2,9 @@ import './globals.css'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'GAAKA - Handcrafted African Storage Baskets',
-  description: 'Discover beautiful handwoven African storage baskets that combine modern design with traditional craftsmanship. Ethically sourced and artisan-made.',
-  keywords: ['handcrafted baskets', 'African baskets', 'storage solutions', 'home decor', 'artisan made', 'sustainable'],
+  title: 'GAAKA - Handcrafted Kenyan Storage Baskets',
+  description: 'Discover beautiful handwoven Kenyan storage baskets that combine modern design with traditional craftsmanship. Ethically sourced and artisan-made.',
+  keywords: ['handcrafted baskets', 'Kenyan baskets', 'storage solutions', 'home decor', 'artisan made', 'sustainable'],
   authors: [{ name: 'GAAKA Team' }],
   creator: 'GAAKA',
   publisher: 'GAAKA',
@@ -17,8 +17,8 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'GAAKA - Handcrafted African Storage Baskets',
-    description: 'Modern design meets traditional craftsmanship. Discover our collection of handwoven African storage baskets.',
+    title: 'GAAKA - Handcrafted Kenyan Storage Baskets',
+    description: 'Modern design meets traditional craftsmanship. Discover our collection of handwoven Kenyan storage baskets.',
     url: 'https://gaaka.com',
     siteName: 'GAAKA',
     images: [
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'GAAKA Handcrafted African Baskets',
+        alt: 'GAAKA Handcrafted Kenyan Baskets',
       },
     ],
     locale: 'en_US',
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'GAAKA - Handcrafted African Storage Baskets',
+    title: 'GAAKA - Handcrafted Kenyan Storage Baskets',
     description: 'Modern design meets traditional craftsmanship',
     images: ['/twitter-image.jpg'],
   },
@@ -59,10 +59,10 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <head>
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="icon" href="/images/GAAKA.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/GAAKA.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/GAAKA.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/GAAKA.png" />
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="theme-color" content="#ee7724" />
       </head>

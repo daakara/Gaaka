@@ -1,8 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
-import { Menu, X, ShoppingBag, Search, User, Sparkles, Heart } from 'lucide-react'
+import Image from 'next/image'
+import { Menu, X, ShoppingCart, Search, Heart, Sparkles, User, ShoppingBag } from 'lucide-react'
 import { useLanguage } from '../../lib/i18n'
 import { useCart } from '../../contexts/CartContext'
 import LanguageToggle from '../ui/LanguageToggle'
@@ -52,18 +53,18 @@ export default function Header() {
           {/* Artistic Logo */}
           <div className="flex items-center">
             <Link href="/">
-              <a className="flex items-center space-x-3 group">
+              <a className="flex items-center group">
                 <div className="relative">
-                  <div className="w-12 h-12 bg-gradient-to-br from-amber-500 via-orange-500 to-red-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-xl transform group-hover:scale-105 transition-all duration-300">
-                    <span className="text-white font-black text-xl">G</span>
+                  <div className="w-12 h-12 rounded-2xl overflow-hidden shadow-lg group-hover:shadow-xl transform group-hover:scale-105 transition-all duration-300">
+                    <Image
+                      src="/images/GAAKA.png"
+                      alt="GAAKA Logo"
+                      width={48}
+                      height={48}
+                      className="object-contain w-full h-full"
+                    />
                   </div>
                   <div className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full animate-pulse"></div>
-                </div>
-                <div>
-                  <span className="text-3xl font-black bg-gradient-to-r from-amber-600 via-orange-600 to-red-600 bg-clip-text text-transparent">
-                    GAAKA
-                  </span>
-                  <p className="text-xs text-gray-600 font-medium -mt-1">african artistry</p>
                 </div>
               </a>
             </Link>
@@ -116,62 +117,140 @@ export default function Header() {
 
       {/* Artistic Mobile menu */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 lg:hidden">
-          <div className="fixed inset-y-0 left-0 w-80 bg-gradient-to-br from-white via-amber-25 to-orange-25 shadow-2xl">
-            <div className="flex items-center justify-between p-6 border-b border-amber-100 bg-white/80 backdrop-blur-sm">
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 lg:hidden animate-fadeIn">
+          <div className="fixed inset-y-0 left-0 w-80 bg-gradient-to-br from-white via-amber-25 to-orange-25 shadow-2xl transform animate-slideInLeft relative overflow-hidden">
+            {/* Artistic Background Pattern */}
+            <div className="absolute inset-0 opacity-5">
+              <div className="absolute top-20 right-10 w-32 h-32 bg-amber-400 rounded-full blur-xl animate-pulse"></div>
+              <div className="absolute bottom-40 left-10 w-24 h-24 bg-orange-400 rounded-full blur-lg animate-pulse delay-1000"></div>
+              <div className="absolute top-60 right-20 w-16 h-16 bg-red-400 rounded-full blur-md animate-pulse delay-500"></div>
+            </div>
+            {/* Enhanced Mobile Header */}
+            <div className="flex items-center justify-between p-6 border-b border-amber-100 bg-white/90 backdrop-blur-md relative z-10">
               <Link href="/">
-                <a className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-red-600 rounded-2xl flex items-center justify-center shadow-lg">
-                    <span className="text-white font-black text-lg">G</span>
-                  </div>
-                  <div>
-                    <span className="text-2xl font-black bg-gradient-to-r from-amber-600 to-red-600 bg-clip-text text-transparent">GAAKA</span>
-                    <p className="text-xs text-gray-600 -mt-1">african artistry</p>
+                <a className="flex items-center group">
+                  <div className="relative">
+                    <div className="w-12 h-12 rounded-3xl overflow-hidden shadow-xl group-hover:shadow-2xl transform group-hover:scale-105 transition-all duration-300">
+                      <Image
+                        src="/images/GAAKA.png"
+                        alt="GAAKA Logo"
+                        width={48}
+                        height={48}
+                        className="object-contain w-full h-full"
+                      />
+                    </div>
+                    <div className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full animate-pulse"></div>
+                    {/* Artistic sparkle effect */}
+                    <div className="absolute -bottom-1 -left-1 w-3 h-3 bg-gradient-to-br from-pink-400 to-red-400 rounded-full animate-pulse delay-500"></div>
                   </div>
                 </a>
               </Link>
               <button
                 onClick={() => setMobileMenuOpen(false)}
-                className="p-2 rounded-full text-gray-600 hover:text-red-600 hover:bg-red-50 transition-all duration-300"
+                className="p-3 rounded-full text-gray-600 hover:text-red-600 hover:bg-red-50 transition-all duration-300 hover:scale-110 group"
               >
-                <X className="h-6 w-6" />
+                <X className="h-6 w-6 group-hover:rotate-90 transition-transform duration-300" />
               </button>
             </div>
             
-            <nav className="p-6">
-              <div className="space-y-3">
+            {/* Enhanced Mobile Navigation */}
+            <nav className="p-6 relative z-10 h-full overflow-y-auto">
+              <div className="space-y-4">
+                {/* Welcome Message */}
+                <div className="bg-gradient-to-r from-amber-500/20 to-orange-500/20 backdrop-blur-sm rounded-3xl p-4 mb-6 border border-amber-200">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl flex items-center justify-center">
+                      <Heart className="w-4 h-4 text-white fill-current" />
+                    </div>
+                    <div>
+                      <p className="font-bold text-gray-900 text-sm">Welcome to GAAKA</p>
+                      <p className="text-xs text-gray-600">Discover African artistry</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Enhanced Navigation Items */}
                 {navigation.map((item, index) => (
                   <Link
                     key={item.name}
                     href={item.href}
                   >
                     <a
-                      className="flex items-center gap-3 text-gray-700 hover:text-amber-700 font-semibold py-3 px-4 rounded-2xl hover:bg-white/60 transition-all duration-300 group"
+                      className="flex items-center gap-4 text-gray-700 hover:text-amber-700 font-semibold py-4 px-5 rounded-3xl hover:bg-white/80 hover:shadow-lg transition-all duration-300 group transform hover:-translate-y-1"
                       onClick={() => setMobileMenuOpen(false)}
                     >
-                      <div className={`w-2 h-2 rounded-full ${
-                        index % 4 === 0 ? 'bg-amber-400' :
-                        index % 4 === 1 ? 'bg-orange-400' :
-                        index % 4 === 2 ? 'bg-red-400' :
-                        'bg-pink-400'
-                      } group-hover:scale-150 transition-transform duration-300`}></div>
-                      {item.name}
+                      <div className="relative">
+                        <div className={`w-10 h-10 rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 ${
+                          index % 4 === 0 ? 'bg-gradient-to-br from-amber-400 to-orange-500' :
+                          index % 4 === 1 ? 'bg-gradient-to-br from-orange-400 to-red-500' :
+                          index % 4 === 2 ? 'bg-gradient-to-br from-red-400 to-pink-500' :
+                          'bg-gradient-to-br from-pink-400 to-purple-500'
+                        } group-hover:scale-110`}>
+                          <div className={`w-2 h-2 rounded-full bg-white group-hover:scale-150 transition-transform duration-300`}></div>
+                        </div>
+                        {index === 0 && (
+                          <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full animate-pulse"></div>
+                        )}
+                      </div>
+                      <div className="flex-1">
+                        <span className="text-base">{item.name}</span>
+                        <div className="flex items-center gap-1 mt-1">
+                          <div className={`w-1 h-1 rounded-full ${
+                            index % 4 === 0 ? 'bg-amber-400' :
+                            index % 4 === 1 ? 'bg-orange-400' :
+                            index % 4 === 2 ? 'bg-red-400' :
+                            'bg-pink-400'
+                          }`}></div>
+                          <div className={`w-1 h-1 rounded-full ${
+                            index % 4 === 0 ? 'bg-amber-300' :
+                            index % 4 === 1 ? 'bg-orange-300' :
+                            index % 4 === 2 ? 'bg-red-300' :
+                            'bg-pink-300'
+                          }`}></div>
+                          <div className={`w-1 h-1 rounded-full ${
+                            index % 4 === 0 ? 'bg-amber-200' :
+                            index % 4 === 1 ? 'bg-orange-200' :
+                            index % 4 === 2 ? 'bg-red-200' :
+                            'bg-pink-200'
+                          }`}></div>
+                        </div>
+                      </div>
+                      <Sparkles className="w-4 h-4 text-gray-400 group-hover:text-amber-500 opacity-0 group-hover:opacity-100 transition-all duration-300" />
                     </a>
                   </Link>
                 ))}
                 
-                <div className="pt-6 mt-6 border-t border-amber-200">
-                  <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-4">
+                {/* Enhanced Language Toggle Section */}
+                <div className="pt-8 mt-8 border-t border-amber-200">
+                  <div className="bg-gradient-to-r from-white/90 to-amber-50/90 backdrop-blur-sm rounded-3xl p-6 border border-amber-200 shadow-lg">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center">
+                        <span className="text-white text-xs font-bold">🌍</span>
+                      </div>
+                      <div>
+                        <p className="font-bold text-gray-900 text-sm">Language</p>
+                        <p className="text-xs text-gray-600">Choose your preferred language</p>
+                      </div>
+                    </div>
                     <LanguageToggle />
                   </div>
                 </div>
                 
-                {/* Artistic Mobile Footer */}
-                <div className="mt-8 text-center">
-                  <div className="flex items-center justify-center gap-2 text-gray-600">
-                    <Heart className="w-4 h-4 text-red-400 fill-current animate-pulse" />
-                    <span className="text-sm italic">handcrafted with love</span>
-                    <Sparkles className="w-4 h-4 text-amber-400 animate-pulse" />
+                {/* Enhanced Artistic Mobile Footer */}
+                <div className="mt-8 text-center pb-8">
+                  <div className="bg-gradient-to-r from-gray-50 to-amber-50 rounded-3xl p-6 border border-amber-100">
+                    <div className="flex items-center justify-center gap-3 mb-3">
+                      <Heart className="w-5 h-5 text-red-400 fill-current animate-pulse" />
+                      <span className="text-sm font-medium text-gray-700">handcrafted with love</span>
+                      <Sparkles className="w-5 h-5 text-amber-400 animate-pulse" />
+                    </div>
+                    <div className="flex items-center justify-center gap-2 text-xs text-gray-500">
+                      <div className="w-1 h-1 bg-amber-400 rounded-full animate-pulse"></div>
+                      <span>Supporting artisan communities</span>
+                      <div className="w-1 h-1 bg-orange-400 rounded-full animate-pulse delay-300"></div>
+                      <span>Preserving traditions</span>
+                      <div className="w-1 h-1 bg-red-400 rounded-full animate-pulse delay-600"></div>
+                    </div>
                   </div>
                 </div>
               </div>

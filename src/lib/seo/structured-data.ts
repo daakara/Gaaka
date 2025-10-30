@@ -19,8 +19,8 @@ export function generateOrganizationData() {
     data: {
       name: 'GAAKA',
       url: 'https://gaaka.com',
-      logo: 'https://gaaka.com/logo.png',
-      description: 'Handcrafted African storage baskets combining modern design with traditional craftsmanship. Ethically sourced and fair trade certified.',
+      logo: 'https://gaaka.com/images/GAAKA.png',
+      description: 'Handcrafted Kenyan storage baskets combining modern design with traditional craftsmanship. Ethically sourced and fair trade certified.',
       address: {
         '@type': 'PostalAddress',
         addressCountry: 'DE',

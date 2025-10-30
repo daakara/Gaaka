@@ -78,12 +78,12 @@ export default function ProductSections() {
                     <p className="text-xl text-gray-700 leading-relaxed font-light mb-4">
                       {category.description}
                     </p>
-                    <div className="flex items-center gap-2">
-                      <Heart className="w-4 h-4 text-red-500 fill-current animate-pulse" />
-                      <p className="text-lg text-gray-600 italic">
-                        handcrafted with love in Senegal
-                      </p>
-                    </div>
+                  <div className="flex items-center gap-2">
+                    <Heart className="w-4 h-4 text-red-500 fill-current animate-pulse" />
+                    <p className="text-lg text-gray-600 italic">
+                      handcrafted with love in Kenya
+                    </p>
+                  </div>
                   </div>
                 </div>
                 
@@ -175,7 +175,7 @@ export default function ProductSections() {
                         <Heart className="w-4 h-4 text-red-500 fill-current" />
                         <div>
                           <p className="text-sm font-semibold text-gray-900">artisan made</p>
-                          <p className="text-xs text-gray-600">from senegal with love</p>
+                          <p className="text-xs text-gray-600">from kenya with love</p>
                         </div>
                       </div>
                     </div>

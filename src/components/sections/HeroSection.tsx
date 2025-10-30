@@ -33,7 +33,7 @@ export default function HeroSection() {
             <div className="relative">
               <div className="border-l-4 border-amber-400 pl-6">
                 <p className="text-xl text-gray-700 leading-relaxed font-light">
-                  From the vibrant markets of <span className="font-semibold text-amber-700">Senegal</span> to your home—
+                  From the vibrant markets of <span className="font-semibold text-amber-700">Kenya</span> to your home—
                   <br />
                   <span className="text-2xl font-medium text-gray-900">functional art</span> woven with centuries of tradition
                 </p>

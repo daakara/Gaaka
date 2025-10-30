@@ -13,7 +13,7 @@ export default function Returns() {
         <title>{t('returns')} - GAAKA</title>
         <meta name="description" content="Learn about GAAKA's return and exchange policy. Easy 30-day returns on all handcrafted basket purchases." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/images/GAAKA.png" />
       </Head>
 
       <Header />

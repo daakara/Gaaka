@@ -12,7 +12,7 @@ export default function ArtisanStories() {
         <title>{t('artisanStories')} - GAAKA</title>
         <meta name="description" content="Meet the talented artisans behind GAAKA's beautiful handcrafted baskets and learn their inspiring stories." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/images/GAAKA.png" />
       </Head>
 
       <Header />
@@ -45,8 +45,8 @@ export default function ArtisanStories() {
               <div className="bg-gray-50 rounded-2xl p-8">
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">Featured upcoming stories:</h3>
                 <ul className="text-left space-y-2 text-gray-600 max-w-md mx-auto">
-                  <li>• Amina from Senegal - Master weaver and teacher</li>
-                  <li>• The Basket Weavers of Ghana - A cooperative's journey</li>
+                  <li>• Grace from Kenya - Master weaver and teacher</li>
+                  <li>• The Basket Weavers of Kenya - A cooperative's journey</li>
                   <li>• Traditional patterns and their meanings</li>
                   <li>• How basket weaving supports education</li>
                   <li>• Preserving crafts for future generations</li>

@@ -12,7 +12,7 @@ export default function Terms() {
         <title>{t('termsOfService')} - GAAKA</title>
         <meta name="description" content="Read GAAKA's terms of service to understand the conditions for using our website and purchasing our products." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/images/GAAKA.png" />
       </Head>
 
       <Header />

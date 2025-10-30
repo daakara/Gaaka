@@ -26,12 +26,12 @@ export function generateSEOConfig({
   twitter,
   structuredData
 }: SEOConfig) {
-  const baseTitle = 'GAAKA - Handcrafted African Storage Baskets'
+  const baseTitle = 'GAAKA - Handcrafted Kenyan Storage Baskets'
   const fullTitle = title === baseTitle ? title : `${title} | ${baseTitle}`
   
   const defaultKeywords = [
     'handcrafted baskets',
-    'african baskets',
+    'kenyan baskets',
     'storage solutions',
     'home decor',
     'artisan made',
@@ -68,14 +68,14 @@ export function generateSEOConfig({
 
 // SEO configurations for different pages
 export const homeSEO = generateSEOConfig({
-  title: 'GAAKA - Handcrafted African Storage Baskets',
-  description: 'Discover beautiful handwoven African storage baskets that combine modern design with traditional craftsmanship. Ethically sourced, fair trade certified, and artisan-made in Germany.',
+  title: 'GAAKA - Handcrafted Kenyan Storage Baskets',
+  description: 'Discover beautiful handwoven Kenyan storage baskets that combine modern design with traditional craftsmanship. Ethically sourced, fair trade certified, and artisan-made from Kenya.',
   keywords: [
     'handwoven storage baskets',
-    'african home decor',
+    'kenyan home decor',
     'sustainable home organization',
     'fair trade baskets germany',
-    'traditional african crafts'
+    'traditional kenyan crafts'
   ],
   canonical: 'https://gaaka.com'
 })
@@ -94,11 +94,11 @@ export const productsSEO = generateSEOConfig({
 })
 
 export const aboutSEO = generateSEOConfig({
-  title: 'About GAAKA - Our Mission & Artisan Stories',
-  description: 'Learn about GAAKA\'s mission to support African artisans through fair trade. Discover how we empower communities while preserving traditional craftsmanship.',
+  title: 'About GAAKA - Our Mission & Kenyan Artisan Stories',
+  description: 'Learn about GAAKA\'s mission to support Kenyan artisans through fair trade. Discover how we empower communities while preserving traditional craftsmanship.',
   keywords: [
     'fair trade mission',
-    'african artisan support',
+    'kenyan artisan support',
     'sustainable craftsmanship',
     'community empowerment',
     'traditional weaving techniques'

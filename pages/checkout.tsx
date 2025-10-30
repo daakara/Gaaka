@@ -75,7 +75,7 @@ export default function CheckoutPage() {
         <title>Secure Checkout - GAAKA</title>
         <meta name="description" content="Complete your order of handwoven African baskets with our secure checkout process." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/images/GAAKA.png" />
       </Head>
 
       <Header />

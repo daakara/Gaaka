@@ -15,7 +15,7 @@ export default function Mission() {
         <title>{t('mission')} - GAAKA</title>
         <meta name="description" content="Discover GAAKA's mission to empower African artisan communities through fair trade, education support, and sustainable employment opportunities." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/images/GAAKA.png" />
       </Head>
 
       <Header />
@@ -113,13 +113,13 @@ export default function Mission() {
                 </h2>
                 <div className="space-y-6">
                   <p className="text-lg text-gray-600 leading-relaxed">
-                    Meet Amina, a master weaver from Senegal who has been creating baskets for over 20 years. Through our partnership, she now employs 8 women in her village and has been able to send all three of her daughters to university.
+                    Meet Grace, a master weaver from Kenya who has been creating baskets for over 20 years. Through our partnership, she now employs 8 women in her village and has been able to send all three of her daughters to university.
                   </p>
                   <p className="text-lg text-gray-600 leading-relaxed">
-                    "Before GAAKA, I could only make baskets when there were tourists. Now I have steady work all year, and my daughters have opportunities I never had," says Amina.
+                    "Before GAAKA, I could only make baskets when there were tourists. Now I have steady work all year, and my daughters have opportunities I never had," says Grace.
                   </p>
                   <p className="text-lg text-gray-600 leading-relaxed">
-                    Stories like Amina's are happening across all our partner communities. When you choose GAAKA, you become part of these success stories.
+                    Stories like Grace's are happening across all our partner communities. When you choose GAAKA, you become part of these success stories.
                   </p>
                 </div>
                 <div className="mt-8">

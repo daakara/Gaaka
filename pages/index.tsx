@@ -14,15 +14,15 @@ export default function HomePage() {
   return (
     <div className="min-h-screen">
       <Head>
-        <title>GAAKA - Handcrafted African Storage Baskets</title>
-        <meta name="description" content="Discover beautiful handwoven African storage baskets that combine modern design with traditional craftsmanship. Ethically sourced and artisan-made." />
-        <meta name="keywords" content="handcrafted baskets, African baskets, storage solutions, home decor, artisan made, sustainable" />
+        <title>GAAKA - Handcrafted Kenyan Storage Baskets</title>
+        <meta name="description" content="Discover beautiful handwoven Kenyan storage baskets that combine modern design with traditional craftsmanship. Ethically sourced and artisan-made." />
+        <meta name="keywords" content="handcrafted baskets, Kenyan baskets, storage solutions, home decor, artisan made, sustainable" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/images/GAAKA.png" />
         
         {/* Open Graph */}
-        <meta property="og:title" content="GAAKA - Handcrafted African Storage Baskets" />
-        <meta property="og:description" content="Modern design meets traditional craftsmanship. Discover our collection of handwoven African storage baskets." />
+        <meta property="og:title" content="GAAKA - Handcrafted Kenyan Storage Baskets" />
+        <meta property="og:description" content="Modern design meets traditional craftsmanship. Discover our collection of handwoven Kenyan storage baskets." />
         <meta property="og:image" content="/og-image.jpg" />
         <meta property="og:url" content="https://gaaka.com" />
         <meta property="og:type" content="website" />

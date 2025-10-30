@@ -49,7 +49,7 @@ export default function FAQ() {
       faqs: [
         {
           question: 'How are the baskets made?',
-          answer: 'Our baskets are handwoven by skilled artisans using traditional techniques passed down through generations. They use natural materials like sweet grass, palm leaves, and natural dyes.'
+          answer: 'Our baskets are handwoven by skilled Kenyan artisans using traditional techniques passed down through generations. They use natural materials like sweet grass, palm leaves, and natural dyes.'
         },
         {
           question: 'How do I care for my basket?',
@@ -90,7 +90,7 @@ export default function FAQ() {
         <title>{t('faq')} - GAAKA</title>
         <meta name="description" content="Find answers to frequently asked questions about GAAKA products, shipping, returns, and more." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/images/GAAKA.png" />
       </Head>
 
       <Header />

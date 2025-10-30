@@ -101,7 +101,7 @@ export default function WallBaskets() {
         <title>{t('wallBaskets')} - GAAKA</title>
         <meta name="description" content="Decorative wall baskets that transform any space into a work of art" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/images/GAAKA.png" />
       </Head>
 
       <Header />
