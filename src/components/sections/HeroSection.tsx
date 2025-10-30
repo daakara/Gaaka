@@ -1,103 +1,91 @@
-import Link from 'next/link'
-import Image from 'next/image'
-import { ArrowRight } from 'lucide-react'
-import { useLanguage } from '../../lib/i18n'
+import Link from 'next/link';
+import { ArrowRight, Heart, Sparkles } from 'lucide-react';
+import { useLanguage } from '../../lib/i18n';
 
 export default function HeroSection() {
-  const { t } = useLanguage()
+  const { t } = useLanguage();
+  
   return (
-    <section className="relative bg-gradient-to-br from-primary-50 to-accent-50 overflow-hidden">
-      <div className="container-custom section-padding">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Content */}
-          <div className="space-y-8 animate-fade-in">
-            <div>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-bold text-gray-900 leading-tight">
-                <span className="text-gradient">{t('liveColorfully')}</span>
+    <section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-amber-50 via-orange-50 to-red-50">
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-20 left-10 w-32 h-32 bg-amber-400 rounded-full blur-xl animate-pulse"></div>
+        <div className="absolute bottom-20 right-20 w-48 h-48 bg-orange-400 rounded-full blur-2xl animate-pulse"></div>
+      </div>
+
+      <div className="relative z-10 container mx-auto px-4 min-h-screen flex items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center w-full">
+          <div className="space-y-12">
+            <div className="relative">
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight">
+                <span className="block text-gray-900 mb-2">handcrafted</span>
+                <span className="block bg-gradient-to-r from-amber-600 via-orange-600 to-red-600 bg-clip-text text-transparent font-black">
+                  african artistry
+                </span>
               </h1>
-              <p className="text-xl text-gray-700 mt-4 leading-relaxed">
-                {t('heroSubtitle')}
-              </p>
+              <div className="flex items-center gap-2 mt-6">
+                <Heart className="w-5 h-5 text-red-500 fill-current animate-pulse" />
+                <p className="text-xl text-gray-700 italic font-light">
+                  where every basket tells a story
+                </p>
+              </div>
             </div>
             
-            <p className="text-lg text-gray-600 leading-relaxed max-w-xl">
-              {t('heroDescription')}
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link
-                href="/collections/all"
-                className="btn-primary group inline-flex items-center"
-              >
-                {t('shopCollection')}
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
-              </Link>
-              <Link href="/about" className="btn-outline">
-                {t('ourStory')}
-              </Link>
+            <div className="relative">
+              <div className="border-l-4 border-amber-400 pl-6">
+                <p className="text-xl text-gray-700 leading-relaxed font-light">
+                  From the vibrant markets of <span className="font-semibold text-amber-700">Senegal</span> to your home—
+                  <br />
+                  <span className="text-2xl font-medium text-gray-900">functional art</span> woven with centuries of tradition
+                </p>
+              </div>
             </div>
             
-            {/* Trust Indicators */}
-            <div className="flex flex-wrap items-center gap-8 pt-8">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-accent-500 rounded-full"></div>
-                <span className="text-sm text-gray-600">{t('handcraftedQuality')}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-accent-500 rounded-full"></div>
-                <span className="text-sm text-gray-600">{t('ethicallySourced')}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-accent-500 rounded-full"></div>
-                <span className="text-sm text-gray-600">{t('fairTrade')}</span>
-              </div>
+            <div className="flex flex-col sm:flex-row gap-6">
+              <Link href="/collections/all">
+                <a className="group relative overflow-hidden bg-gradient-to-r from-amber-600 to-orange-600 text-white px-8 py-4 rounded-full font-semibold text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300">
+                  <span className="relative z-10 flex items-center">
+                    discover the collection
+                    <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
+                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-orange-600 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </a>
+              </Link>
+              <Link href="/about">
+                <a className="group border-2 border-amber-600 text-amber-700 px-8 py-4 rounded-full font-semibold text-lg hover:bg-amber-600 hover:text-white transition-all duration-300 flex items-center justify-center">
+                  <Sparkles className="mr-2 w-5 h-5 group-hover:animate-spin" />
+                  our artisan story
+                </a>
+              </Link>
             </div>
           </div>
           
-          {/* Hero Image */}
-          <div className="relative animate-slide-up">
-            <div className="relative z-10">
-              <Image
-                src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2058&q=80"
-                alt="Beautiful handwoven African storage basket"
-                width={600}
-                height={700}
-                className="rounded-2xl shadow-2xl object-cover"
-                priority
-              />
-            </div>
-            
-            {/* Decorative elements */}
-            <div className="absolute -top-8 -left-8 w-32 h-32 bg-primary-200 rounded-full opacity-60 -z-10"></div>
-            <div className="absolute -bottom-8 -right-8 w-40 h-40 bg-accent-200 rounded-full opacity-60 -z-10"></div>
-            
-            {/* Floating Badge */}
-            <div className="absolute top-8 -right-4 bg-white rounded-xl shadow-lg p-4 max-w-xs">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-accent-500 rounded-full flex items-center justify-center">
-                  <span className="text-white text-xs font-bold">✓</span>
+          <div className="relative lg:h-screen flex items-center justify-center">
+            <div className="relative group">
+              <div className="absolute -top-8 -left-8 w-24 h-24 border-4 border-amber-300 rounded-full opacity-60 group-hover:scale-110 transition-transform duration-700"></div>
+              <div className="relative overflow-hidden rounded-3xl shadow-2xl group-hover:shadow-3xl transition-shadow duration-500">
+                <div className="w-96 h-[500px] bg-gradient-to-br from-amber-200 to-orange-200 flex items-center justify-center">
+                  <div className="text-center p-8">
+                    <div className="w-24 h-24 bg-gradient-to-br from-amber-500 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Sparkles className="w-12 h-12 text-white" />
+                    </div>
+                    <h3 className="text-2xl font-bold text-gray-800 mb-2">Artisan Crafted</h3>
+                    <p className="text-gray-600">Traditional Weaving</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="font-semibold text-gray-900 text-sm">{t('madeWithLove')}</p>
-                  <p className="text-gray-600 text-xs">{t('supporting')} 200+ {t('artisans')}</p>
-                </div>
+              </div>
+              <div className="absolute -top-4 -right-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-2 rounded-full shadow-lg transform rotate-3 group-hover:rotate-6 transition-transform duration-500">
+                <span className="text-sm font-bold">Authentic</span>
               </div>
             </div>
           </div>
         </div>
       </div>
       
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern id="hero-pattern" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
-              <circle cx="30" cy="30" r="2" fill="currentColor" fillOpacity="0.1"/>
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#hero-pattern)" />
-        </svg>
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <div className="w-6 h-10 border-2 border-amber-400 rounded-full flex justify-center">
+          <div className="w-1 h-3 bg-amber-400 rounded-full mt-2 animate-pulse"></div>
+        </div>
       </div>
     </section>
-  )
+  );
 }

@@ -61,8 +61,24 @@ export const translations = {
     quickView: 'Quick View',
     addToCart: 'Add to Cart',
     colors: 'Colors',
+    color: 'Color',
     from: 'From',
     viewAllProducts: 'View All Products',
+    allProducts: 'All Products',
+    allProductsDescription: 'Discover our complete collection of handcrafted African baskets and home accessories',
+    
+    // Cart & Checkout
+    shoppingCart: 'Shopping Cart',
+    emptyCart: 'Your cart is empty',
+    emptyCartDescription: 'Looks like you haven\'t added anything to your cart yet.',
+    continueShopping: 'Continue Shopping',
+    subtotal: 'Subtotal',
+    shippingCalculated: 'Shipping calculated at checkout',
+    proceedToCheckout: 'Proceed to Checkout',
+    viewCart: 'View Cart',
+    quantity: 'Quantity',
+    remove: 'Remove',
+    updateCart: 'Update Cart',
     
     // Footer
     joinCommunity: 'Join Our Community',
@@ -179,6 +195,8 @@ export const translations = {
     colors: 'Farben',
     from: 'Ab',
     viewAllProducts: 'Alle Produkte Anzeigen',
+    allProducts: 'Alle Produkte',
+    allProductsDescription: 'Entdecken Sie unsere komplette Kollektion handgefertigter afrikanischer Körbe und Wohnaccessoires',
     
     // Footer
     joinCommunity: 'Werden Sie Teil Unserer Gemeinschaft',
@@ -223,6 +241,20 @@ export const translations = {
     yellow: 'Gelb',
     white: 'Weiß',
     multi: 'Mehrfarbig',
+    
+    // Cart & Checkout (German)
+    shoppingCart: 'Warenkorb',
+    emptyCart: 'Ihr Warenkorb ist leer',
+    emptyCartDescription: 'Sie haben noch keine Artikel in Ihren Warenkorb gelegt.',
+    continueShopping: 'Weiter Einkaufen',
+    subtotal: 'Zwischensumme',
+    shippingCalculated: 'Versandkosten werden an der Kasse berechnet',
+    proceedToCheckout: 'Zur Kasse gehen',
+    viewCart: 'Warenkorb ansehen',
+    quantity: 'Menge',
+    remove: 'Entfernen',
+    updateCart: 'Warenkorb aktualisieren',
+    color: 'Farbe',
     
     // Badges
     handcrafted: 'Handgefertigt',
