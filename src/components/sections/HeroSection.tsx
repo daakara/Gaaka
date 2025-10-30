@@ -25,16 +25,15 @@ export default function HeroSection() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link href="/collections/all">
-                <a className="btn-primary group inline-flex items-center">
-                  {t('shopCollection')}
-                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
-                </a>
+              <Link
+                href="/collections/all"
+                className="btn-primary group inline-flex items-center"
+              >
+                {t('shopCollection')}
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
               </Link>
-              <Link href="/about">
-                <a className="btn-outline">
-                  {t('ourStory')}
-                </a>
+              <Link href="/about" className="btn-outline">
+                {t('ourStory')}
               </Link>
             </div>
             

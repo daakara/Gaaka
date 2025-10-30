@@ -174,10 +174,11 @@ export default function ProductGrid() {
                 
                 {/* Quick View Overlay */}
                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                  <Link href={`/products/${product.id}`}>
-                    <a className="bg-white text-gray-900 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors duration-300">
-                      {t('quickView')}
-                    </a>
+                  <Link
+                    href={`/products/${product.id}`}
+                    className="bg-white text-gray-900 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors duration-300"
+                  >
+                    {t('quickView')}
                   </Link>
                 </div>
               </div>
@@ -186,11 +187,9 @@ export default function ProductGrid() {
               <div className="p-6">
                 <div className="mb-3">
                   <Link href={`/products/${product.id}`}>
-                    <a>
-                      <h3 className="font-semibold text-gray-900 hover:text-primary-600 transition-colors duration-300 mb-2">
-                        {product.name}
-                      </h3>
-                    </a>
+                    <h3 className="font-semibold text-gray-900 hover:text-primary-600 transition-colors duration-300 mb-2">
+                      {product.name}
+                    </h3>
                   </Link>
                   
                   {/* Rating */}
@@ -269,10 +268,8 @@ export default function ProductGrid() {
         
         {/* View All Button */}
         <div className="text-center mt-12">
-          <Link href="/collections/all">
-            <a className="btn-outline">
-              {t('viewAllProducts')}
-            </a>
+          <Link href="/collections/all" className="btn-outline">
+            {t('viewAllProducts')}
           </Link>
         </div>
       </div>

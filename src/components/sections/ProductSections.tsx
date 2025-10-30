@@ -67,11 +67,12 @@ export default function ProductSections() {
                   </ul>
                 </div>
                 
-                <Link href={category.href}>
-                  <a className="btn-primary group inline-flex items-center">
-                    {category.cta}
-                    <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
-                  </a>
+                <Link
+                  href={category.href}
+                  className="btn-primary group inline-flex items-center"
+                >
+                  {category.cta}
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
                 </Link>
               </div>
               

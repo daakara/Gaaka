@@ -66,13 +66,11 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Brand Column */}
           <div className="lg:col-span-2">
-            <Link href="/">
-              <a className="flex items-center space-x-2 mb-6">
-                <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-accent-500 rounded-full flex items-center justify-center">
-                  <span className="text-white font-bold text-xl">G</span>
-                </div>
-                <span className="text-2xl font-heading font-bold">GAAKA</span>
-              </a>
+            <Link href="/" className="flex items-center space-x-2 mb-6">
+              <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-accent-500 rounded-full flex items-center justify-center">
+                <span className="text-white font-bold text-xl">G</span>
+              </div>
+              <span className="text-2xl font-heading font-bold">GAAKA</span>
             </Link>
             <p className="text-gray-400 mb-6 leading-relaxed">
               Handcrafted African storage baskets that combine modern design with traditional craftsmanship. 
@@ -82,14 +80,14 @@ export default function Footer() {
               {socialLinks.map((social) => {
                 const Icon = social.icon
                 return (
-                  <Link key={social.name} href={social.href}>
-                    <a
-                      className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary-600 transition-colors duration-300"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Icon className="h-5 w-5" />
-                    </a>
+                  <Link
+                    key={social.name}
+                    href={social.href}
+                    className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary-600 transition-colors duration-300"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Icon className="h-5 w-5" />
                   </Link>
                 )
               })}
@@ -102,10 +100,11 @@ export default function Footer() {
             <ul className="space-y-3">
               {footerLinks.shop.map((link) => (
                 <li key={link.name}>
-                  <Link href={link.href}>
-                    <a className="text-gray-400 hover:text-white transition-colors duration-200">
-                      {link.name}
-                    </a>
+                  <Link
+                    href={link.href}
+                    className="text-gray-400 hover:text-white transition-colors duration-200"
+                  >
+                    {link.name}
                   </Link>
                 </li>
               ))}
@@ -118,10 +117,11 @@ export default function Footer() {
             <ul className="space-y-3">
               {footerLinks.company.map((link) => (
                 <li key={link.name}>
-                  <Link href={link.href}>
-                    <a className="text-gray-400 hover:text-white transition-colors duration-200">
-                      {link.name}
-                    </a>
+                  <Link
+                    href={link.href}
+                    className="text-gray-400 hover:text-white transition-colors duration-200"
+                  >
+                    {link.name}
                   </Link>
                 </li>
               ))}
@@ -134,10 +134,11 @@ export default function Footer() {
             <ul className="space-y-3">
               {footerLinks.support.map((link) => (
                 <li key={link.name}>
-                  <Link href={link.href}>
-                    <a className="text-gray-400 hover:text-white transition-colors duration-200">
-                      {link.name}
-                    </a>
+                  <Link
+                    href={link.href}
+                    className="text-gray-400 hover:text-white transition-colors duration-200"
+                  >
+                    {link.name}
                   </Link>
                 </li>
               ))}
@@ -153,10 +154,12 @@ export default function Footer() {
             </p>
             <div className="flex flex-wrap gap-6">
               {footerLinks.legal.map((link) => (
-                <Link key={link.name} href={link.href}>
-                  <a className="text-gray-400 hover:text-white text-sm transition-colors duration-200">
-                    {link.name}
-                  </a>
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  className="text-gray-400 hover:text-white text-sm transition-colors duration-200"
+                >
+                  {link.name}
                 </Link>
               ))}
             </div>

@@ -23,10 +23,8 @@ export default function Header() {
     <header className="bg-white shadow-sm sticky top-0 z-50">
       {/* Top Banner */}
       <div className="bg-primary-600 text-white text-center py-2 text-sm">
-        <Link href="/collections/all">
-          <a className="hover:underline">
-            {t('freeShipping')}
-          </a>
+        <Link href="/collections/all" className="hover:underline">
+          {t('freeShipping')}
         </Link>
       </div>
 
@@ -46,23 +44,23 @@ export default function Header() {
 
           {/* Logo */}
           <div className="flex items-center">
-            <Link href="/">
-              <a className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-accent-500 rounded-full flex items-center justify-center">
-                  <span className="text-white font-bold text-lg">G</span>
-                </div>
-                <span className="text-2xl font-heading font-bold text-gray-900">GAAKA</span>
-              </a>
+            <Link href="/" className="flex items-center space-x-2">
+              <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-accent-500 rounded-full flex items-center justify-center">
+                <span className="text-white font-bold text-lg">G</span>
+              </div>
+              <span className="text-2xl font-heading font-bold text-gray-900">GAAKA</span>
             </Link>
           </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-8">
             {navigation.map((item) => (
-              <Link key={item.name} href={item.href}>
-                <a className="text-gray-700 hover:text-primary-600 font-medium transition-colors duration-200">
-                  {item.name}
-                </a>
+              <Link
+                key={item.name}
+                href={item.href}
+                className="text-gray-700 hover:text-primary-600 font-medium transition-colors duration-200"
+              >
+                {item.name}
               </Link>
             ))}
           </nav>
@@ -91,13 +89,11 @@ export default function Header() {
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 lg:hidden">
           <div className="fixed inset-y-0 left-0 w-64 bg-white shadow-xl">
             <div className="flex items-center justify-between p-4 border-b">
-              <Link href="/">
-                <a className="flex items-center space-x-2">
-                  <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-accent-500 rounded-full flex items-center justify-center">
-                    <span className="text-white font-bold text-lg">G</span>
-                  </div>
-                  <span className="text-xl font-heading font-bold text-gray-900">GAAKA</span>
-                </a>
+              <Link href="/" className="flex items-center space-x-2">
+                <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-accent-500 rounded-full flex items-center justify-center">
+                  <span className="text-white font-bold text-lg">G</span>
+                </div>
+                <span className="text-xl font-heading font-bold text-gray-900">GAAKA</span>
               </Link>
               <button
                 onClick={() => setMobileMenuOpen(false)}
@@ -109,13 +105,13 @@ export default function Header() {
             <nav className="p-4">
               <div className="space-y-4">
                 {navigation.map((item) => (
-                  <Link key={item.name} href={item.href}>
-                    <a
-                      className="block text-gray-700 hover:text-primary-600 font-medium py-2"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      {item.name}
-                    </a>
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className="block text-gray-700 hover:text-primary-600 font-medium py-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {item.name}
                   </Link>
                 ))}
                 <div className="pt-4 border-t">

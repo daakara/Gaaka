@@ -61,11 +61,12 @@ export default function MissionSection() {
               })}
             </div>
 
-            <Link href="/mission">
-              <a className="btn-primary group inline-flex items-center">
-                {t('learnAboutMission')}
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
-              </a>
+            <Link
+              href="/mission"
+              className="btn-primary group inline-flex items-center"
+            >
+              {t('learnAboutMission')}
+              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
             </Link>
           </div>
 
