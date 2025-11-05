@@ -1,7 +1,6 @@
 import './globals.css'
-import type { Metadata } from 'next'
 
-export const metadata: Metadata = {
+export const metadata = {
   title: 'GAAKA - Handcrafted Kenyan Storage Baskets',
   description: 'Discover beautiful handwoven Kenyan storage baskets that combine modern design with traditional craftsmanship. Ethically sourced and artisan-made.',
   keywords: ['handcrafted baskets', 'Kenyan baskets', 'storage solutions', 'home decor', 'artisan made', 'sustainable'],

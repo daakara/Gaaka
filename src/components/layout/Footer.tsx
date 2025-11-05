@@ -97,18 +97,18 @@ export default function Footer() {
           {/* Artistic Brand Column */}
           <div className="lg:col-span-2">
             <Link href="/">
-              <a className="flex items-center mb-8 group">
+              <a className="flex items-center space-x-4 mb-8 group">
                 <div className="relative">
-                  <div className="w-16 h-16 rounded-3xl overflow-hidden shadow-xl group-hover:shadow-2xl transform group-hover:scale-105 transition-all duration-300">
-                    <Image
-                      src="/images/GAAKA.png"
-                      alt="GAAKA Logo"
-                      width={64}
-                      height={64}
-                      className="object-contain w-full h-full"
-                    />
+                  <div className="w-16 h-16 bg-gradient-to-br from-amber-500 via-orange-500 to-red-600 rounded-3xl flex items-center justify-center shadow-xl group-hover:shadow-2xl transform group-hover:scale-105 transition-all duration-300">
+                    <span className="text-white font-black text-2xl">G</span>
                   </div>
                   <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full animate-pulse"></div>
+                </div>
+                <div>
+                  <span className="text-4xl font-black bg-gradient-to-r from-amber-400 via-orange-400 to-red-400 bg-clip-text text-transparent">
+                    GAAKA
+                  </span>
+                  <p className="text-gray-400 text-sm -mt-1">african artistry</p>
                 </div>
               </a>
             </Link>

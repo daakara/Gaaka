@@ -53,18 +53,18 @@ export default function Header() {
           {/* Artistic Logo */}
           <div className="flex items-center">
             <Link href="/">
-              <a className="flex items-center group">
+              <a className="flex items-center space-x-3 group">
                 <div className="relative">
-                  <div className="w-12 h-12 rounded-2xl overflow-hidden shadow-lg group-hover:shadow-xl transform group-hover:scale-105 transition-all duration-300">
-                    <Image
-                      src="/images/GAAKA.png"
-                      alt="GAAKA Logo"
-                      width={48}
-                      height={48}
-                      className="object-contain w-full h-full"
-                    />
+                  <div className="w-12 h-12 bg-gradient-to-br from-amber-500 via-orange-500 to-red-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-xl transform group-hover:scale-105 transition-all duration-300">
+                    <span className="text-white font-black text-xl">G</span>
                   </div>
                   <div className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full animate-pulse"></div>
+                </div>
+                <div>
+                  <span className="text-3xl font-black bg-gradient-to-r from-amber-600 via-orange-600 to-red-600 bg-clip-text text-transparent">
+                    GAAKA
+                  </span>
+                  <p className="text-xs text-gray-600 font-medium -mt-1">african artistry</p>
                 </div>
               </a>
             </Link>
@@ -128,20 +128,23 @@ export default function Header() {
             {/* Enhanced Mobile Header */}
             <div className="flex items-center justify-between p-6 border-b border-amber-100 bg-white/90 backdrop-blur-md relative z-10">
               <Link href="/">
-                <a className="flex items-center group">
+                <a className="flex items-center space-x-3 group">
                   <div className="relative">
-                    <div className="w-12 h-12 rounded-3xl overflow-hidden shadow-xl group-hover:shadow-2xl transform group-hover:scale-105 transition-all duration-300">
-                      <Image
-                        src="/images/GAAKA.png"
-                        alt="GAAKA Logo"
-                        width={48}
-                        height={48}
-                        className="object-contain w-full h-full"
-                      />
+                    <div className="w-12 h-12 bg-gradient-to-br from-amber-500 via-orange-500 to-red-600 rounded-3xl flex items-center justify-center shadow-xl group-hover:shadow-2xl transform group-hover:scale-105 transition-all duration-300">
+                      <span className="text-white font-black text-xl">G</span>
                     </div>
                     <div className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full animate-pulse"></div>
                     {/* Artistic sparkle effect */}
                     <div className="absolute -bottom-1 -left-1 w-3 h-3 bg-gradient-to-br from-pink-400 to-red-400 rounded-full animate-pulse delay-500"></div>
+                  </div>
+                  <div>
+                    <span className="text-2xl font-black bg-gradient-to-r from-amber-600 via-orange-600 to-red-600 bg-clip-text text-transparent">
+                      GAAKA
+                    </span>
+                    <p className="text-xs text-gray-600 font-medium -mt-1 flex items-center gap-1">
+                      <Sparkles className="w-3 h-3 text-amber-500" />
+                      african artistry
+                    </p>
                   </div>
                 </a>
               </Link>

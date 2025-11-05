@@ -1,0 +1,29 @@
+# Web scraping and data processing
+requests==2.31.0
+beautifulsoup4==4.12.2
+pandas==2.1.4
+
+# Image processing (for potential product image optimization)
+Pillow==10.1.0
+
+# API development (if needed for backend services)
+flask==3.0.0
+fastapi==0.104.1
+
+# Data analysis and visualization
+matplotlib==3.8.2
+seaborn==0.13.0
+
+# Development and testing
+pytest==7.4.3
+black==23.11.0
+flake8==6.1.0
+
+# Environment and configuration
+python-dotenv==1.0.0
+
+# Database connectivity (if needed)
+SQLAlchemy==2.0.23
+
+# HTTP client
+httpx==0.25.2
