@@ -1,0 +1,323 @@
+[
+  {
+    "ID": "AVOID_FLOATING_POINT_DATA_TYPES",
+    "Name": "Do not use floating point data types",
+    "Category": "Performance",
+    "Description": "The \"Double\" floating point data type should be avoided, as it can result in unpredictable roundoff errors and decreased performance in certain scenarios. Use \"Int64\" or \"Decimal\" where appropriate (but note that \"Decimal\" is limited to 4 digits after the decimal sign).",
+    "Severity": 2,
+    "Scope": "DataColumn, CalculatedColumn, CalculatedTableColumn",
+    "Expression": "DataType = \"Double\"",
+    "FixExpression": "DataType = DataType.Decimal",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "SNOWFLAKE_SCHEMA_ARCHITECTURE",
+    "Name": "Consider a star-schema instead of a snowflake architecture",
+    "Category": "Performance",
+    "Description": "Generally speaking, a star-schema is the optimal architecture for tabular models. That being the case, there are valid cases to use a snowflake approach. Please check your model and consider moving to a star-schema architecture.\r\nReference: https://docs.microsoft.com/power-bi/guidance/star-schema",
+    "Severity": 3,
+    "Scope": "Table, CalculatedTable",
+    "Expression": "UsedInRelationships.Any(current.Name == FromTable.Name)\r\nand\r\nUsedInRelationships.Any(current.Name == ToTable.Name)",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "MODEL_SHOULD_HAVE_A_DATE_TABLE",
+    "Name": "Model should have a date table",
+    "Category": "Performance",
+    "Description": "Generally speaking, models should generally have a date table. Models that do not have a date table generally are not taking advantage of features such as time intelligence or may not have a properly structured architecture.",
+    "Severity": 2,
+    "Scope": "Model",
+    "Expression": "Tables.Any(DataCategory == \"Time\" && Columns.Any(IsKey == true && DataType == \"DateTime\")) == false",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "REMOVE_AUTO-DATE_TABLE",
+    "Name": "Remove auto-date table",
+    "Category": "Performance",
+    "Description": "Avoid using auto-date tables. Make sure to turn off auto-date table in the settings in Power BI Desktop. This will save memory resources. \r\nReference: https://www.youtube.com/watch?v=xu3uDEHtCrg",
+    "Severity": 2,
+    "Scope": "Table, CalculatedTable",
+    "Expression": "ObjectTypeName == \"Calculated Table\"\n\r\nand\r\n\n(\nName.StartsWith(\"DateTableTemplate_\") \n\nor \n\nName.StartsWith(\"LocalDateTable_\")\n)",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "AVOID_EXCESSIVE_BI-DIRECTIONAL_OR_MANY-TO-MANY_RELATIONSHIPS",
+    "Name": "Avoid excessive bi-directional or many-to-many relationships",
+    "Category": "Performance",
+    "Description": "Limit use of b-di and many-to-many relationships. This rule flags the model if more than 30% of relationships are bi-di or many-to-many.\r\nReference: https://www.sqlbi.com/articles/bidirectional-relationships-and-ambiguity-in-dax/",
+    "Severity": 2,
+    "Scope": "Model",
+    "Expression": "(\r\n\nRelationships.Where(CrossFilteringBehavior == CrossFilteringBehavior.BothDirections).Count()\r\n\n+\r\n\nRelationships.Where(FromCardinality.ToString() == \"Many\" && ToCardinality.ToString() == \"Many\").Count()\r\n\n)\r\n\n\n/\r\n\n\nMath.Max(Convert.ToDecimal(Relationships.Count)\n\n,1)> 0.3",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "MANY-TO-MANY_RELATIONSHIPS_SHOULD_BE_SINGLE-DIRECTION",
+    "Name": "Many-to-many relationships should be single-direction",
+    "Category": "Performance",
+    "Description": "Use single direction instead of many-to-many for optimal filtering in Power BI.",
+    "Severity": 1,
+    "Scope": "Relationship",
+    "Expression": "FromCardinality == \"Many\"\n\r\nand\r\n\nToCardinality == \"Many\"\r\n\nand\r\n\nCrossFilteringBehavior == \"BothDirections\"",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "REDUCE_USAGE_OF_CALCULATED_TABLES",
+    "Name": "Reduce usage of calculated tables",
+    "Category": "Performance",
+    "Description": "Migrate calculated table logic to your data warehouse. Reliance on calculated tables will lead to technical debt and potential misalignments if you have multiple models on your platform.",
+    "Severity": 2,
+    "Scope": "CalculatedTable",
+    "Expression": "1=1 and NOT(Expression.ToUpper().Contains(\"NAMEOF\")) and NOT\n(\nName.StartsWith(\"DateTableTemplate_\") \n\nor \n\nName.StartsWith(\"LocalDateTable_\")\n)\r\n",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "MEASURES_USING_TIME_INTELLIGENCE_AND_MODEL_IS_USING_DIRECT_QUERY",
+    "Name": "Measures using time intelligence and model is using Direct Query",
+    "Category": "Performance",
+    "Description": "At present, time intelligence functions are known to not perform as well when using Direct Query. If you are having performance issues, you may want to try alternative solutions such as adding columns in the fact table that show previous year or previous month data.",
+    "Severity": 3,
+    "Scope": "Measure, CalculationItem",
+    "Expression": "Model.Tables.Any(ObjectTypeName == \"Table (DirectQuery)\")\r\nand\r\n(\r\nRegEx.IsMatch(Expression,\"CLOSINGBALANCEMONTH\\s*\\(\")\r\nor\r\nRegEx.IsMatch(Expression,\"CLOSINGBALANCEQUARTER\\s*\\(\")\r\nor\r\nRegEx.IsMatch(Expression,\"CLOSINGBALANCEYEAR\\s*\\(\")\r\nor\r\nRegEx.IsMatch(Expression,\"DATEADD\\s*\\(\")\r\nor\r\nRegEx.IsMatch(Expression,\"DATESBETWEEN\\s*\\(\")\r\nor\r\nRegEx.IsMatch(Expression,\"DATESINPERIOD\\s*\\(\")\r\nor\r\nRegEx.IsMatch(Expression,\"DATESMTD\\s*\\(\")\r\nor\r\nRegEx.IsMatch(Expression,\"DATESQTD\\s*\\(\")\r\nor\r\nRegEx.IsMatch(Expression,\"DATESYTD\\s*\\(\")\r\nor\r\nRegEx.IsMatch(Expression,\"ENDOFMONTH\\s*\\(\")\r\nor\r\nRegEx.IsMatch(Expression,\"ENDOFQUARTER\\s*\\(\")\r\nor\r\nRegEx.IsMatch(Expression,\"ENDOFYEAR\\s*\\(\")\r\nor\r\nRegEx.IsMatch(Expression,\"FIRSTDATE\\s*\\(\")\r\nor\r\nRegEx.IsMatch(Expression,\"FIRSTNONBLANK\\s*\\(\")\r\nor\r\nRegEx.IsMatch(Expression,\"FIRSTNONBLANKVALUE\\s*\\(\")\r\nor\r\nRegEx.IsMatch(Expression,\"LASTDATE\\s*\\(\")\r\nor\r\nRegEx.IsMatch(Expression,\"LASTNONBLANK\\s*\\(\")\r\nor\r\nRegEx.IsMatch(Expression,\"LASTNONBLANKVALUE\\s*\\(\")\r\nor\r\nRegEx.IsMatch(Expression,\"NEXTDAY\\s*\\(\")\r\nor\r\nRegEx.IsMatch(Expression,\"NEXTMONTH\\s*\\(\")\r\nor\r\nRegEx.IsMatch(Expression,\"NEXTQUARTER\\s*\\(\")\r\nor\r\nRegEx.IsMatch(Expression,\"NEXTYEAR\\s*\\(\")\r\nor\r\nRegEx.IsMatch(Expression,\"OPENINGBALANCEMONTH\\s*\\(\")\r\nor\r\nRegEx.IsMatch(Expression,\"OPENINGBALANCEQUARTER\\s*\\(\")\r\nor\r\nRegEx.IsMatch(Expression,\"OPENINGBALANCEYEAR\\s*\\(\")\r\nor\r\nRegEx.IsMatch(Expression,\"PARALLELPERIOD\\s*\\(\")\r\nor\r\nRegEx.IsMatch(Expression,\"PREVIOUSDAY\\s*\\(\")\r\nor\r\nRegEx.IsMatch(Expression,\"PREVIOUSMONTH\\s*\\(\")\r\nor\r\nRegEx.IsMatch(Expression,\"PREVIOUSQUARTER\\s*\\(\")\r\nor\r\nRegEx.IsMatch(Expression,\"PREVIOUSYEAR\\s*\\(\")\r\nor\r\nRegEx.IsMatch(Expression,\"SAMEPERIODLASTYEAR\\s*\\(\")\r\nor\r\nRegEx.IsMatch(Expression,\"STARTOFMONTH\\s*\\(\")\r\nor\r\nRegEx.IsMatch(Expression,\"STARTOFQUARTER\\s*\\(\")\r\nor\r\nRegEx.IsMatch(Expression,\"STARTOFYEAR\\s*\\(\")\r\nor\r\nRegEx.IsMatch(Expression,\"TOTALMTD\\s*\\(\")\r\nor\r\nRegEx.IsMatch(Expression,\"TOTALQTD\\s*\\(\")\r\nor\r\nRegEx.IsMatch(Expression,\"TOTALYTD\\s*\\(\")\r\n)",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "REDUCE_NUMBER_OF_CALCULATED_COLUMNS",
+    "Name": "Reduce number of calculated columns",
+    "Category": "Performance",
+    "Description": "Calculated columns do not compress as well as data columns so they take up more memory. They also slow down processing times for both the table as well as process recalc. Offload calculated column logic to your data warehouse and turn these calculated columns into data columns.\r\nReference: https://www.elegantbi.com/post/top10bestpractices",
+    "Severity": 3,
+    "Scope": "DataColumn, CalculatedColumn, CalculatedTableColumn",
+    "Expression": "(Type.ToString() == \"Calculated\") and NOT\n(\nTable.Name.StartsWith(\"DateTableTemplate_\") \n\nor \n\nTable.Name.StartsWith(\"LocalDateTable_\")\n)",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "CHECK_IF_BI-DIRECTIONAL_AND_MANY-TO-MANY_RELATIONSHIPS_ARE_VALID",
+    "Name": "Check if bi-directional and many-to-many relationships are valid",
+    "Category": "Performance",
+    "Description": "Bi-directional and many-to-many relationships may cause performance degradation or even have unintended consequences. Make sure to check these specific relationships to ensure they are working as designed and are actually necessary.\r\nReference: https://www.sqlbi.com/articles/bidirectional-relationships-and-ambiguity-in-dax/",
+    "Severity": 2,
+    "Scope": "Relationship",
+    "Expression": "FromCardinality.ToString() = \"Many\" and ToCardinality.ToString() = \"Many\"\r\nor\r\nCrossFilteringBehavior == CrossFilteringBehavior.BothDirections",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "DAX_COLUMNS_FULLY_QUALIFIED",
+    "Name": "Column references should be fully qualified",
+    "Category": "DAX Expressions",
+    "Description": "Using fully qualified column references makes it easier to distinguish between column and measure references, and also helps avoid certain errors. When referencing a column in DAX, first specify the table name, then specify the column name in square brackets.\r\nReference: https://www.elegantbi.com/post/top10bestpractices",
+    "Severity": 5,
+    "Scope": "Measure, KPI, TablePermission, CalculationItem",
+    "Expression": "DependsOn.Any(Key.ObjectType = \"Column\" and Value.Any(not FullyQualified))",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "AVOID_DUPLICATE_MEASURES",
+    "Name": "No two measures should have the same definition",
+    "Category": "DAX Expressions",
+    "Description": "Two measures with different names and defined by the same DAX expression should be avoided to reduce redundancy.",
+    "Severity": 4,
+    "Scope": "Measure",
+    "Expression": "Model.AllMeasures.Any(Expression.Replace(\" \",\"\").Replace(\"\\n\",\"\").Replace(\"\\r\",\"\").Replace(\"\\t\",\"\") = outerIt.Expression.Replace(\" \",\"\").Replace(\"\\n\",\"\").Replace(\"\\r\",\"\").Replace(\"\\t\",\"\") and it <> outerIt)",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "USE_THE_DIVIDE_FUNCTION_FOR_DIVISION",
+    "Name": "Use the DIVIDE function for division",
+    "Category": "DAX Expressions",
+    "Description": "Use the DIVIDE  function instead of using \"/\". The DIVIDE function resolves divide-by-zero cases. As such, it is recommended to use to avoid errors.\r\n\r\nReference: https://docs.microsoft.com/power-bi/guidance/dax-divide-function-operator",
+    "Severity": 2,
+    "Scope": "Measure, CalculatedColumn, CalculationItem",
+    "Expression": "(RegEx.IsMatch(Expression,\"\\]\\s*\\/(?!\\/)(?!\\*)\")\r\nor\r\nRegEx.IsMatch(Expression,\"\\)\\s*\\/(?!\\/)(?!\\*)\"))\r\nand \r\nNOT\n(\nTable.Name.StartsWith(\"DateTableTemplate_\") \n\nor \n\nTable.Name.StartsWith(\"LocalDateTable_\")\n)",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "MEASURES_SHOULD_NOT_BE_DIRECT_REFERENCES_OF_OTHER_MEASURES",
+    "Name": "Measures should not be direct references of other measures",
+    "Category": "DAX Expressions",
+    "Description": "This rule identifies measures which are simply a reference to another measure. As an example, consider a model with two measures: [MeasureA] and [MeasureB]. This rule would be triggered for MeasureB if MeasureB's DAX was MeasureB:=[MeasureA]. Such duplicative measures should be removed.",
+    "Severity": 3,
+    "Scope": "Measure",
+    "Expression": "Model.AllMeasures.Any(DaxObjectName == current.Expression)",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "FILTER_COLUMN_VALUES",
+    "Name": "Filter column values with proper syntax",
+    "Category": "DAX Expressions",
+    "Description": "Instead of using this pattern FILTER('Table','Table'[Column]=\"Value\") for the filter parameters of a CALCULATE or CALCULATETABLE function, use one of the options below. As far as whether to use the KEEPFILTERS function, see the second reference link below.\r\n\r\nOption 1: KEEPFILTERS('Table'[Column]=\"Value\")\r\nOption 2: 'Table'[Column]=\"Value\"\r\n\r\nReference: https://docs.microsoft.com/power-bi/guidance/dax-avoid-avoid-filter-as-filter-argument\r\nReference: https://www.sqlbi.com/articles/using-keepfilters-in-dax/",
+    "Severity": 4,
+    "Scope": "Measure, CalculatedColumn, CalculationItem",
+    "Expression": "RegEx.IsMatch(Expression,\"(?i)CALCULATE\\s*\\(\\s*[^,]+,\\s*(?i)FILTER\\s*\\(\\s*\\'*[A-Za-z0-9 _]+'*\\s*,\\s*\\'*[A-Za-z0-9 _]+\\'*\\[[A-Za-z0-9 _]+\\]\")\r\nor\r\nRegEx.IsMatch(Expression,\"(?i)CALCULATETABLE\\s*\\([^,]*,\\s*(?i)FILTER\\s*\\(\\s*\\'*[A-Za-z0-9 _]+\\'*,\\s*\\'*[A-Za-z0-9 _]+\\'*\\[[A-Za-z0-9 _]+\\]\")",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "FILTER_MEASURE_VALUES_BY_COLUMNS",
+    "Name": "Filter measure values by columns, not tables",
+    "Category": "DAX Expressions",
+    "Description": "Instead of using this pattern FILTER('Table',[Measure]>Value) for the filter parameters of a CALCULATE or CALCULATETABLE function, use one of the options below (if possible). Filtering on a specific column will produce a smaller table for the engine to process, thereby enabling faster performance. Using the VALUES function or the ALL function depends on the desired measure result.\r\n\r\nOption 1: FILTER(VALUES('Table'[Column]),[Measure] > Value)\r\nOption 2: FILTER(ALL('Table'[Column]),[Measure] > Value)\r\n\r\nReference: https://docs.microsoft.com/power-bi/guidance/dax-avoid-avoid-filter-as-filter-argument",
+    "Severity": 4,
+    "Scope": "Measure, CalculatedColumn, CalculationItem",
+    "Expression": "RegEx.IsMatch(Expression,\"(?i)CALCULATE\\s*\\(\\s*[^,]+,\\s*(?i)FILTER\\s*\\(\\s*\\'*[A-Za-z0-9 _]+\\'*\\s*,\\s*\\[[^\\]]+\\]\")\r\nor\r\nRegEx.IsMatch(Expression,\"(?i)CALCULATETABLE\\s*\\([^,]*,\\s*(?i)FILTER\\s*\\(\\s*\\'*[A-Za-z0-9 _]+\\'*,\\s*\\[\")",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "ENSURE_TABLES_HAVE_RELATIONSHIPS",
+    "Name": "Ensure tables have relationships",
+    "Category": "Maintenance",
+    "Description": "This rule highlights tables which are not connected to any other table in the model with a relationship.",
+    "Severity": 3,
+    "Scope": "Table, CalculatedTable",
+    "Expression": "UsedInRelationships.Count() == 0\r\nand NOT\n(\nName.StartsWith(\"DateTableTemplate_\") \n\nor \n\nName.StartsWith(\"LocalDateTable_\")\n)",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "CHECK_IF_RLS_IS_CONFIGURED_IN_IMPORT_MODE",
+    "Name": "RLS in import mode NOT configured",
+    "Category": "Security",
+    "Description": "Ensure that Row-Level Security (RLS) is implemented in the model if required. If missing, sensitive data may be exposed.\r\nReference: https://docs.microsoft.com/power-bi/admin/service-admin-rls",
+    "Severity": 1,
+    "Scope": "Model",
+    "Expression": "(Model.Roles.Count < 1) \r\nand (Tables.Any(ObjectTypeName == \"Table (Import)\") )\r\nand (Tables.Any(ObjectTypeName <> \"Table (DirectQuery)\"))",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "CHECK_DATATYPE_OF_COLUMN_DATETIME",
+    "Name": "Check if the data type is datetime",
+    "Category": "Performance",
+    "Description": "Ensure that the datatype for a column is not datetime but date or time instead of datetime because it using too much storage.",
+    "Severity": 2,
+    "Scope": "DataColumn, CalculatedColumn, CalculatedTableColumn",
+    "Expression": "DataType = \"DateTime\" and GetAnnotation(\"UnderlyingDateTimeDataType\") <> \"Date\" and GetAnnotation(\"UnderlyingDateTimeDataType\") <> \"Time\"\r\n\r\nand \r\nNOT\n(\nTable.Name.StartsWith(\"DateTableTemplate_\") \n\nor \n\nTable.Name.StartsWith(\"LocalDateTable_\")\n)",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "ROWS_DISTINCT_TWO_AS_STRING",
+    "Name": "Rows distinct values two and type is string. Check if it can be a boolean.",
+    "Category": "Performance",
+    "Description": "Distinct values in the column is two and the type is string. Check if it could be an integer or a boolean.",
+    "Severity": 3,
+    "Scope": "DataColumn, CalculatedColumn, CalculatedTableColumn",
+    "Expression": "Convert.ToInt64(GetAnnotation(\"Vertipaq_DistinctColumnValues\")) = 2 \r\nand DataType = \"String\"",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "TRIM_OBJECT_NAMES",
+    "Name": "Trim object names",
+    "Category": "Naming Conventions",
+    "Description": "Unintentionally leaving a trailing space in an object name is a common occurrence when copying/duplicating objects in Tabular Editor.",
+    "Severity": 5,
+    "Scope": "Model, Table, Measure, Hierarchy, Level, Perspective, Partition, ProviderDataSource, DataColumn, CalculatedColumn, CalculatedTable, CalculatedTableColumn, StructuredDataSource, NamedExpression, ModelRole, CalculationGroup, CalculationItem",
+    "Expression": "Name.StartsWith(\" \") or Name.EndsWith(\" \")",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "CHECK_DATA_SOURCE_IS_NOT_PERSONAL",
+    "Name": "Data source is not related to a real database and from a personal computer",
+    "Category": "Performance",
+    "Description": "Source of the data is not from a database like Snowflake, Teradata or SQL. This can be a risk when sharing the data that users will not have access.",
+    "Severity": 1,
+    "Scope": "Partition",
+    "Expression": "\nSourceType.ToString() = \"M\"\r\nand\r\n(\r\nQuery.Contains(\"/personal/\")\r\nor\r\n\nQuery.Contains(\"C:\\Users\\\")\r\nor\r\n\nQuery.Contains(\"D:\\Users\\\")\r\nor\r\n\nQuery.Contains(\"E:\\Users\\\")\r\nor\r\n\nQuery.Contains(\"F:\\Users\\\")\r\nor\r\n\nQuery.Contains(\"M:\\Users\\\"))",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "USE_THE_TREATAS_FUNCTION_INSTEAD_OF_INTERSECT",
+    "Name": "Use the TREATAS function instead of INTERSECT for virtual relationships",
+    "Category": "DAX Expressions",
+    "Description": "The TREATAS function is more efficient and provides better performance than the INTERSECT function when used in virutal relationships.\r\nReference:  https://www.sqlbi.com/articles/propagate-filters-using-treatas-in-dax/",
+    "Severity": 4,
+    "Scope": "Measure, CalculationItem",
+    "Expression": "RegEx.IsMatch(Expression,\"(?i)INTERSECT\\s*\\(\")",
+    "CompatibilityLevel": 1400
+  },
+  {
+    "ID": "AVOID_USING_THE_IFERROR_FUNCTION",
+    "Name": "Avoid using the IFERROR function",
+    "Category": "DAX Expressions",
+    "Description": "Avoid using the IFERROR function as it may cause performance degradation. If you are concerned about a divide-by-zero error, use the DIVIDE function as it naturally resolves such errors as blank (or you can customize what should be shown in case of such an error).\r\nReference: https://www.elegantbi.com/post/top10bestpractices",
+    "Severity": 4,
+    "Scope": "Measure, CalculatedColumn",
+    "Expression": "RegEx.IsMatch(Expression,\"(?i)IFERROR\\s*\\(\")",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "SPECIFY_COLUMNS_FROM_DATABASE",
+    "Name": "Select appropriate columns instead of all the columns from the database",
+    "Category": "Maintenance",
+    "Description": "Selecting all the columns from a database is not optimal if you are not using everything. Select only the columns that you will really use.",
+    "Severity": 3,
+    "Scope": "Partition",
+    "Expression": "\nSourceType.ToString() = \"M\"\r\nand\r\n(\r\nQuery.Contains(\"Value.NativeQuery\")\r\nand\r\n\nQuery.Contains(\"*\")\r\n)",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "PUSH_TRANSFORMATIONS_TO_THE_DATABASE_SOURCE_IN_YOUR_QUERY",
+    "Name": "Push the transformation of adding a column to the database in the query itself.",
+    "Category": "Maintenance",
+    "Description": "This will reduce the total steps in Power Query and will not do the transformations in Power Query but in the database itself.",
+    "Severity": 3,
+    "Scope": "Partition",
+    "Expression": "\nSourceType.ToString() = \"M\"\r\nand\r\n(\r\nQuery.Contains(\"Value.NativeQuery\")\r\nand\r\n\nQuery.Contains(\"Table.AddColumn\")\r\n)",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "DO_NOT_USE_ONE_TO_ONE_RELATION",
+    "Name": "Do not use the one-to-one relation",
+    "Category": "Performance",
+    "Description": "Force the model to use a one-to-many relation. This will improve the model performance.",
+    "Severity": 3,
+    "Scope": "DataColumn, CalculatedColumn, CalculatedTableColumn",
+    "Expression": "UsedInRelationships.Any(CrossFilteringBehavior == CrossFilteringBehavior.BothDirections) \n\nand \n\nUsedInRelationships.Any(FromCardinality == FromCardinality.One)\n\n and \n\nUsedInRelationships.Any(ToCardinality == ToCardinality.One)",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "INCREMENTAL_REFRESH",
+    "Name": "Incremental Refresh is not enabled.",
+    "Category": "Performance",
+    "Description": "Incremental Refresh is not enabled but table has more than 50 million records. Enable Incremental Refresh if possible. ",
+    "Severity": 3,
+    "Scope": "Table",
+    "Expression": "Convert.ToInt64(GetAnnotation(\"Vertipaq_RowCount\")) > 50000000\r\nand\r\nEnableRefreshPolicy = False",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "MODEL_SIZE_MORE_THAN_1GB",
+    "Name": "Model size more than 1GB.",
+    "Category": "Performance",
+    "Description": "The model size is bigger than 1GB. Check if all columns and tables are necessary.",
+    "Severity": 3,
+    "Scope": "Model",
+    "Expression": "Convert.ToInt64(GetAnnotation(\"Vertipaq_ModelSize\")) > 1000000000",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "CALCULATED_COLUMN_IN_OTHER_MODEL_CONNECTION",
+    "Name": "Calculated Column in table from other semantic model connection (Analysis Service)",
+    "Category": "Performance",
+    "Description": "Identifies calculated columns in a semantic model connection that impact the Power BI service performance.",
+    "Severity": 2,
+    "Scope": "DataColumn, CalculatedColumn, CalculatedTableColumn",
+    "Expression": "(Type.ToString() == \"Calculated\") and (Table.ObjectTypeName == \"Table (DQ over AS)\")\n",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "CHANGE_SOURCE_FROM_OUT_OF_IMPORT",
+    "Name": "Change the source connection.",
+    "Category": "Performance",
+    "Description": "This will ensure that Snowflake queries running on the correct warehouse.",
+    "Severity": 1,
+    "Scope": "Partition",
+    "Expression": "\nSourceType.ToString() = \"M\"\r\nand\r\n(Query.Contains(\"snowflake\"))\r\nand\r\nNOT(\nQuery.Contains(\"OUT_ANALYTICS_IMPORT\"))\r\nand\r\n(Mode = \"Import\")",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "DO_NOT_DUPLICATE_POWER_QUERY_STEPS",
+    "Name": "Avoid using the same Power Query Step multiple times.",
+    "Category": "Performance",
+    "Description": "This will reduce the query duration and help the query fold to the data source, the maintenance will be easier.",
+    "Severity": 2,
+    "Scope": "Partition",
+    "Expression": "\nSourceType.ToString() = \"M\"\r\nand\r\n(\r\nRegex.Matches(Query, \"Table.RenameColumns\").Count > 1\r\nor\r\nRegex.Matches(Query, \"Table.TransformColumnTypes\").Count > 1\r\nor \r\nRegex.Matches(Query, \"Table.RemoveColumns\").Count > 1\r\nor \r\nRegex.Matches(Query, \"Table.SelectRows\").Count > 1\r\n)",
+    "CompatibilityLevel": 1200
+  }
+]
