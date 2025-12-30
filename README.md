@@ -12,7 +12,7 @@ A modern e-commerce website for GAAKA, a German SME specializing in handcrafted 
 - **🛒 Complete E-commerce**: Full product catalog with collections, gift cards, and shopping features
 - **🌍 German Market Focus**: Optimized for German customers with local pricing (€) and shipping
 - **🔍 SEO Optimized**: Structured data, meta tags, and search engine optimization
-- **🚀 Performance**: Next.js 12 with optimized images and fast loading
+- **🚀 Performance**: Next.js 14 with optimized images and fast loading
 - **♿ Accessibility**: WCAG compliant with semantic HTML and proper contrast
 - **🌐 Bilingual**: German/English language switching with persistent preferences
 - **📱 Mobile First**: Fully responsive design with touch-friendly interactions
@@ -22,7 +22,7 @@ A modern e-commerce website for GAAKA, a German SME specializing in handcrafted 
 
 ## 🛠 Tech Stack
 
-- **Framework**: Next.js 12 with Pages Router (Node.js 14+ compatible)
+- **Framework**: Next.js 14+ (Node.js 18+ compatible)
 - **Language**: TypeScript 4.x
 - **Styling**: Tailwind CSS 3.x with custom design system
 - **Icons**: Lucide React for consistent iconography
@@ -36,7 +36,7 @@ A modern e-commerce website for GAAKA, a German SME specializing in handcrafted 
 
 ### Prerequisites
 
-- Node.js 14.17.5+ (tested with Node.js 14.x)
+- Node.js 18.17.0+ (tested with Node.js 18.x)
 - npm 6+ or yarn 1.x
 
 ### Installation
@@ -86,6 +86,8 @@ npm run dev
 │   │   ├── layout/          # Header, Footer with navigation
 │   │   ├── sections/        # Hero, Products, Mission sections
 │   │   └── ui/              # LanguageToggle component
+│   ├── contexts/
+│   │   └── CartContext.tsx  # Shopping cart state management
 │   └── lib/
 │       ├── i18n/            # Internationalization system
 │       │   ├── index.ts     # Language context and hooks
@@ -157,8 +159,8 @@ NEXT_PUBLIC_ANALYTICS_ID=your_analytics_id
 
 ### Build Status
 
-- **Node.js Compatibility**: Tested with Node.js 14.17.5+
-- **Next.js Version**: 12.x (Pages Router)
+- **Node.js Compatibility**: Tested with Node.js 18.x+
+- **Next.js Version**: 14.x
 - **Production Ready**: All core pages implemented and tested
 - **SEO Optimized**: Structured data and meta tags configured
 - **Mobile Responsive**: Fully responsive across all device sizes
@@ -169,12 +171,13 @@ NEXT_PUBLIC_ANALYTICS_ID=your_analytics_id
 - **Product Collections**: Storage baskets, kitchen & dining, wall baskets
 - **Product Catalog**: Complete product listings with ratings, colors, and pricing
 - **Gift Cards**: Digital gift card system with custom amounts and personalization
+- **Shopping Cart**: Real-time cart state and UI integration
 - **Multilingual Support**: German/English language switching
 - **Customer Support**: Contact forms, FAQ, shipping, and return policies
 - **Company Pages**: About, mission, artisan stories (coming soon)
 
 ### Ready for Integration
-- Shopping cart functionality
+- Checkout payment flow
 - Wishlist support
 - User accounts and authentication
 - Order management system
@@ -191,10 +194,11 @@ NEXT_PUBLIC_ANALYTICS_ID=your_analytics_id
 - [x] Gift card system with personalization
 - [x] Contact forms and customer support pages
 - [x] SEO optimization with structured data
-- [x] Next.js 12 compatibility (Node.js 14+)
+- [x] Next.js 14 compatibility (Node.js 18+)
+- [x] Shopping cart state and UI
 
 ### 🔄 Ready for Integration
-- [ ] Shopping cart and checkout flow
+- [ ] Checkout flow and Payment Gateway
 - [ ] User authentication and accounts
 - [ ] Payment gateway (Stripe, PayPal)
 - [ ] Inventory management system

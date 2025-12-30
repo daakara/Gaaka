@@ -2,8 +2,7 @@
 
 import React, { useState } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
-import { Menu, X, ShoppingCart, Search, Heart, Sparkles, User, ShoppingBag } from 'lucide-react'
+import { Menu, X, Search, Heart, Sparkles, User, ShoppingBag } from 'lucide-react'
 import { useLanguage } from '../../lib/i18n'
 import { useCart } from '../../contexts/CartContext'
 import LanguageToggle from '../ui/LanguageToggle'
@@ -27,12 +26,13 @@ export default function Header() {
       {/* Artistic Top Banner */}
       <div className="bg-gradient-to-r from-amber-600 via-orange-600 to-red-600 text-white text-center py-3 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-pulse"></div>
-        <Link href="/collections/all">
-          <a className="relative z-10 hover:underline flex items-center justify-center gap-2 font-medium">
-            <Sparkles className="w-4 h-4 animate-pulse" />
-            {t('freeShipping')}
-            <Heart className="w-4 h-4 animate-pulse fill-current" />
-          </a>
+        <Link 
+          href="/collections/all"
+          className="relative z-10 hover:underline flex items-center justify-center gap-2 font-medium"
+        >
+          <Sparkles className="w-4 h-4 animate-pulse" />
+          {t('freeShipping')}
+          <Heart className="w-4 h-4 animate-pulse fill-current" />
         </Link>
       </div>
 
@@ -45,6 +45,7 @@ export default function Header() {
               type="button"
               className="p-3 rounded-full text-gray-600 hover:text-amber-600 hover:bg-amber-50 transition-all duration-300"
               onClick={() => setMobileMenuOpen(true)}
+              aria-label="Open main menu"
             >
               <Menu className="h-6 w-6" />
             </button>
@@ -52,21 +53,22 @@ export default function Header() {
 
           {/* Artistic Logo */}
           <div className="flex items-center">
-            <Link href="/">
-              <a className="flex items-center space-x-3 group">
-                <div className="relative">
-                  <div className="w-12 h-12 bg-gradient-to-br from-amber-500 via-orange-500 to-red-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-xl transform group-hover:scale-105 transition-all duration-300">
-                    <span className="text-white font-black text-xl">G</span>
-                  </div>
-                  <div className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full animate-pulse"></div>
+            <Link 
+              href="/"
+              className="flex items-center space-x-3 group"
+            >
+              <div className="relative">
+                <div className="w-12 h-12 bg-gradient-to-br from-amber-500 via-orange-500 to-red-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-xl transform group-hover:scale-105 transition-all duration-300">
+                  <span className="text-white font-black text-xl">G</span>
                 </div>
-                <div>
-                  <span className="text-3xl font-black bg-gradient-to-r from-amber-600 via-orange-600 to-red-600 bg-clip-text text-transparent">
-                    GAAKA
-                  </span>
-                  <p className="text-xs text-gray-600 font-medium -mt-1">african artistry</p>
-                </div>
-              </a>
+                <div className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full animate-pulse"></div>
+              </div>
+              <div>
+                <span className="text-3xl font-black bg-gradient-to-r from-amber-600 via-orange-600 to-red-600 bg-clip-text text-transparent">
+                  GAAKA
+                </span>
+                <p className="text-xs text-gray-600 font-medium -mt-1">african artistry</p>
+              </div>
             </Link>
           </div>
 
@@ -76,14 +78,13 @@ export default function Header() {
               <Link
                 key={item.name}
                 href={item.href}
+                className="relative group px-4 py-2 rounded-full text-gray-700 hover:text-amber-700 font-semibold transition-all duration-300 hover:bg-amber-50"
               >
-                <a className="relative group px-4 py-2 rounded-full text-gray-700 hover:text-amber-700 font-semibold transition-all duration-300 hover:bg-amber-50">
-                  {item.name}
-                  <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-amber-500 to-orange-500 group-hover:w-full transition-all duration-300"></span>
-                  {index === 0 && (
-                    <div className="absolute -top-1 -right-1 w-2 h-2 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full animate-pulse"></div>
-                  )}
-                </a>
+                {item.name}
+                <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-amber-500 to-orange-500 group-hover:w-full transition-all duration-300"></span>
+                {index === 0 && (
+                  <div className="absolute -top-1 -right-1 w-2 h-2 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full animate-pulse"></div>
+                )}
               </Link>
             ))}
           </nav>
@@ -93,15 +94,22 @@ export default function Header() {
             <div className="hidden sm:block">
               <LanguageToggle />
             </div>
-            <button className="p-3 text-gray-600 hover:text-amber-600 hover:bg-amber-50 rounded-full transition-all duration-300 hover:scale-105">
+            <button 
+              className="p-3 text-gray-600 hover:text-amber-600 hover:bg-amber-50 rounded-full transition-all duration-300 hover:scale-105"
+              aria-label="Search"
+            >
               <Search className="h-5 w-5" />
             </button>
-            <button className="p-3 text-gray-600 hover:text-orange-600 hover:bg-orange-50 rounded-full transition-all duration-300 hover:scale-105">
+            <button 
+              className="p-3 text-gray-600 hover:text-orange-600 hover:bg-orange-50 rounded-full transition-all duration-300 hover:scale-105"
+              aria-label="Account"
+            >
               <User className="h-5 w-5" />
             </button>
             <button 
               onClick={toggleCart}
               className="relative p-3 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-full transition-all duration-300 hover:scale-105 group"
+              aria-label="Shopping cart"
             >
               <ShoppingBag className="h-6 w-6" />
               {state.itemCount > 0 && (
@@ -127,30 +135,32 @@ export default function Header() {
             </div>
             {/* Enhanced Mobile Header */}
             <div className="flex items-center justify-between p-6 border-b border-amber-100 bg-white/90 backdrop-blur-md relative z-10">
-              <Link href="/">
-                <a className="flex items-center space-x-3 group">
-                  <div className="relative">
-                    <div className="w-12 h-12 bg-gradient-to-br from-amber-500 via-orange-500 to-red-600 rounded-3xl flex items-center justify-center shadow-xl group-hover:shadow-2xl transform group-hover:scale-105 transition-all duration-300">
-                      <span className="text-white font-black text-xl">G</span>
-                    </div>
-                    <div className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full animate-pulse"></div>
-                    {/* Artistic sparkle effect */}
-                    <div className="absolute -bottom-1 -left-1 w-3 h-3 bg-gradient-to-br from-pink-400 to-red-400 rounded-full animate-pulse delay-500"></div>
+              <Link 
+                href="/"
+                className="flex items-center space-x-3 group"
+              >
+                <div className="relative">
+                  <div className="w-12 h-12 bg-gradient-to-br from-amber-500 via-orange-500 to-red-600 rounded-3xl flex items-center justify-center shadow-xl group-hover:shadow-2xl transform group-hover:scale-105 transition-all duration-300">
+                    <span className="text-white font-black text-xl">G</span>
                   </div>
-                  <div>
-                    <span className="text-2xl font-black bg-gradient-to-r from-amber-600 via-orange-600 to-red-600 bg-clip-text text-transparent">
-                      GAAKA
-                    </span>
-                    <p className="text-xs text-gray-600 font-medium -mt-1 flex items-center gap-1">
-                      <Sparkles className="w-3 h-3 text-amber-500" />
-                      african artistry
-                    </p>
-                  </div>
-                </a>
+                  <div className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full animate-pulse"></div>
+                  {/* Artistic sparkle effect */}
+                  <div className="absolute -bottom-1 -left-1 w-3 h-3 bg-gradient-to-br from-pink-400 to-red-400 rounded-full animate-pulse delay-500"></div>
+                </div>
+                <div>
+                  <span className="text-2xl font-black bg-gradient-to-r from-amber-600 via-orange-600 to-red-600 bg-clip-text text-transparent">
+                    GAAKA
+                  </span>
+                  <p className="text-xs text-gray-600 font-medium -mt-1 flex items-center gap-1">
+                    <Sparkles className="w-3 h-3 text-amber-500" />
+                    african artistry
+                  </p>
+                </div>
               </Link>
               <button
                 onClick={() => setMobileMenuOpen(false)}
                 className="p-3 rounded-full text-gray-600 hover:text-red-600 hover:bg-red-50 transition-all duration-300 hover:scale-110 group"
+                aria-label="Close menu"
               >
                 <X className="h-6 w-6 group-hover:rotate-90 transition-transform duration-300" />
               </button>
@@ -177,49 +187,46 @@ export default function Header() {
                   <Link
                     key={item.name}
                     href={item.href}
+                    className="flex items-center gap-4 text-gray-700 hover:text-amber-700 font-semibold py-4 px-5 rounded-3xl hover:bg-white/80 hover:shadow-lg transition-all duration-300 group transform hover:-translate-y-1"
+                    onClick={() => setMobileMenuOpen(false)}
                   >
-                    <a
-                      className="flex items-center gap-4 text-gray-700 hover:text-amber-700 font-semibold py-4 px-5 rounded-3xl hover:bg-white/80 hover:shadow-lg transition-all duration-300 group transform hover:-translate-y-1"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      <div className="relative">
-                        <div className={`w-10 h-10 rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 ${
-                          index % 4 === 0 ? 'bg-gradient-to-br from-amber-400 to-orange-500' :
-                          index % 4 === 1 ? 'bg-gradient-to-br from-orange-400 to-red-500' :
-                          index % 4 === 2 ? 'bg-gradient-to-br from-red-400 to-pink-500' :
-                          'bg-gradient-to-br from-pink-400 to-purple-500'
-                        } group-hover:scale-110`}>
-                          <div className={`w-2 h-2 rounded-full bg-white group-hover:scale-150 transition-transform duration-300`}></div>
-                        </div>
-                        {index === 0 && (
-                          <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full animate-pulse"></div>
-                        )}
+                    <div className="relative">
+                      <div className={`w-10 h-10 rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 ${
+                        index % 4 === 0 ? 'bg-gradient-to-br from-amber-400 to-orange-500' :
+                        index % 4 === 1 ? 'bg-gradient-to-br from-orange-400 to-red-500' :
+                        index % 4 === 2 ? 'bg-gradient-to-br from-red-400 to-pink-500' :
+                        'bg-gradient-to-br from-pink-400 to-purple-500'
+                      } group-hover:scale-110`}>
+                        <div className={`w-2 h-2 rounded-full bg-white group-hover:scale-150 transition-transform duration-300`}></div>
                       </div>
-                      <div className="flex-1">
-                        <span className="text-base">{item.name}</span>
-                        <div className="flex items-center gap-1 mt-1">
-                          <div className={`w-1 h-1 rounded-full ${
-                            index % 4 === 0 ? 'bg-amber-400' :
-                            index % 4 === 1 ? 'bg-orange-400' :
-                            index % 4 === 2 ? 'bg-red-400' :
-                            'bg-pink-400'
-                          }`}></div>
-                          <div className={`w-1 h-1 rounded-full ${
-                            index % 4 === 0 ? 'bg-amber-300' :
-                            index % 4 === 1 ? 'bg-orange-300' :
-                            index % 4 === 2 ? 'bg-red-300' :
-                            'bg-pink-300'
-                          }`}></div>
-                          <div className={`w-1 h-1 rounded-full ${
-                            index % 4 === 0 ? 'bg-amber-200' :
-                            index % 4 === 1 ? 'bg-orange-200' :
-                            index % 4 === 2 ? 'bg-red-200' :
-                            'bg-pink-200'
-                          }`}></div>
-                        </div>
+                      {index === 0 && (
+                        <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full animate-pulse"></div>
+                      )}
+                    </div>
+                    <div className="flex-1">
+                      <span className="text-base">{item.name}</span>
+                      <div className="flex items-center gap-1 mt-1">
+                        <div className={`w-1 h-1 rounded-full ${
+                          index % 4 === 0 ? 'bg-amber-400' :
+                          index % 4 === 1 ? 'bg-orange-400' :
+                          index % 4 === 2 ? 'bg-red-400' :
+                          'bg-pink-400'
+                        }`}></div>
+                        <div className={`w-1 h-1 rounded-full ${
+                          index % 4 === 0 ? 'bg-amber-300' :
+                          index % 4 === 1 ? 'bg-orange-300' :
+                          index % 4 === 2 ? 'bg-red-300' :
+                          'bg-pink-300'
+                        }`}></div>
+                        <div className={`w-1 h-1 rounded-full ${
+                          index % 4 === 0 ? 'bg-amber-200' :
+                          index % 4 === 1 ? 'bg-orange-200' :
+                          index % 4 === 2 ? 'bg-red-200' :
+                          'bg-pink-200'
+                        }`}></div>
                       </div>
-                      <Sparkles className="w-4 h-4 text-gray-400 group-hover:text-amber-500 opacity-0 group-hover:opacity-100 transition-all duration-300" />
-                    </a>
+                    </div>
+                    <Sparkles className="w-4 h-4 text-gray-400 group-hover:text-amber-500 opacity-0 group-hover:opacity-100 transition-all duration-300" />
                   </Link>
                 ))}
                 
