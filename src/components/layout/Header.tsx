@@ -26,13 +26,12 @@ export default function Header() {
       {/* Artistic Top Banner */}
       <div className="bg-gradient-to-r from-amber-600 via-orange-600 to-red-600 text-white text-center py-3 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-pulse"></div>
-        <Link 
-          href="/collections/all"
-          className="relative z-10 hover:underline flex items-center justify-center gap-2 font-medium"
-        >
-          <Sparkles className="w-4 h-4 animate-pulse" />
-          {t('freeShipping')}
-          <Heart className="w-4 h-4 animate-pulse fill-current" />
+        <Link href="/collections/all">
+          <a className="relative z-10 hover:underline flex items-center justify-center gap-2 font-medium">
+            <Sparkles className="w-4 h-4 animate-pulse" />
+            {t('freeShipping')}
+            <Heart className="w-4 h-4 animate-pulse fill-current" />
+          </a>
         </Link>
       </div>
 
@@ -53,10 +52,8 @@ export default function Header() {
 
           {/* Artistic Logo */}
           <div className="flex items-center">
-            <Link 
-              href="/"
-              className="flex items-center space-x-3 group"
-            >
+            <Link href="/">
+              <a className="flex items-center space-x-3 group">
               <div className="relative">
                 <div className="w-12 h-12 bg-gradient-to-br from-amber-500 via-orange-500 to-red-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-xl transform group-hover:scale-105 transition-all duration-300">
                   <span className="text-white font-black text-xl">G</span>
@@ -69,22 +66,21 @@ export default function Header() {
                 </span>
                 <p className="text-xs text-gray-600 font-medium -mt-1">african artistry</p>
               </div>
+              </a>
             </Link>
           </div>
 
           {/* Artistic Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-1">
             {navigation.map((item, index) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="relative group px-4 py-2 rounded-full text-gray-700 hover:text-amber-700 font-semibold transition-all duration-300 hover:bg-amber-50"
-              >
-                {item.name}
-                <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-amber-500 to-orange-500 group-hover:w-full transition-all duration-300"></span>
-                {index === 0 && (
-                  <div className="absolute -top-1 -right-1 w-2 h-2 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full animate-pulse"></div>
-                )}
+              <Link key={item.name} href={item.href}>
+                <a className="relative group px-4 py-2 rounded-full text-gray-700 hover:text-amber-700 font-semibold transition-all duration-300 hover:bg-amber-50">
+                  {item.name}
+                  <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-amber-500 to-orange-500 group-hover:w-full transition-all duration-300"></span>
+                  {index === 0 && (
+                    <div className="absolute -top-1 -right-1 w-2 h-2 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full animate-pulse"></div>
+                  )}
+                </a>
               </Link>
             ))}
           </nav>
@@ -135,10 +131,8 @@ export default function Header() {
             </div>
             {/* Enhanced Mobile Header */}
             <div className="flex items-center justify-between p-6 border-b border-amber-100 bg-white/90 backdrop-blur-md relative z-10">
-              <Link 
-                href="/"
-                className="flex items-center space-x-3 group"
-              >
+              <Link href="/">
+                <a className="flex items-center space-x-3 group">
                 <div className="relative">
                   <div className="w-12 h-12 bg-gradient-to-br from-amber-500 via-orange-500 to-red-600 rounded-3xl flex items-center justify-center shadow-xl group-hover:shadow-2xl transform group-hover:scale-105 transition-all duration-300">
                     <span className="text-white font-black text-xl">G</span>
@@ -156,6 +150,7 @@ export default function Header() {
                     african artistry
                   </p>
                 </div>
+                </a>
               </Link>
               <button
                 onClick={() => setMobileMenuOpen(false)}
@@ -184,12 +179,11 @@ export default function Header() {
 
                 {/* Enhanced Navigation Items */}
                 {navigation.map((item, index) => (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    className="flex items-center gap-4 text-gray-700 hover:text-amber-700 font-semibold py-4 px-5 rounded-3xl hover:bg-white/80 hover:shadow-lg transition-all duration-300 group transform hover:-translate-y-1"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
+                  <Link key={item.name} href={item.href}>
+                    <a
+                      className="flex items-center gap-4 text-gray-700 hover:text-amber-700 font-semibold py-4 px-5 rounded-3xl hover:bg-white/80 hover:shadow-lg transition-all duration-300 group transform hover:-translate-y-1"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
                     <div className="relative">
                       <div className={`w-10 h-10 rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 ${
                         index % 4 === 0 ? 'bg-gradient-to-br from-amber-400 to-orange-500' :
@@ -227,6 +221,7 @@ export default function Header() {
                       </div>
                     </div>
                     <Sparkles className="w-4 h-4 text-gray-400 group-hover:text-amber-500 opacity-0 group-hover:opacity-100 transition-all duration-300" />
+                    </a>
                   </Link>
                 ))}
                 
