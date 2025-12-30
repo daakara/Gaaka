@@ -2,28 +2,11 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight, Heart, Sparkles, Star } from 'lucide-react'
 import { useLanguage } from '../../lib/i18n'
+import { getAllProductCategories } from '../../lib/wordpress'
 
-export default function ProductSections() {
+export default function ProductSections({ productCategories }) {
   const { t } = useLanguage()
   
-  const productCategories = [
-    {
-      id: 'storage-baskets',
-      title: t('storageBasketsTitle'),
-      description: t('storageBasketsDescription'),
-      image: 'https://expeditionsubsahara.com/cdn/shop/products/ES_Oct_Product-35copy_800x.jpg',
-      href: '/collections/storage-baskets',
-      cta: t('shopLiddedBaskets')
-    },
-    {
-      id: 'kitchen-dining',
-      title: t('kitchenDiningTitle'),
-      description: t('kitchenDiningDescription'),
-      image: 'https://expeditionsubsahara.com/cdn/shop/products/ES_Oct_Product-32copy_800x.jpg',
-      href: '/collections/kitchen-dining',
-      cta: t('shopKitchenEssentials')
-    }
-  ]
   return (
     <section className="relative section-padding bg-gradient-to-br from-amber-25 via-orange-25 to-red-25 overflow-hidden">
       {/* Artistic Background Elements */}
