@@ -1,17 +1,20 @@
-import { createClient } from '@sanity/client'
-import imageUrlBuilder from '@sanity/image-url'
+// Sanity client removed. Lightweight stub to avoid breaking imports.
 
 export const config = {
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'your-project-id',
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
-  apiVersion: '2024-01-01',
-  useCdn: true,
+  projectId: null,
+  dataset: null,
 }
 
-export const sanityClient = createClient(config)
+export const sanityClient = {
+  // fetch is a no-op stub returning an empty array by default
+  fetch: async (_query: string, _params?: any) => {
+    return []
+  },
+}
 
-const builder = imageUrlBuilder(sanityClient)
-
-export function urlFor(source: any) {
-  return builder.image(source)
+export function urlFor(_source: any) {
+  return {
+    width: () => ({ url: () => '' }),
+    url: () => '',
+  }
 }
