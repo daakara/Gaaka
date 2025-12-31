@@ -4,7 +4,7 @@ import { Star, Heart, Check, Sparkles, Eye, ShoppingBag } from 'lucide-react'
 import { useLanguage } from '../../lib/i18n'
 import { useCart } from '../../contexts/CartContext'
 
-interface Product {
+export interface Product {
   id: string
   name: string
   price: number
@@ -33,7 +33,11 @@ const getBadgeStyles = (badge: Product['badge']) => {
   }
 }
 
-export default function ProductGrid() {
+interface ProductGridProps {
+  products: Product[];
+}
+
+export default function ProductGrid({ products }: ProductGridProps) {
   const { t } = useLanguage()
   const { addItem } = useCart()
 

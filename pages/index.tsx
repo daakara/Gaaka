@@ -6,8 +6,19 @@ import ProductSections from '@/components/sections/ProductSections'
 import MissionSection from '@/components/sections/MissionSection'
 import ProductGrid from '@/components/sections/ProductGrid'
 import { generateOrganizationData, generateWebSiteData } from '@/lib/seo/structured-data'
+import { getAllProducts, getAllProductCategories } from '@/lib/wordpress'
+import { Product } from '@/components/sections/ProductGrid'
 
-export default function HomePage() {
+interface ProductCategory {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  href: string;
+  cta: string;
+}
+
+export default function HomePage({ products, productCategories }: { products: Product[], productCategories: ProductCategory[] }) {
   const organizationData = generateOrganizationData()
   const webSiteData = generateWebSiteData()
 
@@ -51,11 +62,39 @@ export default function HomePage() {
       <Header />
       <main>
         <HeroSection />
-        <ProductSections />
+        <ProductSections productCategories={productCategories} />
         <MissionSection />
-        <ProductGrid />
+        <ProductGrid products={products} />
       </main>
       <Footer />
     </div>
   )
+}
+
+export async function getStaticProps() {
+  const products = await getAllProducts()
+  const productCategories = await getAllProductCategories()
+
+  return {
+    props: {
+      products: products.nodes.map(node => ({
+        id: node.id,
+        name: node.title,
+        price: node.productFields.price,
+        image: node.productFields.images[0]?.mediaItemUrl,
+        rating: node.productFields.rating,
+        reviewCount: node.productFields.reviewCount,
+        badge: node.productFields.badge,
+        colors: node.productFields.colors ? node.productFields.colors.split(',').map(color => color.trim()) : [],
+      })),
+      productCategories: productCategories.nodes.map(node => ({
+        id: node.id,
+        title: node.name,
+        description: node.description,
+        image: node.image.mediaItemUrl,
+        href: `/collections/${node.slug}`,
+        cta: `Shop ${node.name}`
+      })),
+    },
+  }
 }
