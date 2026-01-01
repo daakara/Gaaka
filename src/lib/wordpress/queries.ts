@@ -205,7 +205,20 @@ export const GET_SALE_PRODUCTS = `
 // ==================== CATEGORY QUERIES ====================
 
 /**
- * Get all product categories
+ * Get single category details by slug or id
+ */
+export const GET_CATEGORY_DETAILS = `
+  ${CATEGORY_FRAGMENT}
+
+  query GetCategoryDetails($id: ID!, $idType: ProductCategoryNodeIdTypeEnum = SLUG) {
+    productCategory(id: $id, idType: $idType) {
+      ...CategoryFields
+    }
+  }
+`
+
+/**
+ * Get all categories
  */
 export const GET_ALL_CATEGORIES = `
   ${CATEGORY_FRAGMENT}
