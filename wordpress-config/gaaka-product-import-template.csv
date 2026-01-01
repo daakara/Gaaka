@@ -1,0 +1,130 @@
+SKU,Type,Name,Published,Is featured?,Short description,Description,Categories,Tags,Images,Regular price,Sale price,Stock,In stock?,Weight (kg),Length (cm),Width (cm),Height (cm)
+BASKET-001,simple,"Handwoven Storage Basket - Natural",1,1,"Beautiful handwoven storage basket made by Rwandan artisans","This stunning storage basket is handcrafted by skilled artisans in Rwanda using traditional weaving techniques passed down through generations. Made from natural sisal fibers, each basket features intricate patterns and exceptional durability.
+
+Perfect for organizing your home while supporting artisan communities. Each purchase directly supports the weaver and their family.
+
+Features:
+• Handwoven by Rwandan artisans
+• Natural sisal fibers
+• Traditional weaving techniques
+• Fair trade certified
+• Each basket is unique
+
+Dimensions: Approximately 35cm diameter x 30cm height
+Materials: Natural sisal, colored cotton accents
+Care: Spot clean with damp cloth","Storage Baskets","Handwoven,Natural,Storage,Fair Trade",https://example.com/basket-storage-1.jpg|https://example.com/basket-storage-2.jpg,49.99,,100,1,0.8,35,35,30
+BASKET-002,simple,"Colorful Wall Basket - Small",1,0,"Vibrant wall basket with traditional African patterns","Add a pop of color to your walls with this beautiful handwoven wall basket. Created by artisans in Rwanda, each basket features vibrant colors and traditional geometric patterns.
+
+Perfect as wall art or functional storage. Hang in your living room, bedroom, or entryway for an artistic touch.
+
+Features:
+• Handwoven by Rwandan women artisans
+• Vibrant dyed sisal fibers
+• Traditional geometric patterns
+• Lightweight and easy to hang
+• Fair trade certified
+
+Dimensions: 25cm diameter
+Materials: Dyed sisal, woven cotton
+Hanging: Small loop on back for easy mounting","Wall Baskets","Handwoven,Colorful,Wall Decor,Fair Trade",https://example.com/basket-wall-1.jpg,29.99,,50,1,0.3,25,25,5
+BASKET-003,simple,"Kitchen Fruit Basket - Large",1,1,"Spacious fruit basket perfect for kitchen countertops","This large handwoven basket is ideal for storing fruits, vegetables, or bread on your kitchen counter. The open weave allows air circulation to keep produce fresh longer.
+
+Crafted by artisan cooperatives in Rwanda, each basket combines functionality with beautiful traditional design.
+
+Features:
+• Handwoven by artisan cooperatives
+• Natural and colored sisal blend
+• Open weave for air circulation
+• Sturdy construction
+• Food-safe materials
+• Fair trade certified
+
+Dimensions: 40cm diameter x 15cm height
+Materials: Natural sisal with colored accents
+Care: Wipe clean with damp cloth, air dry","Kitchen & Dining","Handwoven,Natural,Kitchen,Fair Trade",https://example.com/basket-kitchen-1.jpg|https://example.com/basket-kitchen-2.jpg|https://example.com/basket-kitchen-3.jpg,39.99,34.99,75,1,0.6,40,40,15
+BASKET-004,simple,"Woven Planter Basket",1,0,"Stylish basket perfect for indoor plants","Transform your indoor plants into statement pieces with this beautiful woven planter basket. The natural sisal construction provides excellent drainage while adding organic texture to your space.
+
+Handcrafted by Rwandan artisans, each basket supports sustainable livelihoods and preserves traditional weaving skills.
+
+Features:
+• Handwoven by Rwandan artisans
+• Natural sisal construction
+• Drainage-friendly weave
+• Fits standard 6-8 inch pots
+• Eco-friendly and sustainable
+
+Dimensions: 30cm diameter x 25cm height
+Materials: 100% natural sisal
+Perfect for: Pothos, snake plants, peace lilies","Storage Baskets","Handwoven,Natural,Plants,Eco-Friendly",https://example.com/basket-planter-1.jpg,34.99,,60,1,0.5,30,30,25
+BASKET-005,simple,"Traditional Bread Basket",1,1,"Elegant bread basket for your dining table","This elegant bread basket brings warmth and tradition to your dining table. The tight weave keeps bread fresh while the beautiful design serves as a centerpiece.
+
+Made by experienced weavers in Rwanda using techniques passed down through generations.
+
+Features:
+• Handwoven by master artisans
+• Tight weave pattern
+• Natural and colored sisal
+• Traditional design
+• Food-safe materials
+• Fair trade certified
+
+Dimensions: 35cm x 25cm x 10cm
+Materials: Natural sisal with traditional dyed patterns
+Care: Wipe with damp cloth, do not submerge in water","Kitchen & Dining","Handwoven,Natural,Dining,Traditional",https://example.com/basket-bread-1.jpg|https://example.com/basket-bread-2.jpg,27.99,,80,1,0.4,35,25,10
+BASKET-006,simple,"Colorful Storage Basket Set",1,1,"Set of 3 nested storage baskets in vibrant colors","Organize your home in style with this set of three nested storage baskets. Each basket features vibrant colors and traditional patterns, perfect for any room.
+
+Handcrafted by women's cooperatives in Rwanda, supporting economic empowerment and skill preservation.
+
+Features:
+• Set of 3 nested baskets
+• Small: 20cm, Medium: 25cm, Large: 30cm
+• Vibrant traditional colors
+• Stackable for easy storage
+• Handwoven by women's cooperatives
+• Fair trade certified
+
+Materials: Dyed sisal fibers with cotton accents
+Use for: Toys, accessories, bathroom items, craft supplies
+Care: Spot clean with damp cloth","Storage Baskets","Handwoven,Colorful,Storage,Set,Fair Trade",https://example.com/basket-set-1.jpg|https://example.com/basket-set-2.jpg|https://example.com/basket-set-3.jpg,89.99,79.99,30,1,1.2,30,30,25
+
+# GAAKA Product Import Template
+# 
+# Instructions:
+# 1. Fill in your product details following the examples above
+# 2. Replace example image URLs with your actual image URLs (upload to WordPress Media Library first)
+# 3. Categories must exist in WooCommerce before import (create them first)
+# 4. Tags will be created automatically if they don't exist
+# 5. SKU must be unique for each product
+# 6. Published: 1 = published, 0 = draft
+# 7. Is featured: 1 = yes, 0 = no
+# 8. Stock: Enter quantity (leave empty for unlimited)
+# 9. In stock: 1 = yes, 0 = no
+# 10. Multiple images: Separate URLs with | (pipe character)
+#
+# Import Process:
+# 1. Go to WordPress admin → WooCommerce → Products
+# 2. Click "Import" button at top
+# 3. Upload this CSV file
+# 4. Map columns (usually auto-detected)
+# 5. Review products
+# 6. Run import
+#
+# Tips:
+# - Start with 3-5 products to test
+# - Use "Update existing products" option to modify products later
+# - Keep a backup copy of this file
+# - Upload all product images to Media Library before importing
+#
+# Categories for GAAKA:
+# - Storage Baskets
+# - Kitchen & Dining
+# - Wall Baskets
+#
+# Common Tags:
+# - Handwoven
+# - Natural
+# - Colorful
+# - Fair Trade
+# - Eco-Friendly
+# - Traditional
+# - Modern
