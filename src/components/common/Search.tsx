@@ -97,8 +97,8 @@ export default function Search() {
                     >
                       <div className="relative w-16 h-16 rounded-md overflow-hidden mr-4 flex-shrink-0">
                         <Image
-                          src={product.image?.sourceUrl ?? '/images/placeholder.png'}
-                          alt={product.image?.altText ?? product.name}
+                          src={product.image ?? '/images/placeholder.png'}
+                          alt={product.imageAlt ?? product.name}
                           layout="fill"
                           objectFit="cover"
                         />

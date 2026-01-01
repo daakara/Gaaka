@@ -5,10 +5,10 @@ import { Star, Heart, Check, Sparkles, Eye, ShoppingBag, ChevronRight, ArrowLeft
 import Link from 'next/link'
 
 import { fetchGraphQL } from '../../src/lib/wordpress/client'
-import { GET_ALL_PRODUCTS_SLUGS, GET_PRODUCT_BY_SLUG } from '../../src/lib/wordpress/queries'
+import { GET_ALL_PRODUCT_SLUGS, GET_PRODUCT_BY_SLUG } from '../../src/lib/wordpress/queries'
 import { transformProduct } from '../../src/lib/wordpress/utils'
 import { Product } from '../../src/lib/wordpress/types'
-import { useLanguage } from '../../src/lib/i1n'
+import { useLanguage } from '../../src/lib/i18n'
 import { useCart } from '../../src/contexts/CartContext'
 import Header from '../../src/components/layout/Header'
 import Footer from '../../src/components/layout/Footer'
@@ -59,8 +59,8 @@ const ProductPage: NextPage<ProductPageProps> = ({ product }) => {
             <div className="relative">
               <div className="aspect-square relative rounded-2xl overflow-hidden shadow-lg">
                 <Image
-                  src={product.image?.sourceUrl ?? '/images/placeholder.png'}
-                  alt={product.image?.altText ?? product.name}
+                  src={product.image ?? '/images/placeholder.png'}
+                  alt={product.imageAlt ?? product.name}
                   layout="fill"
                   objectFit="cover"
                 />
@@ -78,7 +78,7 @@ const ProductPage: NextPage<ProductPageProps> = ({ product }) => {
                     <Star
                       key={i}
                       className={`h-5 w-5 ${
-                        i < Math.floor(product.averageRating ?? 0)
+                        i < Math.floor(product.rating ?? 0)
                           ? 'text-amber-400 fill-current'
                           : 'text-gray-300'
                       }`}
@@ -101,25 +101,25 @@ const ProductPage: NextPage<ProductPageProps> = ({ product }) => {
               <div className="mt-auto">
                 <button
                   onClick={() => {
-                    if (product.stockStatus !== 'OUT_OF_STOCK') {
+                    if (product.inStock) {
                       addItem({
                         id: product.id,
                         name: product.name,
                         price: product.price,
-                        image: product.image?.sourceUrl ?? '',
-                        color: product.colors?.[0]?.name ?? ''
+                        image: product.image ?? '',
+                        color: product.colors?.[0] ?? ''
                       })
                     }
                   }}
                   className={`w-full py-4 rounded-xl font-bold text-lg transition-all duration-300 flex items-center justify-center gap-3 ${
-                    product.stockStatus === 'OUT_OF_STOCK'
+                    !product.inStock
                       ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
                       : 'bg-amber-600 text-white hover:bg-amber-700'
                   }`}
-                  disabled={product.stockStatus === 'OUT_OF_STOCK'}
+                  disabled={!product.inStock}
                 >
                   <ShoppingBag className="w-6 h-6" />
-                  {product.stockStatus === 'OUT_OF_STOCK' ? t('soldOut') : t('addToCart')}
+                  {!product.inStock ? t('soldOut') : t('addToCart')}
                 </button>
               </div>
             </div>

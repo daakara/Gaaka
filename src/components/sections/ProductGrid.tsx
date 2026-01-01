@@ -126,8 +126,8 @@ export default function ProductGrid({
                 {/* Artistic Product Image */}
                 <div className="relative overflow-hidden aspect-square">
                   <Image
-                    src={product.image?.sourceUrl ?? '/images/placeholder.png'}
-                    alt={product.image?.altText ?? product.name}
+                    src={product.image ?? '/images/placeholder.png'}
+                    alt={product.imageAlt ?? product.name}
                     layout="fill"
                     objectFit="cover"
                     className="group-hover:scale-110 transition-transform duration-700"
@@ -195,7 +195,7 @@ export default function ProductGrid({
                           <Star
                             key={i}
                             className={`h-5 w-5 ${
-                              i < Math.floor(product.averageRating ?? 0)
+                              i < Math.floor(product.rating ?? 0)
                                 ? 'text-amber-400 fill-current'
                                 : 'text-gray-200'
                             }`}
@@ -260,24 +260,24 @@ export default function ProductGrid({
                     {/* Artistic Add to Cart Button */}
                     <button 
                       onClick={() => {
-                        if (product.stockStatus !== 'OUT_OF_STOCK') {
+                        if (product.inStock) {
                           addItem({
                             id: product.id,
                             name: product.name,
                             price: product.price,
-                            image: product.image?.sourceUrl ?? '',
-                            color: product.colors?.[0]?.name ?? ''
+                            image: product.image ?? '',
+                            color: product.colors?.[0] ?? ''
                           })
                         }
                       }}
                       className={`w-full py-3 rounded-2xl font-bold transition-all duration-300 flex items-center justify-center gap-2 transform hover:-translate-y-1 shadow-lg hover:shadow-xl ${
-                        product.stockStatus === 'OUT_OF_STOCK'
+                        !product.inStock
                           ? 'bg-gray-100 text-gray-500 cursor-not-allowed'
                           : 'bg-gradient-to-r from-amber-600 to-orange-600 text-white hover:from-orange-600 hover:to-red-600'
                       }`}
-                      disabled={product.stockStatus === 'OUT_OF_STOCK'}
+                      disabled={!product.inStock}
                     >
-                      {product.stockStatus === 'OUT_OF_STOCK' ? (
+                      {!product.inStock ? (
                         <>
                           <span>✕</span>
                           {t('soldOut')}
