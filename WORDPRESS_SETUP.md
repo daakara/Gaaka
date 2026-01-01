@@ -327,7 +327,7 @@ query TestProducts {
 
 ```bash
 # Update .env.local
-WORDPRESS_API_URL=https://your-wordpress-site.com/graphql
+WORDPRESS_API_URL=http://www.gaaka.com/dev/graphql
 
 # Install dependencies
 npm install

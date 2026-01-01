@@ -7,7 +7,7 @@
 
 const https = require('https');
 
-const WORDPRESS_API_URL = process.env.WORDPRESS_API_URL || 'https://www.gaaka.com/graphql';
+const WORDPRESS_API_URL = process.env.WORDPRESS_API_URL || 'http://www.gaaka.com/dev/graphql';
 
 const query = `
   query TestWordPress {

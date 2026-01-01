@@ -15,7 +15,7 @@
     "dev": "next dev -H 0.0.0.0",
     "dev-local": "next dev",
     "build": "next build && next export",
-    "build:static": "WORDPRESS_API_URL=https://www.gaaka.com/graphql next build && next export",
+    "build:static": "WORDPRESS_API_URL=http://www.gaaka.com/dev/graphql next build && next export",
     "export": "npm run build:static",
     "start": "next start",
     "lint": "next lint",
