@@ -25,12 +25,11 @@ export default function ShippingPage() {
           <div className="container mx-auto px-4 py-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
-                <Link 
-                  href="/"
-                  className="flex items-center text-gray-600 hover:text-gray-900 transition-colors duration-300"
-                >
-                  <ArrowLeft className="h-5 w-5 mr-2" />
-                  Back to Shop
+                <Link href="/">
+                  <a className="flex items-center text-gray-600 hover:text-gray-900 transition-colors duration-300">
+                    <ArrowLeft className="h-5 w-5 mr-2" />
+                    Back to Shop
+                  </a>
                 </Link>
               </div>
             </div>
