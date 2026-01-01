@@ -34,7 +34,7 @@ export function transformProduct(wpProduct: WooCommerceProduct): Product {
   const primaryCategory = categories[0]
   
   // Determine badge
-  let badge: Product['badge'] = null
+  let badge: Product['badge'] = undefined
   if (wpProduct.stockStatus !== 'IN_STOCK') {
     badge = 'sold-out'
   } else if (wpProduct.productFields?.bestSeller) {
