@@ -49,18 +49,29 @@ export const PRODUCT_CORE_FRAGMENT = `
     description
     shortDescription
     sku
-    price
-    regularPrice
-    salePrice
-    onSale
-    stockStatus
-    stockQuantity
-    manageStock
     featured
     averageRating
     reviewCount
     date
     modified
+    ... on SimpleProduct {
+      price
+      regularPrice
+      salePrice
+      onSale
+      stockStatus
+      stockQuantity
+      manageStock
+    }
+    ... on VariableProduct {
+      price
+      regularPrice
+      salePrice
+      onSale
+      stockStatus
+      stockQuantity
+      manageStock
+    }
   }
 `
 

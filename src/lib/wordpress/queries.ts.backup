@@ -19,6 +19,21 @@ export const GET_ALL_PRODUCTS = `
     products(first: $first, after: $after, where: $where) {
       nodes {
         ...ProductFullFields
+        productFields {
+          dimensions {
+            height
+            width
+            depth
+            unit
+          }
+          weight
+          weightUnit
+          materials
+          availableColors
+          bestSeller
+          limitedEdition
+          careInstructions
+        }
       }
       pageInfo {
         hasNextPage
@@ -40,6 +55,10 @@ export const GET_FEATURED_PRODUCTS = `
     products(first: $first, where: { featured: true }) {
       nodes {
         ...ProductFullFields
+        productFields {
+          bestSeller
+          limitedEdition
+        }
       }
     }
   }
@@ -55,6 +74,17 @@ export const GET_PRODUCTS_BY_CATEGORY = `
     products(first: $first, where: { category: $category }) {
       nodes {
         ...ProductFullFields
+        productFields {
+          dimensions {
+            height
+            width
+            depth
+          }
+          weight
+          materials
+          bestSeller
+          limitedEdition
+        }
       }
       pageInfo {
         hasNextPage
@@ -73,6 +103,13 @@ export const GET_PRODUCT_BY_SLUG = `
   query GetProductBySlug($slug: ID!) {
     product(id: $slug, idType: SLUG) {
       ...ProductFullFields
+      productFields {
+        dimensions {
+          height
+          width
+          depth
+          unit
+        }
         weight
         weightUnit
         materials
@@ -124,6 +161,12 @@ export const GET_PRODUCT_BY_ID = `
   query GetProductById($id: ID!) {
     product(id: $id, idType: DATABASE_ID) {
       ...ProductFullFields
+      productFields {
+        dimensions {
+          height
+          width
+          depth
+        }
         weight
         materials
         availableColors

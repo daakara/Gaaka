@@ -22,10 +22,10 @@ export function transformProduct(wpProduct: WooCommerceProduct): Product {
   // Determine compare at price
   const compareAtPrice = wpProduct.onSale && regularPrice > salePrice 
     ? regularPrice 
-    : undefined
+    : null
   
-  // Extract images
-  const mainImage = wpProduct.image?.sourceUrl || ''
+  // Extract images - use placeholder if no image
+  const mainImage = wpProduct.image?.sourceUrl || '/images/placeholder-basket.jpg'
   const galleryImages = wpProduct.galleryImages?.nodes.map(img => img.sourceUrl) || []
   const allImages = [mainImage, ...galleryImages].filter(Boolean)
   
@@ -34,7 +34,7 @@ export function transformProduct(wpProduct: WooCommerceProduct): Product {
   const primaryCategory = categories[0]
   
   // Determine badge
-  let badge: Product['badge'] = undefined
+  let badge: Product['badge'] = null
   if (wpProduct.stockStatus !== 'IN_STOCK') {
     badge = 'sold-out'
   } else if (wpProduct.productFields?.bestSeller) {
@@ -50,38 +50,38 @@ export function transformProduct(wpProduct: WooCommerceProduct): Product {
     databaseId: wpProduct.databaseId,
     name: wpProduct.name,
     slug: wpProduct.slug,
-    description: wpProduct.description,
-    excerpt: wpProduct.shortDescription,
+    description: wpProduct.description || '',
+    excerpt: wpProduct.shortDescription || '',
     
     price: wpProduct.onSale ? salePrice : price,
     compareAtPrice,
-    onSale: wpProduct.onSale,
+    onSale: wpProduct.onSale || false,
     
     image: mainImage,
     images: allImages,
-    imageAlt: wpProduct.image?.altText,
+    imageAlt: wpProduct.image?.altText || wpProduct.name,
     
     category: primaryCategory ? {
       name: primaryCategory.name,
       slug: primaryCategory.slug,
-    } : undefined,
+    } : null,
     categories: categories.map(cat => cat.name),
     
     inStock: wpProduct.stockStatus === 'IN_STOCK',
-    stockQuantity: wpProduct.stockQuantity || undefined,
+    stockQuantity: wpProduct.stockQuantity || null,
     
-    colors: wpProduct.productFields?.availableColors,
-    dimensions: wpProduct.productFields?.dimensions,
-    weight: wpProduct.productFields?.weight,
-    materials: wpProduct.productFields?.materials,
+    colors: wpProduct.productFields?.availableColors || [],
+    dimensions: wpProduct.productFields?.dimensions || null,
+    weight: wpProduct.productFields?.weight || null,
+    materials: wpProduct.productFields?.materials || null,
     
-    featured: wpProduct.featured,
+    featured: wpProduct.featured || false,
     bestSeller: wpProduct.productFields?.bestSeller || false,
     limitedEdition: wpProduct.productFields?.limitedEdition || false,
     badge,
     
-    rating: wpProduct.averageRating,
-    reviewCount: wpProduct.reviewCount,
+    rating: wpProduct.averageRating || 0,
+    reviewCount: wpProduct.reviewCount || 0,
     
     createdAt: wpProduct.date,
     updatedAt: wpProduct.modified,
