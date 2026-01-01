@@ -132,7 +132,7 @@ const ProductPage: NextPage<ProductPageProps> = ({ product }) => {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const data = await fetchGraphQL(GET_ALL_PRODUCTS_SLUGS, {})
+  const data = await fetchGraphQL(GET_ALL_PRODUCT_SLUGS, {})
   const paths = data.products.nodes.map((product: { slug: string }) => ({
     params: { slug: product.slug },
   }))
