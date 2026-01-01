@@ -36,9 +36,9 @@ export default function ProductGrid({
   const { addItem } = useCart()
   const {
     products: fetchedProducts,
-    isLoading: fetchedIsLoading,
+    loading: fetchedIsLoading,
     error: fetchedError,
-  } = useProducts({ featured: true }, { skip: !!initialProducts })
+  } = useProducts({ featured: true })
 
   const products = initialProducts || fetchedProducts
   const isLoading = initialIsLoading ?? fetchedIsLoading
