@@ -12,14 +12,14 @@
 
 // Register Site Content Custom Post Type for global settings
 function gaaka_register_site_content() {
-    register_post_type('site_content', [
-        'labels' => [
+    register_post_type('site_content', array(
+        'labels' => array(
             'name' => 'Site Content',
             'singular_name' => 'Site Content',
             'add_new' => 'Add Content Block',
             'edit_item' => 'Edit Content Block',
             'menu_name' => 'Site Content'
-        ],
+        ),
         'public' => false,
         'show_ui' => true,
         'show_in_menu' => true,
@@ -27,23 +27,23 @@ function gaaka_register_site_content() {
         'show_in_graphql' => true,
         'graphql_single_name' => 'siteContent',
         'graphql_plural_name' => 'siteContents',
-        'supports' => ['title', 'editor', 'revisions'],
+        'supports' => array('title', 'editor', 'revisions'),
         'capability_type' => 'post',
         'hierarchical' => false,
-    ]);
+    ));
 }
 add_action('init', 'gaaka_register_site_content');
 
 // Register Artisan Stories Custom Post Type
 function gaaka_register_artisan_stories() {
-    register_post_type('artisan_story', [
-        'labels' => [
+    register_post_type('artisan_story', array(
+        'labels' => array(
             'name' => 'Artisan Stories',
             'singular_name' => 'Artisan Story',
             'add_new' => 'Add Story',
             'edit_item' => 'Edit Story',
             'menu_name' => 'Artisan Stories'
-        ],
+        ),
         'public' => true,
         'show_ui' => true,
         'show_in_menu' => true,
@@ -51,24 +51,24 @@ function gaaka_register_artisan_stories() {
         'show_in_graphql' => true,
         'graphql_single_name' => 'artisanStory',
         'graphql_plural_name' => 'artisanStories',
-        'supports' => ['title', 'editor', 'thumbnail', 'excerpt', 'revisions'],
+        'supports' => array('title', 'editor', 'thumbnail', 'excerpt', 'revisions'),
         'has_archive' => true,
-        'rewrite' => ['slug' => 'artisan-stories'],
+        'rewrite' => array('slug' => 'artisan-stories'),
         'capability_type' => 'post',
         'hierarchical' => false,
-    ]);
+    ));
 }
 add_action('init', 'gaaka_register_artisan_stories');
 
 // Add GraphQL support to product categories for descriptions
 function gaaka_add_category_graphql_fields() {
-    register_graphql_field('ProductCategory', 'longDescription', [
+    register_graphql_field('ProductCategory', 'longDescription', array(
         'type' => 'String',
         'description' => 'Extended description for collection pages',
         'resolve' => function($category) {
             return get_term_meta($category->term_id, 'long_description', true);
         }
-    ]);
+    ));
 }
 add_action('graphql_register_types', 'gaaka_add_category_graphql_fields');
 
@@ -108,5 +108,5 @@ add_action('create_product_cat', 'gaaka_save_category_fields');
  * Version: 1.0.0
  * Author: GAAKA
  * Requires at least: 6.0
- * Requires PHP: 8.0
+ * Requires PHP: 7.4
  */

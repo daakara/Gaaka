@@ -5,7 +5,7 @@ This guide explains how to set up WordPress with WooCommerce as a headless CMS f
 ## 📋 Prerequisites
 
 - WordPress 6.0+ installation
-- PHP 8.0+
+- PHP 7.4+ (recommended 8.0+)
 - MySQL 5.7+ or MariaDB 10.3+
 - SSL certificate (for production)
 - Admin access to WordPress
