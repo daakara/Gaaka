@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import { GetStaticProps } from 'next'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import HeroSection from '@/components/sections/HeroSection'
@@ -6,8 +7,19 @@ import ProductSections from '@/components/sections/ProductSections'
 import MissionSection from '@/components/sections/MissionSection'
 import ProductGrid from '@/components/sections/ProductGrid'
 import { generateOrganizationData, generateWebSiteData } from '@/lib/seo/structured-data'
+import { fetchSiteContent } from '@/lib/wordpress/content-queries'
 
-export default function HomePage() {
+interface HomePageProps {
+  heroContent?: {
+    headline?: string;
+    subheadline?: string;
+    ctaText?: string;
+    ctaLink?: string;
+    backgroundImage?: string;
+  };
+}
+
+export default function HomePage({ heroContent }: HomePageProps) {
   const organizationData = generateOrganizationData()
   const webSiteData = generateWebSiteData()
 
@@ -50,7 +62,7 @@ export default function HomePage() {
       
       <Header />
       <main>
-        <HeroSection />
+        <HeroSection content={heroContent} />
         <ProductSections />
         <MissionSection />
         <ProductGrid />
@@ -59,3 +71,20 @@ export default function HomePage() {
     </div>
   )
 }
+
+export const getStaticProps: GetStaticProps<HomePageProps> = async () => {
+  // Fetch hero content from WordPress with fallback
+  const heroContent = await fetchSiteContent('hero', {
+    headline: 'handcrafted african artistry',
+    subheadline: 'where every basket tells a story',
+    ctaText: 'discover the collection',
+    ctaLink: '/collections/all',
+  });
+
+  return {
+    props: {
+      heroContent,
+    },
+    revalidate: 3600, // Revalidate every hour
+  };
+};

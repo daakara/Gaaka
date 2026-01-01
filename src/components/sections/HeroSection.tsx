@@ -2,8 +2,24 @@ import Link from 'next/link';
 import { ArrowRight, Heart, Sparkles } from 'lucide-react';
 import { useLanguage } from '../../lib/i18n';
 
-export default function HeroSection() {
+interface HeroSectionProps {
+  content?: {
+    headline?: string;
+    subheadline?: string;
+    ctaText?: string;
+    ctaLink?: string;
+    backgroundImage?: string;
+  };
+}
+
+export default function HeroSection({ content }: HeroSectionProps) {
   const { t } = useLanguage();
+  
+  // Default fallback content
+  const headline = content?.headline || 'handcrafted african artistry';
+  const subheadline = content?.subheadline || 'where every basket tells a story';
+  const ctaText = content?.ctaText || 'discover the collection';
+  const ctaLink = content?.ctaLink || '/collections/all';
   
   return (
     <section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-amber-50 via-orange-50 to-red-50">
@@ -17,15 +33,14 @@ export default function HeroSection() {
           <div className="space-y-12">
             <div className="relative">
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight">
-                <span className="block text-gray-900 mb-2">handcrafted</span>
                 <span className="block bg-gradient-to-r from-amber-600 via-orange-600 to-red-600 bg-clip-text text-transparent font-black">
-                  african artistry
+                  {headline}
                 </span>
               </h1>
               <div className="flex items-center gap-2 mt-6">
                 <Heart className="w-5 h-5 text-red-500 fill-current animate-pulse" />
                 <p className="text-xl text-gray-700 italic font-light">
-                  where every basket tells a story
+                  {subheadline}
                 </p>
               </div>
             </div>
@@ -41,10 +56,10 @@ export default function HeroSection() {
             </div>
             
             <div className="flex flex-col sm:flex-row gap-6">
-              <Link href="/collections/all">
+              <Link href={ctaLink}>
                 <a className="group relative overflow-hidden bg-gradient-to-r from-amber-600 to-orange-600 text-white px-8 py-4 rounded-full font-semibold text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300">
                   <span className="relative z-10 flex items-center">
-                    discover the collection
+                    {ctaText}
                     <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
                   </span>
                   <div className="absolute inset-0 bg-gradient-to-r from-orange-600 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>

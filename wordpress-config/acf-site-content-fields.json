@@ -1,0 +1,87 @@
+{
+  "key": "group_site_content",
+  "title": "Site Content Fields",
+  "fields": [
+    {
+      "key": "field_content_type",
+      "label": "Content Type",
+      "name": "content_type",
+      "type": "select",
+      "instructions": "Select where this content appears on the site",
+      "required": 1,
+      "choices": {
+        "hero": "Hero Section (Homepage)",
+        "mission": "Mission Statement",
+        "about": "About Page Content",
+        "footer_cta": "Footer Call to Action"
+      },
+      "default_value": "hero",
+      "show_in_graphql": 1,
+      "graphql_field_name": "contentType"
+    },
+    {
+      "key": "field_headline",
+      "label": "Headline",
+      "name": "headline",
+      "type": "text",
+      "instructions": "Main headline (H1 or H2)",
+      "show_in_graphql": 1,
+      "graphql_field_name": "headline"
+    },
+    {
+      "key": "field_subheadline",
+      "label": "Subheadline",
+      "name": "subheadline",
+      "type": "textarea",
+      "instructions": "Supporting text below headline",
+      "rows": 3,
+      "show_in_graphql": 1,
+      "graphql_field_name": "subheadline"
+    },
+    {
+      "key": "field_cta_text",
+      "label": "Call to Action Text",
+      "name": "cta_text",
+      "type": "text",
+      "instructions": "Button text (e.g., 'Shop Now')",
+      "show_in_graphql": 1,
+      "graphql_field_name": "ctaText"
+    },
+    {
+      "key": "field_cta_link",
+      "label": "Call to Action Link",
+      "name": "cta_link",
+      "type": "url",
+      "instructions": "URL for the button (e.g., /collections/all)",
+      "show_in_graphql": 1,
+      "graphql_field_name": "ctaLink"
+    },
+    {
+      "key": "field_background_image",
+      "label": "Background Image",
+      "name": "background_image",
+      "type": "image",
+      "instructions": "Optional background image (recommended: 1920x800px)",
+      "return_format": "url",
+      "preview_size": "medium",
+      "show_in_graphql": 1,
+      "graphql_field_name": "backgroundImage"
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "site_content"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "show_in_graphql": 1,
+  "graphql_field_name": "siteContentFields"
+}

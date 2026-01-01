@@ -1,0 +1,99 @@
+{
+  "key": "group_artisan_story",
+  "title": "Artisan Story Fields",
+  "fields": [
+    {
+      "key": "field_artisan_name",
+      "label": "Artisan Name",
+      "name": "artisan_name",
+      "type": "text",
+      "instructions": "Full name of the artisan",
+      "required": 1,
+      "show_in_graphql": 1,
+      "graphql_field_name": "artisanName"
+    },
+    {
+      "key": "field_artisan_location",
+      "label": "Location",
+      "name": "location",
+      "type": "text",
+      "instructions": "City or region in Kenya",
+      "placeholder": "e.g., Nairobi, Mombasa, Kisumu",
+      "show_in_graphql": 1,
+      "graphql_field_name": "location"
+    },
+    {
+      "key": "field_artisan_craft",
+      "label": "Primary Craft",
+      "name": "craft",
+      "type": "select",
+      "instructions": "Main type of craftsmanship",
+      "choices": {
+        "basket_weaving": "Basket Weaving",
+        "pottery": "Pottery",
+        "wood_carving": "Wood Carving",
+        "beadwork": "Beadwork",
+        "textile": "Textile Weaving"
+      },
+      "show_in_graphql": 1,
+      "graphql_field_name": "craft"
+    },
+    {
+      "key": "field_years_experience",
+      "label": "Years of Experience",
+      "name": "years_experience",
+      "type": "number",
+      "instructions": "How many years practicing this craft",
+      "min": 0,
+      "show_in_graphql": 1,
+      "graphql_field_name": "yearsExperience"
+    },
+    {
+      "key": "field_artisan_quote",
+      "label": "Featured Quote",
+      "name": "quote",
+      "type": "textarea",
+      "instructions": "A memorable quote from the artisan about their craft",
+      "rows": 3,
+      "show_in_graphql": 1,
+      "graphql_field_name": "quote"
+    },
+    {
+      "key": "field_artisan_video",
+      "label": "Video URL",
+      "name": "video_url",
+      "type": "url",
+      "instructions": "YouTube or Vimeo URL showcasing their work",
+      "show_in_graphql": 1,
+      "graphql_field_name": "videoUrl"
+    },
+    {
+      "key": "field_related_products",
+      "label": "Related Products",
+      "name": "related_products",
+      "type": "relationship",
+      "instructions": "Products created by this artisan",
+      "post_type": ["product"],
+      "filters": ["search"],
+      "return_format": "id",
+      "show_in_graphql": 1,
+      "graphql_field_name": "relatedProducts"
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "artisan_story"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "show_in_graphql": 1,
+  "graphql_field_name": "artisanStoryFields"
+}
