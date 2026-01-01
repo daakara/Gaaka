@@ -129,7 +129,14 @@ export const translations = {
     madeWithLove: 'Made with Love',
     supporting: 'Supporting',
     artisans: 'artisans',
-    fairTradeCertifiedBadge: 'Fair Trade Certified'
+    fairTradeCertifiedBadge: 'Fair Trade Certified',
+    
+    // Language Selector
+    language: 'Language',
+    chooseLanguage: 'Choose your preferred language',
+    handcraftedWithLove: 'handcrafted with love',
+    supportingCommunities: 'Supporting artisan communities',
+    preservingTraditions: 'Preserving traditions'
   },
   de: {
     // Navigation
@@ -141,13 +148,13 @@ export const translations = {
     about: 'Über uns',
     
     // Header
-    freeShipping: 'Kostenloser Versand bei Bestellungen über 75€',
+    freeShipping: 'Kostenloser Versand bei Bestellungen über 75€ in Deutschland',
     
     // Hero Section
-    liveColorfully: 'Leben Sie Farbenfroh',
-    heroSubtitle: 'Modernes Design trifft auf traditionelle Handwerkskunst',
-    heroDescription: 'Entdecken Sie unsere Kollektion handgewebter afrikanischer Aufbewahrungskörbe, in denen jedes Stück die Geschichte von Handwerkskunst erzählt, die über Generationen weitergegeben wurde. Verwandeln Sie Ihren Raum mit funktionaler Kunst, die Erbe feiert und Gemeinschaften unterstützt.',
-    shopCollection: 'Kollektion Shoppen',
+    liveColorfully: 'Erleben Sie die Farbenvielfalt',
+    heroSubtitle: 'Wo modernes Design auf traditionelle Handwerkskunst trifft',
+    heroDescription: 'Entdecken Sie unsere Kollektion handgewebter afrikanischer Aufbewahrungskörbe – jedes Stück erzählt die Geschichte von Handwerkskunst, die über Generationen weitergegeben wurde. Verwandeln Sie Ihr Zuhause mit funktionaler Kunst, die kulturelles Erbe feiert und Gemeinschaften unterstützt.',
+    shopCollection: 'Zur Kollektion',
     ourStory: 'Unsere Geschichte',
     
     // Trust Indicators
@@ -157,23 +164,23 @@ export const translations = {
     
     // Product Sections
     storageBasketsTitle: 'Aufbewahrungskörbe',
-    storageBasketsDescription: 'Handgefertigte Körbe mit Deckel, die als funktionale Kunst dienen',
+    storageBasketsDescription: 'Handgefertigte Körbe mit Deckel – funktionale Kunst für Ihr Zuhause',
     kitchenDiningTitle: 'Küche & Esszimmer',
-    kitchenDiningDescription: 'Kunst und Funktion kombiniert für endlose Verwendungsmöglichkeiten in Ihrer Küche und Ihrem Essbereich',
-    shopLiddedBaskets: 'Körbe mit Deckel Shoppen',
-    shopKitchenEssentials: 'Küchenausstattung Shoppen',
+    kitchenDiningDescription: 'Wo Kunst auf Funktion trifft – vielseitige Begleiter für Küche und Esszimmer',
+    shopLiddedBaskets: 'Körbe mit Deckel entdecken',
+    shopKitchenEssentials: 'Küchen-Essentials entdecken',
     
     // Features
-    handwovenByArtisans: 'Handgewebt von erfahrenen Handwerkern',
+    handwovenByArtisans: 'Von erfahrenen Kunsthandwerkern handgewebt',
     sustainableMaterials: 'Nachhaltige Materialien',
     uniquePatterns: 'Einzigartige Muster und Farben',
     fairTradeCertified: 'Fair Trade zertifiziert',
     
     // Mission Section
-    empoweringCommunities: 'Gemeinschaften Stärken, Zukunft Gestalten',
-    missionDescription1: 'Das Zurückgeben steht im Mittelpunkt unseres Handelns. Dank Ihrer Unterstützung haben wir Vollzeitbeschäftigung für Handwerker in ganz Afrika geschaffen und gleichzeitig in Bildung und nachhaltige Gemeindeentwicklung investiert.',
-    missionDescription2: 'Jeder Korb, den Sie kaufen, hilft dabei, traditionelle Handwerkstechniken zu bewahren und faire Löhne für qualifizierte Handwerker zu bieten. Gemeinsam bauen wir eine gerechtere Zukunft auf, in der alte Traditionen in der modernen Welt gedeihen.',
-    learnAboutMission: 'Erfahren Sie Mehr Über Unsere Mission',
+    empoweringCommunities: 'Gemeinsam Gemeinschaften stärken und Zukunft gestalten',
+    missionDescription1: 'Etwas zurückzugeben liegt uns am Herzen. Dank Ihrer Unterstützung haben wir Vollzeitarbeitsplätze für Kunsthandwerker in ganz Afrika geschaffen und investieren gleichzeitig in Bildung und nachhaltige Gemeindeentwicklung.',
+    missionDescription2: 'Jeder Korb, den Sie bei uns kaufen, hilft dabei, traditionelle Handwerkstechniken zu bewahren und faire Löhne für qualifizierte Handwerker zu sichern. Gemeinsam schaffen wir eine gerechtere Zukunft, in der jahrhundertealte Traditionen in der modernen Welt weiterleben.',
+    learnAboutMission: 'Mehr über unsere Mission erfahren',
     
     // Impact Stats
     artisansSupported: 'Unterstützte Handwerker',
@@ -185,25 +192,25 @@ export const translations = {
     
     // Products
     wovenLaundryBaskets: 'Gewebte Wäschekörbe',
-    basketsDescription: 'Handgewebte Wäschekörbe, die langlebig, stilvoll und perfekt geeignet sind, um Ihrem Zuhause eine Note handwerklicher Kunst zu verleihen',
+    basketsDescription: 'Handgewebte Wäschekörbe – langlebig, stilvoll und perfekt, um Ihrem Zuhause eine besondere Note zu verleihen',
     bestSeller: 'Bestseller',
-    limitedEdition: 'Limitierte Auflage',
+    limitedEdition: 'Limitierte Edition',
     onSale: 'Im Angebot',
     soldOut: 'Ausverkauft',
     quickView: 'Schnellansicht',
     addToCart: 'In den Warenkorb',
     colors: 'Farben',
     from: 'Ab',
-    viewAllProducts: 'Alle Produkte Anzeigen',
+    viewAllProducts: 'Alle Produkte ansehen',
     allProducts: 'Alle Produkte',
     allProductsDescription: 'Entdecken Sie unsere komplette Kollektion handgefertigter afrikanischer Körbe und Wohnaccessoires',
     
     // Footer
-    joinCommunity: 'Werden Sie Teil Unserer Gemeinschaft',
-    newsletterDescription: 'Bleiben Sie über neue Ankünfte, Handwerkergeschichten und exklusive Angebote informiert. Werden Sie Teil unserer Mission, afrikanische Handwerker zu unterstützen.',
-    enterEmail: 'E-Mail eingeben',
-    subscribe: 'Abonnieren',
-    connectSocial: 'Verbinden Sie sich mit uns in den sozialen Medien',
+    joinCommunity: 'Werden Sie Teil unserer Community',
+    newsletterDescription: 'Bleiben Sie auf dem Laufenden über Neuankömmlinge, Geschichten unserer Kunsthandwerker und exklusive Angebote. Unterstützen Sie mit uns afrikanische Handwerkskunst.',
+    enterEmail: 'Ihre E-Mail-Adresse',
+    subscribe: 'Jetzt abonnieren',
+    connectSocial: 'Folgen Sie uns auf Social Media',
     
     // Footer Links
     shop: 'Shop',
@@ -245,11 +252,11 @@ export const translations = {
     // Cart & Checkout (German)
     shoppingCart: 'Warenkorb',
     emptyCart: 'Ihr Warenkorb ist leer',
-    emptyCartDescription: 'Sie haben noch keine Artikel in Ihren Warenkorb gelegt.',
-    continueShopping: 'Weiter Einkaufen',
+    emptyCartDescription: 'Schauen Sie sich gerne in unserer Kollektion um!',
+    continueShopping: 'Weiter einkaufen',
     subtotal: 'Zwischensumme',
     shippingCalculated: 'Versandkosten werden an der Kasse berechnet',
-    proceedToCheckout: 'Zur Kasse gehen',
+    proceedToCheckout: 'Zur Kasse',
     viewCart: 'Warenkorb ansehen',
     quantity: 'Menge',
     remove: 'Entfernen',
@@ -258,10 +265,17 @@ export const translations = {
     
     // Badges
     handcrafted: 'Handgefertigt',
-    madeWithLove: 'Mit Liebe Gemacht',
-    supporting: 'Unterstützung von',
-    artisans: 'Handwerkern',
-    fairTradeCertifiedBadge: 'Fair Trade Zertifiziert'
+    madeWithLove: 'Mit Liebe gemacht',
+    supporting: 'Unterstützt',
+    artisans: 'Kunsthandwerker',
+    fairTradeCertifiedBadge: 'Fair Trade zertifiziert',
+    
+    // Language Selector
+    language: 'Sprache',
+    chooseLanguage: 'Wählen Sie Ihre bevorzugte Sprache',
+    handcraftedWithLove: 'mit Liebe handgefertigt',
+    supportingCommunities: 'Unterstützt Kunsthandwerker-Gemeinschaften',
+    preservingTraditions: 'Bewahrt Traditionen'
   }
 }
 

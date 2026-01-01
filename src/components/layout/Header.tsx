@@ -244,8 +244,8 @@ export default function Header() {
                         <span className="text-white text-xs font-bold">🌍</span>
                       </div>
                       <div>
-                        <p className="font-bold text-gray-900 text-sm">Language</p>
-                        <p className="text-xs text-gray-600">Choose your preferred language</p>
+                        <p className="font-bold text-gray-900 text-sm">{t('language')}</p>
+                        <p className="text-xs text-gray-600">{t('chooseLanguage')}</p>
                       </div>
                     </div>
                     <LanguageToggle />
@@ -257,14 +257,14 @@ export default function Header() {
                   <div className="bg-gradient-to-r from-gray-50 to-amber-50 rounded-3xl p-6 border border-amber-100">
                     <div className="flex items-center justify-center gap-3 mb-3">
                       <Heart className="w-5 h-5 text-red-400 fill-current animate-pulse" />
-                      <span className="text-sm font-medium text-gray-700">handcrafted with love</span>
+                      <span className="text-sm font-medium text-gray-700">{t('handcraftedWithLove')}</span>
                       <Sparkles className="w-5 h-5 text-amber-400 animate-pulse" />
                     </div>
                     <div className="flex items-center justify-center gap-2 text-xs text-gray-500">
                       <div className="w-1 h-1 bg-amber-400 rounded-full animate-pulse"></div>
-                      <span>Supporting artisan communities</span>
+                      <span>{t('supportingCommunities')}</span>
                       <div className="w-1 h-1 bg-orange-400 rounded-full animate-pulse delay-300"></div>
-                      <span>Preserving traditions</span>
+                      <span>{t('preservingTraditions')}</span>
                       <div className="w-1 h-1 bg-red-400 rounded-full animate-pulse delay-600"></div>
                     </div>
                   </div>
