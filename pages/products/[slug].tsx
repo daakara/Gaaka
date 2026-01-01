@@ -132,14 +132,31 @@ const ProductPage: NextPage<ProductPageProps> = ({ product }) => {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const data = await fetchGraphQL(GET_ALL_PRODUCT_SLUGS, {})
-  const paths = data.products.nodes.map((product: { slug: string }) => ({
-    params: { slug: product.slug },
-  }))
+  try {
+    const data = await fetchGraphQL(GET_ALL_PRODUCT_SLUGS, {})
+    
+    if (!data || !data.products || !data.products.nodes) {
+      console.warn('No products found in WordPress. Using empty paths.')
+      return {
+        paths: [],
+        fallback: 'blocking',
+      }
+    }
+    
+    const paths = data.products.nodes.map((product: { slug: string }) => ({
+      params: { slug: product.slug },
+    }))
 
-  return {
-    paths,
-    fallback: 'blocking',
+    return {
+      paths,
+      fallback: 'blocking',
+    }
+  } catch (error) {
+    console.error('Error fetching products for static paths:', error)
+    return {
+      paths: [],
+      fallback: 'blocking',
+    }
   }
 }
 

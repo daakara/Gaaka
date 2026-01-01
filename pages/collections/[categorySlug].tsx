@@ -76,14 +76,31 @@ const CategoryPage: NextPage<CategoryPageProps> = ({ products, category }) => {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const data = await fetchGraphQL(GET_ALL_CATEGORIES, {})
-  const paths = data.productCategories.nodes.map((category: { slug: string }) => ({
-    params: { categorySlug: category.slug },
-  }))
+  try {
+    const data = await fetchGraphQL(GET_ALL_CATEGORIES, {})
+    
+    if (!data || !data.productCategories || !data.productCategories.nodes) {
+      console.warn('No categories found in WordPress. Using empty paths.')
+      return {
+        paths: [],
+        fallback: 'blocking',
+      }
+    }
+    
+    const paths = data.productCategories.nodes.map((category: { slug: string }) => ({
+      params: { categorySlug: category.slug },
+    }))
 
-  return {
-    paths,
-    fallback: 'blocking',
+    return {
+      paths,
+      fallback: 'blocking',
+    }
+  } catch (error) {
+    console.error('Error fetching categories for static paths:', error)
+    return {
+      paths: [],
+      fallback: 'blocking',
+    }
   }
 }
 
