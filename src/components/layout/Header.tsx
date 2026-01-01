@@ -10,7 +10,7 @@ import SearchComponent from '../common/Search'
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const { t } = useLanguage()
+  const { t, language, setLanguage } = useLanguage()
   const { state, toggleCart } = useCart()
 
   const navigation = [
@@ -93,8 +93,13 @@ export default function Header() {
 
           {/* Artistic Right side icons */}
           <div className="flex items-center space-x-3">
+            {/* Desktop Language Toggle */}
             <div className="hidden sm:block">
               <LanguageToggle />
+            </div>
+            {/* Mobile Language Toggle - Icon Only */}
+            <div className="sm:hidden">
+              <LanguageToggle variant="icon-only" />
             </div>
             <button 
               className="p-3 text-gray-600 hover:text-amber-600 hover:bg-amber-50 rounded-full transition-all duration-300 hover:scale-105 lg:hidden"
@@ -248,7 +253,28 @@ export default function Header() {
                         <p className="text-xs text-gray-600">{t('chooseLanguage')}</p>
                       </div>
                     </div>
-                    <LanguageToggle />
+                    <div className="flex gap-3">
+                      <button
+                        onClick={() => { setLanguage('en'); setMobileMenuOpen(false); }}
+                        className={`flex-1 py-3 px-4 rounded-xl font-semibold transition-all duration-300 ${
+                          language === 'en'
+                            ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg'
+                            : 'bg-white text-gray-700 border border-gray-300 hover:border-blue-400'
+                        }`}
+                      >
+                        🇬🇧 English
+                      </button>
+                      <button
+                        onClick={() => { setLanguage('de'); setMobileMenuOpen(false); }}
+                        className={`flex-1 py-3 px-4 rounded-xl font-semibold transition-all duration-300 ${
+                          language === 'de'
+                            ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg'
+                            : 'bg-white text-gray-700 border border-gray-300 hover:border-blue-400'
+                        }`}
+                      >
+                        🇩🇪 Deutsch
+                      </button>
+                    </div>
                   </div>
                 </div>
                 
