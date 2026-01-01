@@ -22,7 +22,7 @@ export function transformProduct(wpProduct: WooCommerceProduct): Product {
   // Determine compare at price
   const compareAtPrice = wpProduct.onSale && regularPrice > salePrice 
     ? regularPrice 
-    : null
+    : undefined
   
   // Extract images - use placeholder if no image
   const mainImage = wpProduct.image?.sourceUrl || '/images/placeholder-basket.jpg'
@@ -45,7 +45,7 @@ export function transformProduct(wpProduct: WooCommerceProduct): Product {
     badge = 'on-sale'
   }
   
-  return {
+  const product: Product = {
     id: wpProduct.id,
     databaseId: wpProduct.databaseId,
     name: wpProduct.name,
@@ -54,31 +54,33 @@ export function transformProduct(wpProduct: WooCommerceProduct): Product {
     excerpt: wpProduct.shortDescription || '',
     
     price: wpProduct.onSale ? salePrice : price,
-    compareAtPrice,
+    ...(compareAtPrice && { compareAtPrice }),
     onSale: wpProduct.onSale || false,
     
     image: mainImage,
     images: allImages,
     imageAlt: wpProduct.image?.altText || wpProduct.name,
     
-    category: primaryCategory ? {
-      name: primaryCategory.name,
-      slug: primaryCategory.slug,
-    } : null,
+    ...(primaryCategory && {
+      category: {
+        name: primaryCategory.name,
+        slug: primaryCategory.slug,
+      }
+    }),
     categories: categories.map(cat => cat.name),
     
     inStock: wpProduct.stockStatus === 'IN_STOCK',
-    stockQuantity: wpProduct.stockQuantity || null,
+    ...(wpProduct.stockQuantity && { stockQuantity: wpProduct.stockQuantity }),
     
     colors: wpProduct.productFields?.availableColors || [],
-    dimensions: wpProduct.productFields?.dimensions || null,
-    weight: wpProduct.productFields?.weight || null,
-    materials: wpProduct.productFields?.materials || null,
+    ...(wpProduct.productFields?.dimensions && { dimensions: wpProduct.productFields.dimensions }),
+    ...(wpProduct.productFields?.weight && { weight: wpProduct.productFields.weight }),
+    ...(wpProduct.productFields?.materials && { materials: wpProduct.productFields.materials }),
     
     featured: wpProduct.featured || false,
     bestSeller: wpProduct.productFields?.bestSeller || false,
     limitedEdition: wpProduct.productFields?.limitedEdition || false,
-    badge,
+    ...(badge && { badge }),
     
     rating: wpProduct.averageRating || 0,
     reviewCount: wpProduct.reviewCount || 0,
@@ -86,6 +88,8 @@ export function transformProduct(wpProduct: WooCommerceProduct): Product {
     createdAt: wpProduct.date,
     updatedAt: wpProduct.modified,
   }
+  
+  return product
 }
 
 /**
