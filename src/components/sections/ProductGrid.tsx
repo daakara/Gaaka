@@ -217,18 +217,18 @@ export default function ProductGrid({
                             <div 
                               className="w-6 h-6 rounded-full border-2 border-gray-200 hover:border-amber-400 cursor-pointer transform hover:scale-110 transition-all duration-300 shadow-sm"
                               style={{ 
-                                backgroundColor: color.name === 'Natural' ? '#D2B48C' : 
-                                  color.name === 'Brown' ? '#8B4513' :
-                                  color.name === 'Black' ? '#000000' :
-                                  color.name === 'Red' ? '#DC2626' :
-                                  color.name === 'Blue' ? '#2563EB' :
-                                  color.name === 'Green' ? '#16A34A' :
-                                  color.name === 'Yellow' ? '#EAB308' :
-                                  color.name === 'White' ? '#FFFFFF' : '#9CA3AF'
+                                backgroundColor: color === 'Natural' ? '#D2B48C' : 
+                                  color === 'Brown' ? '#8B4513' :
+                                  color === 'Black' ? '#000000' :
+                                  color === 'Red' ? '#DC2626' :
+                                  color === 'Blue' ? '#2563EB' :
+                                  color === 'Green' ? '#16A34A' :
+                                  color === 'Yellow' ? '#EAB308' :
+                                  color === 'White' ? '#FFFFFF' : '#9CA3AF'
                               }}
                             />
                             <span className="absolute bottom-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover/color:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap">
-                              {color.name}
+                              {color}
                             </span>
                           </div>
                         ))}
