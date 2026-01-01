@@ -25,8 +25,8 @@ Vercel is the recommended platform as it's made by the Next.js team.
 
 2. **Environment Variables**:
    ```env
-   NEXT_PUBLIC_SITE_URL=https://gaaka.com
-   NEXT_PUBLIC_ANALYTICS_ID=your_analytics_id
+   WORDPRESS_API_URL=https://your-wordpress-site.com/graphql
+   WORDPRESS_SITE_URL=https://your-wordpress-site.com
    ```
 
 3. **Custom Domain**:
