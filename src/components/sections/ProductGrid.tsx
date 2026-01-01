@@ -3,20 +3,8 @@ import Image from 'next/image'
 import { Star, Heart, Check, Sparkles, Eye, ShoppingBag } from 'lucide-react'
 import { useLanguage } from '../../lib/i18n'
 import { useCart } from '../../contexts/CartContext'
-
-interface Product {
-  id: string
-  name: string
-  price: number
-  originalPrice?: number
-  image: string
-  rating: number
-  reviewCount: number
-  badge?: 'best-seller' | 'limited-edition' | 'sold-out' | 'on-sale'
-  colors: string[]
-}
-
-
+import { useProducts } from '../../hooks/useWordPress'
+import { Product } from '../../lib/wordpress/types'
 
 const getBadgeStyles = (badge: Product['badge']) => {
   switch (badge) {
@@ -33,91 +21,46 @@ const getBadgeStyles = (badge: Product['badge']) => {
   }
 }
 
-export default function ProductGrid() {
+interface ProductGridProps {
+  products?: Product[]
+  isLoading?: boolean
+  error?: string | null
+}
+
+export default function ProductGrid({
+  products: initialProducts,
+  isLoading: initialIsLoading,
+  error: initialError,
+}: ProductGridProps) {
   const { t } = useLanguage()
   const { addItem } = useCart()
+  const {
+    products: fetchedProducts,
+    isLoading: fetchedIsLoading,
+    error: fetchedError,
+  } = useProducts({ featured: true }, { skip: !!initialProducts })
 
-  const products: Product[] = [
-    {
-      id: 'taya-storage-basket',
-      name: t('tayaStorageBasket'),
-      price: 119,
-      image: 'https://expeditionsubsahara.com/cdn/shop/products/ES_Oct_Product-34copy_800x.jpg',
-      rating: 4.8,
-      reviewCount: 124,
-      badge: 'best-seller',
-      colors: ['Natural', 'Brown', 'Black']
-    },
-    {
-      id: 'wanjiru-storage-basket',
-      name: t('wanjiruStorageBasket'),
-      price: 119,
-      image: 'https://expeditionsubsahara.com/cdn/shop/products/ES_Oct_Product-35copy_800x.jpg',
-      rating: 4.9,
-      reviewCount: 89,
-      badge: 'best-seller',
-      colors: ['Natural', 'Red', 'Blue']
-    },
-    {
-      id: 'ndeye-storage-basket',
-      name: t('ndeyeStorageBasket'),
-      price: 119,
-      image: 'https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2126&q=80',
-      rating: 4.7,
-      reviewCount: 156,
-      badge: 'best-seller',
-      colors: ['Natural', 'Green', 'Yellow']
-    },
-    {
-      id: 'fanta-basket',
-      name: t('faaizaBasket'),
-      price: 89,
-      image: 'https://expeditionsubsahara.com/cdn/shop/files/ES_Oct_2023_182_14798bef-6360-42df-80e2-e6c403ca1672_800x.jpg',
-      rating: 4.6,
-      reviewCount: 67,
-      colors: ['Natural', 'Multi']
-    },
-    {
-      id: 'natty-storage-basket',
-      name: t('nattyStorageBasket'),
-      price: 119,
-      image: 'https://expeditionsubsahara.com/cdn/shop/products/ES_Oct_Product-32copy_800x.jpg',
-      rating: 4.8,
-      reviewCount: 92,
-      colors: ['Natural', 'Brown']
-    },
-    {
-      id: 'astou-storage-basket',
-      name: t('astouStorageBasket'),
-      price: 249,
-      image: 'https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2126&q=80',
-      rating: 4.9,
-      reviewCount: 34,
-      badge: 'limited-edition',
-      colors: ['Natural', 'Black', 'Red']
-    },
-    {
-      id: 'yata-storage-basket',
-      name: t('mangeyStorageBasket'),
-      price: 49,
-      originalPrice: 65,
-      image: 'https://expeditionsubsahara.com/cdn/shop/products/ES_Trays_10_6_3896_800x.jpg',
-      rating: 4.7,
-      reviewCount: 78,
-      badge: 'on-sale',
-      colors: ['Natural', 'Brown', 'Green']
-    },
-    {
-      id: 'hadiza-storage-basket',
-      name: t('hadizaStorageBasket'),
-      price: 119,
-      image: 'https://images.unsplash.com/photo-1558618047-3c0c6424d253?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2126&q=80',
-      rating: 4.8,
-      reviewCount: 45,
-      badge: 'limited-edition',
-      colors: ['Natural', 'Blue', 'White']
-    }
-  ]
+  const products = initialProducts || fetchedProducts
+  const isLoading = initialIsLoading ?? fetchedIsLoading
+  const error = initialError || fetchedError?.message
+
+  if (isLoading) {
+    return (
+      <section className="section-padding text-center">
+        <h2 className="text-2xl font-bold">Loading our treasures...</h2>
+        <p>Please wait a moment.</p>
+      </section>
+    )
+  }
+
+  if (error) {
+    return (
+      <section className="section-padding text-center text-red-600">
+        <h2 className="text-2xl font-bold">Something went wrong</h2>
+        <p>{error}</p>
+      </section>
+    )
+  }
 
   const getBadgeText = (badge: Product['badge']) => {
     switch (badge) {
@@ -183,8 +126,8 @@ export default function ProductGrid() {
                 {/* Artistic Product Image */}
                 <div className="relative overflow-hidden aspect-square">
                   <Image
-                    src={product.image}
-                    alt={product.name}
+                    src={product.image?.sourceUrl ?? '/images/placeholder.png'}
+                    alt={product.image?.altText ?? product.name}
                     layout="fill"
                     objectFit="cover"
                     className="group-hover:scale-110 transition-transform duration-700"
@@ -211,7 +154,7 @@ export default function ProductGrid() {
                   {/* Creative Quick View Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-amber-900/60 via-orange-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
                     <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                      <Link href={`/products/${product.id}`}>
+                      <Link href={`/products/${product.slug}`}>
                         <a className="bg-white/95 backdrop-blur-sm text-gray-900 px-6 py-3 rounded-full font-semibold hover:bg-white transition-all duration-300 shadow-lg flex items-center gap-2 group">
                           <Eye className="w-4 h-4" />
                           {t('quickView')}
@@ -237,7 +180,7 @@ export default function ProductGrid() {
                 {/* Artistic Product Info */}
                 <div className="p-8">
                   <div className="mb-6">
-                    <Link href={`/products/${product.id}`}>
+                    <Link href={`/products/${product.slug}`}>
                       <a>
                         <h3 className="font-bold text-xl text-gray-900 hover:text-amber-600 transition-colors duration-300 mb-3 leading-tight">
                           {product.name}
@@ -252,7 +195,7 @@ export default function ProductGrid() {
                           <Star
                             key={i}
                             className={`h-5 w-5 ${
-                              i < Math.floor(product.rating)
+                              i < Math.floor(product.averageRating ?? 0)
                                 ? 'text-amber-400 fill-current'
                                 : 'text-gray-200'
                             }`}
@@ -266,7 +209,7 @@ export default function ProductGrid() {
                     <div className="mb-4">
                       <p className="text-sm text-gray-600 mb-2 font-medium">Available Colors:</p>
                       <div className="flex items-center gap-2">
-                        {product.colors.slice(0, 3).map((color, colorIndex) => (
+                        {product.colors?.slice(0, 3).map((color, colorIndex) => (
                           <div 
                             key={colorIndex}
                             className="relative group/color"
@@ -274,22 +217,22 @@ export default function ProductGrid() {
                             <div 
                               className="w-6 h-6 rounded-full border-2 border-gray-200 hover:border-amber-400 cursor-pointer transform hover:scale-110 transition-all duration-300 shadow-sm"
                               style={{ 
-                                backgroundColor: color === 'Natural' ? '#D2B48C' : 
-                                  color === 'Brown' ? '#8B4513' :
-                                  color === 'Black' ? '#000000' :
-                                  color === 'Red' ? '#DC2626' :
-                                  color === 'Blue' ? '#2563EB' :
-                                  color === 'Green' ? '#16A34A' :
-                                  color === 'Yellow' ? '#EAB308' :
-                                  color === 'White' ? '#FFFFFF' : '#9CA3AF'
+                                backgroundColor: color.name === 'Natural' ? '#D2B48C' : 
+                                  color.name === 'Brown' ? '#8B4513' :
+                                  color.name === 'Black' ? '#000000' :
+                                  color.name === 'Red' ? '#DC2626' :
+                                  color.name === 'Blue' ? '#2563EB' :
+                                  color.name === 'Green' ? '#16A34A' :
+                                  color.name === 'Yellow' ? '#EAB308' :
+                                  color.name === 'White' ? '#FFFFFF' : '#9CA3AF'
                               }}
                             />
                             <span className="absolute bottom-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover/color:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap">
-                              {color}
+                              {color.name}
                             </span>
                           </div>
                         ))}
-                        {product.colors.length > 3 && (
+                        {product.colors && product.colors.length > 3 && (
                           <span className="text-xs text-gray-500 font-medium ml-1">+{product.colors.length - 3} more</span>
                         )}
                       </div>
@@ -302,14 +245,14 @@ export default function ProductGrid() {
                       <span className="text-2xl font-black text-gray-900">
                         €{product.price}
                       </span>
-                      {product.originalPrice && (
+                      {product.compareAtPrice && (
                         <span className="text-lg text-gray-400 line-through">
-                          €{product.originalPrice}
+                          €{product.compareAtPrice}
                         </span>
                       )}
-                      {product.originalPrice && (
+                      {product.onSale && product.compareAtPrice && (
                         <span className="bg-gradient-to-r from-red-500 to-pink-600 text-white text-xs px-2 py-1 rounded-full font-bold">
-                          SAVE €{product.originalPrice - product.price}
+                          SAVE €{product.compareAtPrice - product.price}
                         </span>
                       )}
                     </div>
@@ -317,24 +260,24 @@ export default function ProductGrid() {
                     {/* Artistic Add to Cart Button */}
                     <button 
                       onClick={() => {
-                        if (product.badge !== 'sold-out') {
+                        if (product.stockStatus !== 'OUT_OF_STOCK') {
                           addItem({
                             id: product.id,
                             name: product.name,
                             price: product.price,
-                            image: product.image,
-                            color: product.colors[0]
+                            image: product.image?.sourceUrl ?? '',
+                            color: product.colors?.[0]?.name ?? ''
                           })
                         }
                       }}
                       className={`w-full py-3 rounded-2xl font-bold transition-all duration-300 flex items-center justify-center gap-2 transform hover:-translate-y-1 shadow-lg hover:shadow-xl ${
-                        product.badge === 'sold-out'
+                        product.stockStatus === 'OUT_OF_STOCK'
                           ? 'bg-gray-100 text-gray-500 cursor-not-allowed'
                           : 'bg-gradient-to-r from-amber-600 to-orange-600 text-white hover:from-orange-600 hover:to-red-600'
                       }`}
-                      disabled={product.badge === 'sold-out'}
+                      disabled={product.stockStatus === 'OUT_OF_STOCK'}
                     >
-                      {product.badge === 'sold-out' ? (
+                      {product.stockStatus === 'OUT_OF_STOCK' ? (
                         <>
                           <span>✕</span>
                           {t('soldOut')}

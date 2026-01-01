@@ -3,8 +3,17 @@ import Header from '../../src/components/layout/Header'
 import Footer from '../../src/components/layout/Footer'
 import ProductGrid from '../../src/components/sections/ProductGrid'
 import { useLanguage } from '../../src/lib/i18n'
+import { GetStaticProps, NextPage } from 'next'
+import { fetchGraphQL } from '../../src/lib/wordpress/client'
+import { GET_ALL_PRODUCTS } from '../../src/lib/wordpress/queries'
+import { transformProduct } from '../../src/lib/wordpress/utils'
+import { Product } from '../../src/lib/wordpress/types'
 
-export default function AllCollections() {
+interface AllCollectionsProps {
+  products: Product[]
+}
+
+const AllCollections: NextPage<AllCollectionsProps> = ({ products }) => {
   const { t } = useLanguage()
 
   return (
@@ -34,10 +43,33 @@ export default function AllCollections() {
         </section>
 
         {/* Products Grid */}
-        <ProductGrid />
+        <ProductGrid products={products} />
       </main>
 
       <Footer />
     </>
   )
 }
+
+export const getStaticProps: GetStaticProps<AllCollectionsProps> = async () => {
+  try {
+    const data = await fetchGraphQL(GET_ALL_PRODUCTS, { first: 100 })
+    const products = data.products.nodes.map(transformProduct)
+
+    return {
+      props: {
+        products,
+      },
+      revalidate: 60, // Re-generate the page every 60 seconds
+    }
+  } catch (error) {
+    console.error('Error fetching all products:', error)
+    return {
+      props: {
+        products: [],
+      },
+    }
+  }
+}
+
+export default AllCollections

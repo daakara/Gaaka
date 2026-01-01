@@ -3,6 +3,10 @@ const API_URL = process.env.WORDPRESS_API_URL
 async function fetchAPI(query: string, { variables }: { variables?: any } = {}) {
   const headers = { 'Content-Type': 'application/json' }
 
+  if (!API_URL) {
+    throw new Error('WORDPRESS_API_URL is not configured')
+  }
+
   const res = await fetch(API_URL, {
     method: 'POST',
     headers,

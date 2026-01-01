@@ -6,6 +6,7 @@ import { Menu, X, Search, Heart, Sparkles, User, ShoppingBag } from 'lucide-reac
 import { useLanguage } from '../../lib/i18n'
 import { useCart } from '../../contexts/CartContext'
 import LanguageToggle from '../ui/LanguageToggle'
+import SearchComponent from '../common/Search'
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -70,6 +71,11 @@ export default function Header() {
             </Link>
           </div>
 
+          {/* Desktop Search */}
+          <div className="hidden lg:flex flex-1 justify-center px-8">
+            <SearchComponent />
+          </div>
+
           {/* Artistic Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-1">
             {navigation.map((item, index) => (
@@ -91,7 +97,7 @@ export default function Header() {
               <LanguageToggle />
             </div>
             <button 
-              className="p-3 text-gray-600 hover:text-amber-600 hover:bg-amber-50 rounded-full transition-all duration-300 hover:scale-105"
+              className="p-3 text-gray-600 hover:text-amber-600 hover:bg-amber-50 rounded-full transition-all duration-300 hover:scale-105 lg:hidden"
               aria-label="Search"
             >
               <Search className="h-5 w-5" />
@@ -164,6 +170,11 @@ export default function Header() {
             {/* Enhanced Mobile Navigation */}
             <nav className="p-6 relative z-10 h-full overflow-y-auto">
               <div className="space-y-4">
+                {/* Mobile Search */}
+                <div className="px-2 pb-4">
+                  <SearchComponent />
+                </div>
+
                 {/* Welcome Message */}
                 <div className="bg-gradient-to-r from-amber-500/20 to-orange-500/20 backdrop-blur-sm rounded-3xl p-4 mb-6 border border-amber-200">
                   <div className="flex items-center gap-3">

@@ -1,7 +1,8 @@
 // Cart Context for managing shopping cart state with SSR safety
-import React, { createContext, useContext, useReducer, useEffect, useState } from 'react'
+import React, { createContext, useContext, useReducer, useEffect } from 'react'
 
 export interface CartItem {
+  cartId: string // Unique identifier for the cart item (e.g., 'product-id-color-size')
   id: string
   name: string
   price: number
@@ -22,9 +23,9 @@ interface CartState {
 }
 
 type CartAction =
-  | { type: 'ADD_ITEM'; payload: CartItem }
-  | { type: 'REMOVE_ITEM'; payload: string }
-  | { type: 'UPDATE_QUANTITY'; payload: { id: string; quantity: number } }
+  | { type: 'ADD_ITEM'; payload: Omit<CartItem, 'quantity' | 'cartId'> & { quantity?: number } }
+  | { type: 'REMOVE_ITEM'; payload: { cartId: string } }
+  | { type: 'UPDATE_QUANTITY'; payload: { cartId: string; quantity: number } }
   | { type: 'CLEAR_CART' }
   | { type: 'TOGGLE_CART' }
   | { type: 'LOAD_CART'; payload: CartItem[] }
@@ -41,19 +42,33 @@ const initialState: CartState = {
 function cartReducer(state: CartState, action: CartAction): CartState {
   switch (action.type) {
     case 'ADD_ITEM': {
+      // Generate a unique ID for the cart item based on product ID and variants
+      const cartId = [
+        action.payload.id,
+        action.payload.color,
+        action.payload.size,
+      ]
+        .filter(Boolean)
+        .join('-')
+
       const existingItemIndex = state.items.findIndex(
-        item => item.id === action.payload.id && item.color === action.payload.color
+        item => item.cartId === cartId
       )
 
       let newItems: CartItem[]
+      const quantityToAdd = action.payload.quantity || 1
+
       if (existingItemIndex > -1) {
         newItems = state.items.map((item, index) =>
           index === existingItemIndex
-            ? { ...item, quantity: item.quantity + action.payload.quantity }
+            ? { ...item, quantity: item.quantity + quantityToAdd }
             : item
         )
       } else {
-        newItems = [...state.items, action.payload]
+        newItems = [
+          ...state.items,
+          { ...action.payload, quantity: quantityToAdd, cartId },
+        ]
       }
 
       const newTotal = newItems.reduce((sum, item) => sum + (item.price * item.quantity), 0)
@@ -63,12 +78,12 @@ function cartReducer(state: CartState, action: CartAction): CartState {
         ...state,
         items: newItems,
         total: newTotal,
-        itemCount: newItemCount
+        itemCount: newItemCount,
       }
     }
 
     case 'REMOVE_ITEM': {
-      const newItems = state.items.filter(item => item.id !== action.payload)
+      const newItems = state.items.filter(item => item.cartId !== action.payload.cartId)
       const newTotal = newItems.reduce((sum, item) => sum + (item.price * item.quantity), 0)
       const newItemCount = newItems.reduce((sum, item) => sum + item.quantity, 0)
 
@@ -76,13 +91,13 @@ function cartReducer(state: CartState, action: CartAction): CartState {
         ...state,
         items: newItems,
         total: newTotal,
-        itemCount: newItemCount
+        itemCount: newItemCount,
       }
     }
 
     case 'UPDATE_QUANTITY': {
       const newItems = state.items.map(item =>
-        item.id === action.payload.id
+        item.cartId === action.payload.cartId
           ? { ...item, quantity: action.payload.quantity }
           : item
       ).filter(item => item.quantity > 0)
@@ -94,7 +109,7 @@ function cartReducer(state: CartState, action: CartAction): CartState {
         ...state,
         items: newItems,
         total: newTotal,
-        itemCount: newItemCount
+        itemCount: newItemCount,
       }
     }
 
@@ -135,9 +150,9 @@ function cartReducer(state: CartState, action: CartAction): CartState {
 
 interface CartContextType {
   state: CartState
-  addItem: (item: Omit<CartItem, 'quantity'> & { quantity?: number }) => void
-  removeItem: (id: string) => void
-  updateQuantity: (id: string, quantity: number) => void
+  addItem: (item: Omit<CartItem, 'quantity' | 'cartId'> & { quantity?: number }) => void
+  removeItem: (cartId: string) => void
+  updateQuantity: (cartId: string, quantity: number) => void
   clearCart: () => void
   toggleCart: () => void
 }
@@ -180,19 +195,19 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
   }, [state.items, state.isHydrated])
 
-  const addItem = (item: Omit<CartItem, 'quantity'> & { quantity?: number }) => {
+  const addItem = (item: Omit<CartItem, 'quantity' | 'cartId'> & { quantity?: number }) => {
     dispatch({
       type: 'ADD_ITEM',
-      payload: { ...item, quantity: item.quantity || 1 }
+      payload: item,
     })
   }
 
-  const removeItem = (id: string) => {
-    dispatch({ type: 'REMOVE_ITEM', payload: id })
+  const removeItem = (cartId: string) => {
+    dispatch({ type: 'REMOVE_ITEM', payload: { cartId } })
   }
 
-  const updateQuantity = (id: string, quantity: number) => {
-    dispatch({ type: 'UPDATE_QUANTITY', payload: { id, quantity } })
+  const updateQuantity = (cartId: string, quantity: number) => {
+    dispatch({ type: 'UPDATE_QUANTITY', payload: { cartId, quantity } })
   }
 
   const clearCart = () => {
