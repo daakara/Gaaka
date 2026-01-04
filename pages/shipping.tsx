@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { ArrowLeft, Truck, Clock, Globe, Package, Shield, Star } from 'lucide-react'
 import Header from '../src/components/layout/Header'
 import Footer from '../src/components/layout/Footer'
-import OrderTracking from '../src/components/tracking/OrderTracking'
 import { useLanguage } from '../src/lib/i18n'
 
 export default function ShippingPage() {
@@ -44,9 +43,19 @@ export default function ShippingPage() {
         </div>
 
         <div className="container mx-auto px-4 py-8">
-          {/* Order Tracking Section */}
-          <section className="mb-12">
-            <OrderTracking />
+          {/* Order Tracking - Handled by WooCommerce */}
+          <section className="mb-12 bg-white rounded-lg border border-gray-200 p-6">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">Track Your Order</h2>
+            <p className="text-gray-600 mb-4">
+              After your order ships, you'll receive a tracking number via email. 
+              You can track your order through your WooCommerce account or using the tracking link provided.
+            </p>
+            <Link href="https://www.gaaka.com/dev/my-account/orders/">
+              <a className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-amber-600 to-orange-600 text-white rounded-lg hover:shadow-lg transition-all">
+                View My Orders
+                <ArrowLeft className="ml-2 h-4 w-4 rotate-180" />
+              </a>
+            </Link>
           </section>
 
           {/* Shipping System Overview */}
