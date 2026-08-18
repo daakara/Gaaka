@@ -1,3 +1,4 @@
+import React, { useState } from 'react'
 import Head from 'next/head'
 import { Mail, Phone, MapPin, Clock, MessageCircle } from 'lucide-react'
 import Header from '../src/components/layout/Header'
@@ -6,6 +7,18 @@ import { useLanguage } from '../src/lib/i18n'
 
 export default function Contact() {
   const { t } = useLanguage()
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    // Simulate safe async submission
+    setTimeout(() => {
+      setIsSubmitting(false)
+      setSubmitted(true)
+    }, 600)
+  }
 
   return (
     <>
@@ -87,103 +100,123 @@ export default function Contact() {
                   {t('sendUsMessage')}
                 </h2>
                 
-                <form className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {submitted ? (
+                  <div className="p-8 bg-emerald-50 border border-emerald-200 rounded-3xl text-center space-y-3 animate-fadeIn">
+                    <div className="w-12 h-12 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center mx-auto font-bold text-xl">
+                      ✓
+                    </div>
+                    <h3 className="text-xl font-bold text-emerald-950">Thank You!</h3>
+                    <p className="text-sm text-emerald-800 max-w-sm mx-auto">
+                      Your message has been received. Our support team will get back to you within 24 hours.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => setSubmitted(false)}
+                      className="mt-4 px-4 py-2 bg-white text-emerald-800 rounded-xl text-xs font-semibold border border-emerald-300 hover:bg-emerald-50 transition-colors"
+                    >
+                      Send Another Message
+                    </button>
+                  </div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          {t('firstNameLabel')}
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary-600"
+                          placeholder={t('firstNamePlaceholder')}
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          {t('lastNameLabel')}
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary-600"
+                          placeholder={t('lastNamePlaceholder')}
+                        />
+                      </div>
+                    </div>
+                    
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        {t('firstNameLabel')}
+                        {t('emailAddressLabel')}
                       </label>
                       <input
-                        type="text"
+                        type="email"
                         required
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary-600"
-                        placeholder={t('firstNamePlaceholder')}
+                        placeholder="your.email@example.com"
                       />
                     </div>
+                    
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        {t('lastNameLabel')}
+                        {t('phoneNumberLabel')}
                       </label>
                       <input
-                        type="text"
-                        required
+                        type="tel"
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary-600"
-                        placeholder={t('lastNamePlaceholder')}
+                        placeholder="+49 30 1234 5678"
                       />
                     </div>
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                    {t('emailAddressLabel')}
-                  </label>
-                    <input
-                      type="email"
-                      required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary-600"
-                      placeholder="your.email@example.com"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                    {t('phoneNumberLabel')}
-                  </label>
-                    <input
-                      type="tel"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary-600"
-                      placeholder="+49 30 1234 5678"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                    {t('subjectLabel')}
-                  </label>
-                  <select
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary-600"
-                  >
-                    <option value="">{t('selectSubject')}</option>
-                    <option value="order">{t('orderQuestion')}</option>
-                    <option value="product">{t('productInformation')}</option>
-                    <option value="shipping">{t('shippingReturnsOption')}</option>
-                    <option value="wholesale">{t('wholesaleInquiries')}</option>
-                    <option value="press">{t('pressMedia')}</option>
-                    <option value="other">{t('otherOption')}</option>
-                  </select>
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                    {t('messageLabel')}
-                  </label>
-                  <textarea
-                    rows={6}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary-600"
-                    placeholder={t('messagePlaceholder')}
-                  ></textarea>
-                  </div>
-                  
-                  <div className="flex items-start gap-3">
-                    <input
-                      type="checkbox"
-                      id="newsletter"
-                      className="mt-1 rounded border-gray-300 text-primary-600 focus:ring-primary-600"
-                    />
-                    <label htmlFor="newsletter" className="text-sm text-gray-600">
-                      {t('newsletterOptIn')}
-                    </label>
-                  </div>
-                  
-                  <button
-                    type="submit"
-                    className="w-full btn-primary py-4 text-lg"
-                  >
-                    {t('sendMessage')}
-                  </button>
-                </form>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        {t('subjectLabel')}
+                      </label>
+                      <select
+                        required
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary-600"
+                      >
+                        <option value="">{t('selectSubject')}</option>
+                        <option value="order">{t('orderQuestion')}</option>
+                        <option value="product">{t('productInformation')}</option>
+                        <option value="shipping">{t('shippingReturnsOption')}</option>
+                        <option value="wholesale">{t('wholesaleInquiries')}</option>
+                        <option value="press">{t('pressMedia')}</option>
+                        <option value="other">{t('otherOption')}</option>
+                      </select>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        {t('messageLabel')}
+                      </label>
+                      <textarea
+                        rows={6}
+                        required
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary-600"
+                        placeholder={t('messagePlaceholder')}
+                      ></textarea>
+                    </div>
+                    
+                    <div className="flex items-start gap-3">
+                      <input
+                        type="checkbox"
+                        id="newsletter"
+                        className="mt-1 rounded border-gray-300 text-primary-600 focus:ring-primary-600"
+                      />
+                      <label htmlFor="newsletter" className="text-sm text-gray-600">
+                        {t('newsletterOptIn')}
+                      </label>
+                    </div>
+                    
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full btn-primary py-4 text-lg disabled:opacity-50 flex items-center justify-center gap-2"
+                    >
+                      {isSubmitting ? 'Sending...' : t('sendMessage')}
+                    </button>
+                  </form>
+                )}
               </div>
 
               {/* Company Info */}

@@ -12,6 +12,8 @@ build/
 
 # Production builds
 dist/
+*.zip
+*.backup
 
 # Environment variables
 .env

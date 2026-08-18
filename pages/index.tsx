@@ -32,6 +32,7 @@ export default function HomePage({ heroContent }: HomePageProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/images/GAAKA.png" />
         <link rel="canonical" href="https://gaaka.com" />
+        <meta name="google-site-verification" content="fTj5txETimaOetyrMll80_tAecMFVrXVsoiQs0zEK5w" />
         
         {/* Open Graph */}
         <meta property="og:title" content="GAAKA - Handcrafted Kenyan Storage Baskets" />
