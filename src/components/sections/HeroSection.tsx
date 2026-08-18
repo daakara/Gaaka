@@ -90,8 +90,8 @@ export default function HeroSection({ content }: HeroSectionProps) {
               <div className="flex items-center gap-2">
                 <ShieldCheck className="w-5 h-5 text-amber-700 shrink-0" />
                 <div>
-                  <p className="text-xs font-bold text-gray-900">Free Germany Ship</p>
-                  <p className="text-[11px] text-gray-500">Orders over €75</p>
+                  <p className="text-xs font-bold text-gray-900">Direct Impact</p>
+                  <p className="text-[11px] text-gray-500">Empowering artisans</p>
                 </div>
               </div>
             </div>

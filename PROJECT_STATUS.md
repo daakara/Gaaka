@@ -12,7 +12,7 @@
 - [x] **Modern Editorial Luxury Design System** - Plus Jakarta Sans & Playfair Display typography, warm artisan terracotta tones, glassmorphism cards, and micro-interactions
 - [x] **WCAG 2.1 AA Accessibility** - Skip to main content landmark links, WAI-ARIA 1.2 Combobox search, keyboard dismiss listeners (Escape key on modals/cart), explicit color swatch labels, high-contrast `:focus-visible` outlines
 - [x] **Interactive Product Experience** - Multi-image gallery with thumbnail switcher, interactive color & quantity selectors, accordion specifications tabs (Artisanship, Specs, Care Guide), and related product recommendations
-- [x] **Slide-Out & Dedicated Cart Modernization** - Dynamic Free Germany Delivery threshold tracker (€75 benchmark), quantity modifiers with animated feedback, and synchronized CartContext fallbacks
+- [x] **Slide-Out & Dedicated Cart Modernization** - Streamlined slide-out cart drawer, accessible quantity modifiers with animated feedback, and synchronized CartContext fallbacks
 - [x] **Comprehensive SEO & Structured Data** - Schema.org JSON-LD (Organization, WebSite, Product, BreadcrumbList), canonical tags across all 30 routes, dynamic OpenGraph/Twitter meta tags
 - [x] **Collection Filtering & Sorting** - Category navigation pills (All, Storage, Kitchen & Dining, Wall Baskets), dynamic sorting (Featured, Price: Low-to-High, Price: High-to-Low, Name A-Z)
 - [x] **100% Test Suite & SSG Build Pass** - Fully green Jest tests (Header, Footer, CartProvider mocks) and clean `next build` static export across all 30 routes without path conflicts

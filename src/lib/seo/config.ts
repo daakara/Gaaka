@@ -82,7 +82,7 @@ export const homeSEO = generateSEOConfig({
 
 export const productsSEO = generateSEOConfig({
   title: 'Handwoven Storage Baskets Collection',
-  description: 'Shop our complete collection of handcrafted African storage baskets. Premium quality, ethically sourced, and perfect for modern homes. Free shipping in Germany.',
+  description: 'Shop our complete collection of handcrafted African storage baskets. Premium quality, ethically sourced, and perfect for modern homes.',
   keywords: [
     'storage basket collection',
     'handwoven laundry baskets',

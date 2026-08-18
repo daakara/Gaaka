@@ -98,8 +98,6 @@ export default function CartPage() {
     ? cart.items_count 
     : localCart.itemCount
 
-  const shippingRemaining = Math.max(0, 75 - subtotal)
-
   return (
     <>
       <Head>
@@ -126,20 +124,6 @@ export default function CartPage() {
           <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-8">
             Shopping Cart ({itemsCount})
           </h1>
-
-          {/* Free Shipping Notification */}
-          <div className="bg-amber-50 border border-amber-200/80 rounded-2xl p-4 mb-8 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <Truck className="w-5 h-5 text-primary-700 shrink-0" />
-              <p className="text-xs sm:text-sm text-amber-950 font-medium">
-                {shippingRemaining === 0 ? (
-                  <span className="text-emerald-800 font-bold">🎉 Congratulations! You qualify for Free Germany Shipping.</span>
-                ) : (
-                  <span>Add <strong className="text-primary-700">€{shippingRemaining.toFixed(2)}</strong> more to get <strong>Free Germany Shipping</strong>!</span>
-                )}
-              </p>
-            </div>
-          </div>
 
           {loading && !hasLocalItems ? (
             <div className="flex justify-center items-center py-20">
@@ -284,16 +268,16 @@ export default function CartPage() {
                     </div>
 
                     <div className="flex justify-between text-gray-600">
-                      <span>Germany Shipping</span>
+                      <span>Shipping</span>
                       <span className="font-semibold text-gray-900">
-                        {subtotal >= 75 ? <span className="text-emerald-700 font-bold">FREE</span> : '€4.90'}
+                        Calculated at checkout
                       </span>
                     </div>
 
                     <div className="border-t border-gray-100 pt-3 flex justify-between text-base font-extrabold text-gray-900">
-                      <span>Total (incl. VAT)</span>
+                      <span>Subtotal (incl. VAT)</span>
                       <span className="text-xl text-primary-700">
-                        €{(subtotal >= 75 ? subtotal : subtotal + 4.9).toFixed(2)}
+                        €{subtotal.toFixed(2)}
                       </span>
                     </div>
                   </div>

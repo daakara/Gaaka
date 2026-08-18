@@ -365,8 +365,8 @@ const ProductPage: NextPage<ProductPageProps> = ({ product, relatedProducts }) =
                   <div className="grid grid-cols-3 gap-2 pt-3 text-center border-t border-gray-200/60">
                     <div className="p-2 bg-white rounded-xl border border-gray-100">
                       <Truck className="w-4 h-4 text-primary-700 mx-auto mb-1" />
-                      <p className="text-[11px] font-bold text-gray-800">Free DE Delivery</p>
-                      <p className="text-[10px] text-gray-500">Orders over €75</p>
+                      <p className="text-[11px] font-bold text-gray-800">Tracked Delivery</p>
+                      <p className="text-[10px] text-gray-500">Fast & reliable</p>
                     </div>
                     <div className="p-2 bg-white rounded-xl border border-gray-100">
                       <ShieldCheck className="w-4 h-4 text-emerald-700 mx-auto mb-1" />

@@ -5,8 +5,6 @@ import { X, Plus, Minus, ShoppingBag, Trash2, ArrowRight, Sparkles, CheckCircle2
 import { useCart } from '../../contexts/CartContext'
 import { useLanguage } from '../../lib/i18n'
 
-const FREE_SHIPPING_THRESHOLD = 75
-
 export default function Cart() {
   const { state, removeItem, updateQuantity, toggleCart } = useCart()
   const { t } = useLanguage()
@@ -23,9 +21,6 @@ export default function Cart() {
   }, [state.isOpen, toggleCart])
 
   if (!state.isOpen) return null
-
-  const freeShippingRemaining = Math.max(0, FREE_SHIPPING_THRESHOLD - state.total)
-  const freeShippingProgress = Math.min(100, (state.total / FREE_SHIPPING_THRESHOLD) * 100)
 
   return (
     <div 
@@ -61,29 +56,6 @@ export default function Cart() {
           >
             <X className="h-5 w-5" />
           </button>
-        </div>
-
-        {/* Free Shipping Progress Indicator */}
-        <div className="bg-amber-50 px-6 py-3 border-b border-amber-100/80">
-          {freeShippingRemaining > 0 ? (
-            <div className="space-y-1.5">
-              <p className="text-xs text-gray-700 flex items-center gap-1.5 font-medium">
-                <Sparkles className="w-3.5 h-3.5 text-primary-600 shrink-0" />
-                Add <span className="font-bold text-primary-700">€{freeShippingRemaining.toFixed(2)}</span> more for Free Germany Shipping!
-              </p>
-              <div className="w-full bg-amber-200/60 rounded-full h-1.5 overflow-hidden">
-                <div 
-                  className="bg-primary-600 h-1.5 rounded-full transition-all duration-500" 
-                  style={{ width: `${freeShippingProgress}%` }}
-                />
-              </div>
-            </div>
-          ) : (
-            <p className="text-xs text-emerald-800 font-semibold flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-              You qualify for Free Shipping in Germany!
-            </p>
-          )}
         </div>
 
         {/* Cart Items */}

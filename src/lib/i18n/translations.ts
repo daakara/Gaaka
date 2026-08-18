@@ -8,7 +8,7 @@ export const translations = {
     about: 'About',
     
     // Header
-    freeShipping: 'Free shipping on German orders over €75',
+    freeShipping: 'Authentic Handwoven Kenyan Baskets • Fair Trade Certified',
     
     // Hero Section
     liveColorfully: 'Live Colorfully',
@@ -184,8 +184,8 @@ export const translations = {
     realtimeRate: 'Real-time rate calculation',
     advancedTracking: 'Advanced order tracking',
     quickFacts: 'Quick Facts',
-    freeShippingLabel: 'Free Shipping',
-    freeShippingGermanyDesc: 'Orders over €50 within Germany',
+    freeShippingLabel: 'Reliable Shipping',
+    freeShippingGermanyDesc: 'Fast, tracked delivery across Germany & EU',
     securePackaging: 'Secure Packaging',
     securePackagingDesc: 'Every basket carefully protected',
     trackingIncluded: 'Tracking Included',
@@ -199,22 +199,22 @@ export const translations = {
     whatDrivesUs: 'What Drives Us',
     whatDrivesUsDesc: 'Every decision we make is guided by our core values of authenticity, sustainability, and community empowerment.',
     authenticCraftsmanship: 'Authentic Craftsmanship',
-    authenticCraftsmanshipDesc: 'We work exclusively with skilled artisans who have mastered traditional weaving techniques passed down through generations, ensuring each piece carries authentic cultural heritage.',
+    authenticCraftsmanshipDesc: 'Every basket is 100% handwoven using traditional techniques passed down through generations.',
     communityFirst: 'Community First',
-    communityFirstDesc: 'Our partnerships create sustainable employment opportunities, providing fair wages and supporting education initiatives that strengthen entire communities across Africa.',
+    communityFirstDesc: 'We ensure fair wages and safe working conditions for all our artisan partners.',
     sustainablePractices: 'Sustainable Practices',
-    sustainablePracticesDesc: 'From sourcing natural materials responsibly to supporting eco-friendly production methods, sustainability is woven into every aspect of our business.',
+    sustainablePracticesDesc: 'We use natural, locally sourced materials and eco-friendly dyes to minimize our environmental footprint.',
     ourImpactTogether: 'Our Impact Together',
-    ourImpactDesc: 'Thanks to customers like you, we\'re making a real difference in artisan communities across Africa.',
+    ourImpactDesc: 'Every purchase directly supports artisan families and helps preserve traditional weaving techniques.',
     countriesLabel: 'Countries',
-    acrossAfricaDesc: 'Across West and East Africa',
+    acrossAfricaDesc: 'Connecting authentic artisan communities globally',
     joinOurMission: 'Join Our Mission',
-    joinOurMissionDesc: 'Every purchase you make supports artisan families and helps preserve traditional African craftsmanship for future generations.',
+    joinOurMissionDesc: 'Discover unique handcrafted baskets and support artisan empowerment with every purchase.',
     readArtisanStories: 'Read Artisan Stories',
 
     // FAQ page new keys
     frequentlyAskedQuestions: 'Frequently Asked Questions',
-    faqHeroDesc: 'Find quick answers to common questions about our products, shipping, and services. Can\'t find what you\'re looking for? Feel free to contact us directly.',
+    faqHeroDesc: 'Find answers to common questions about our products, orders, shipping, and returns.',
     faqCategoryOrders: 'Orders & Payment',
     faqCategoryShipping: 'Shipping & Delivery',
     faqCategoryProducts: 'Products & Care',
@@ -229,7 +229,7 @@ export const translations = {
     faqQ3: 'Do you offer payment plans?',
     faqA3: 'For orders over €200, we offer installment payment options through Klarna. This option will be available at checkout if your order qualifies.',
     faqQ4: 'What are your shipping costs?',
-    faqA4: 'Shipping within Germany is free for orders over €75. For orders under €75, shipping costs €8.90. International shipping rates vary by destination and are calculated at checkout.',
+    faqA4: 'Shipping rates are calculated transparently based on your destination and selected carrier (DHL, Hermes, UPS) during checkout.',
     faqQ5: 'How long does delivery take?',
     faqA5: 'Within Germany: 2-4 business days. EU countries: 5-8 business days. Other international destinations: 10-15 business days. You will receive tracking information once your order ships.',
     faqQ6: 'Do you ship internationally?',
@@ -340,7 +340,7 @@ export const translations = {
     about: 'Über uns',
     
     // Header
-    freeShipping: 'Kostenloser Versand bei Bestellungen über 75€ in Deutschland',
+    freeShipping: 'Authentische handgewebte Körbe aus Kenia • Fairer Handel',
     
     // Hero Section
     liveColorfully: 'Erleben Sie die Farbenvielfalt',
@@ -516,8 +516,8 @@ export const translations = {
     realtimeRate: 'Echtzeit-Ratenberechnung',
     advancedTracking: 'Erweitertes Sendungsverfolgung',
     quickFacts: 'Kurzübersicht',
-    freeShippingLabel: 'Kostenloser Versand',
-    freeShippingGermanyDesc: 'Bestellungen über 50€ innerhalb Deutschlands',
+    freeShippingLabel: 'Zuverlässiger Versand',
+    freeShippingGermanyDesc: 'Schneller, verfolgter Versand in Deutschland & EU',
     securePackaging: 'Sichere Verpackung',
     securePackagingDesc: 'Jeder Korb sorgfältig geschützt',
     trackingIncluded: 'Sendungsverfolgung inklusive',
@@ -561,7 +561,7 @@ export const translations = {
     faqQ3: 'Bieten Sie Ratenzahlung an?',
     faqA3: 'Für Bestellungen über 200€ bieten wir über Klarna Ratenzahlungsoptionen an. Diese Option ist an der Kasse verfügbar, sofern Ihre Bestellung die Voraussetzungen erfüllt.',
     faqQ4: 'Was sind Ihre Versandkosten?',
-    faqA4: 'Der Versand innerhalb Deutschlands ist bei Bestellungen über 75€ kostenlos. Für Bestellungen unter 75€ betragen die Versandkosten 8,90€. Die internationalen Versandkosten variieren je nach Zielland und werden an der Kasse berechnet.',
+    faqA4: 'Die Versandkosten werden transparent an der Kasse basierend auf dem Zielland und dem ausgewählten Versanddienstleister (DHL, Hermes, UPS) berechnet.',
     faqQ5: 'Wie lange dauert die Lieferung?',
     faqA5: 'Innerhalb Deutschlands: 2–4 Werktage. EU-Länder: 5–8 Werktage. Andere internationale Ziele: 10–15 Werktage. Nach dem Versand Ihrer Bestellung erhalten Sie Tracking-Informationen.',
     faqQ6: 'Versenden Sie auch international?',
