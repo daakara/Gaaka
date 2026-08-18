@@ -30,7 +30,7 @@ export default function HeroSection({ content }: HeroSectionProps) {
             <div className="space-y-4">
               <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-100 text-primary-800 text-xs font-semibold uppercase tracking-wider">
                 <Sparkles className="w-3.5 h-3.5 text-primary-600" />
-                Ethically Handwoven in Kenya
+                {t('ethicallyHandwoven')}
               </span>
               
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 tracking-tight leading-tight capitalize">
@@ -47,7 +47,7 @@ export default function HeroSection({ content }: HeroSectionProps) {
             
             <div className="border-l-4 border-primary-500 pl-5">
               <p className="text-base sm:text-lg text-gray-700 leading-relaxed">
-                From the vibrant artisan communities of <span className="font-semibold text-primary-800">Kenya</span> to your living space—functional art woven with centuries of sustainable heritage.
+                {t('heroDescriptionShort')}
               </p>
             </div>
             
@@ -61,7 +61,7 @@ export default function HeroSection({ content }: HeroSectionProps) {
               </Link>
               <Link href="/about">
                 <a className="inline-flex items-center justify-center border-2 border-gray-300 hover:border-primary-600 text-gray-800 hover:text-primary-700 px-8 py-4 rounded-xl font-semibold text-base bg-white transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500">
-                  <span>Our Artisan Story</span>
+                  <span>{t('ourStory')}</span>
                 </a>
               </Link>
             </div>
@@ -76,16 +76,16 @@ export default function HeroSection({ content }: HeroSectionProps) {
                     <Sparkles className="w-10 h-10 text-white" />
                   </div>
                   <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                    Artisan Crafted
+                    {t('artisanCrafted')}
                   </h2>
                   <p className="text-sm text-gray-600 max-w-xs">
-                    100% natural sisal & sweetgrass fibers, crafted by master weavers.
+                    {t('materialDescription')}
                   </p>
                 </div>
                 
                 {/* Floating Authentic Badge */}
                 <div className="absolute -top-3 -right-3 bg-primary-700 text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-md">
-                  100% Fair Trade
+                  100% {t('fairTrade')}
                 </div>
               </div>
             </div>

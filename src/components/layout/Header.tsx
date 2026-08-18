@@ -18,7 +18,6 @@ export default function Header() {
     { name: t('storageBaskets'), href: '/collections/storage-baskets' },
     { name: t('kitchenDining'), href: '/collections/kitchen-dining' },
     { name: t('wallBaskets'), href: '/collections/wall-baskets' },
-    { name: t('giftCards'), href: '/gift-cards' },
     { name: t('about'), href: '/about' },
   ]
 

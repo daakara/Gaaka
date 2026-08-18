@@ -68,7 +68,6 @@ npm run dev
 │   ├── about.tsx            # Company story and values
 │   ├── contact.tsx          # Contact form and company info
 │   ├── faq.tsx              # Frequently asked questions
-│   ├── gift-cards.tsx       # Digital gift card system
 │   ├── mission.tsx          # Mission and impact details
 │   ├── blog.tsx             # Blog (coming soon)
 │   ├── artisan-stories.tsx  # Artisan profiles (coming soon)

@@ -1,7 +1,7 @@
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import { ParsedUrlQuery } from 'querystring'
 import Image from 'next/image'
-import { Star, Heart, Check, Sparkles, Eye, ShoppingBag, ChevronRight, ArrowLeft } from 'lucide-react'
+import { Star, Heart, Eye, ShoppingBag, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 
 import { fetchGraphQL } from '../../src/lib/wordpress/client'
@@ -12,6 +12,7 @@ import { useLanguage } from '../../src/lib/i18n'
 import { useCart } from '../../src/contexts/CartContext'
 import Header from '../../src/components/layout/Header'
 import Footer from '../../src/components/layout/Footer'
+import { ALL_FALLBACK_PRODUCTS } from '../../src/lib/wordpress/fallbackProducts'
 
 interface ProductPageProps {
   product: Product
@@ -65,7 +66,6 @@ const ProductPage: NextPage<ProductPageProps> = ({ product }) => {
                   objectFit="cover"
                 />
               </div>
-              {/* Thumbnails could go here */}
             </div>
 
             {/* Product Details */}
@@ -78,14 +78,14 @@ const ProductPage: NextPage<ProductPageProps> = ({ product }) => {
                     <Star
                       key={i}
                       className={`h-5 w-5 ${
-                        i < Math.floor(product.rating ?? 0)
+                        i < Math.floor(product.rating ?? 5)
                           ? 'text-amber-400 fill-current'
                           : 'text-gray-300'
                       }`}
                     />
                   ))}
                 </div>
-                <span className="text-sm text-gray-600">({product.reviewCount} reviews)</span>
+                <span className="text-sm text-gray-600">({product.reviewCount ?? 0} reviews)</span>
               </div>
 
               <div className="flex items-baseline gap-3 mb-6">
@@ -114,7 +114,7 @@ const ProductPage: NextPage<ProductPageProps> = ({ product }) => {
                   className={`w-full py-4 rounded-xl font-bold text-lg transition-all duration-300 flex items-center justify-center gap-3 ${
                     !product.inStock
                       ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
-                      : 'bg-amber-600 text-white hover:bg-amber-700'
+                      : 'bg-primary-600 text-white hover:bg-primary-700 shadow-sm'
                   }`}
                   disabled={!product.inStock}
                 >
@@ -132,13 +132,16 @@ const ProductPage: NextPage<ProductPageProps> = ({ product }) => {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
+  const fallbackPaths = ALL_FALLBACK_PRODUCTS.map((p) => ({
+    params: { slug: p.slug },
+  }))
+
   try {
     const data = await fetchGraphQL(GET_ALL_PRODUCT_SLUGS, {})
     
-    if (!data || !data.products || !data.products.nodes) {
-      console.warn('No products found in WordPress. Using empty paths.')
+    if (!data || !data.products || !data.products.nodes || data.products.nodes.length === 0) {
       return {
-        paths: [],
+        paths: fallbackPaths,
         fallback: 'blocking',
       }
     }
@@ -148,13 +151,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
     }))
 
     return {
-      paths,
+      paths: [...fallbackPaths, ...paths],
       fallback: 'blocking',
     }
   } catch (error) {
-    console.error('Error fetching products for static paths:', error)
+    console.warn('Error fetching products for static paths, using fallback paths:', error)
     return {
-      paths: [],
+      paths: fallbackPaths,
       fallback: 'blocking',
     }
   }
@@ -162,26 +165,42 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps<ProductPageProps, IParams> = async (context) => {
   const { slug } = context.params!
-  
+  const fallbackProduct = ALL_FALLBACK_PRODUCTS.find((p) => p.slug === slug)
+
   try {
     const data = await fetchGraphQL(GET_PRODUCT_BY_SLUG, { slug })
     
-    if (!data.product) {
+    if (data?.product) {
+      const product = transformProduct(data.product)
       return {
-        notFound: true,
+        props: {
+          product,
+        },
+        revalidate: 60,
       }
     }
 
-    const product = transformProduct(data.product)
+    if (fallbackProduct) {
+      return {
+        props: {
+          product: fallbackProduct,
+        },
+        revalidate: 60,
+      }
+    }
 
     return {
-      props: {
-        product,
-      },
-      revalidate: 60, // In seconds
+      notFound: true,
     }
   } catch (error) {
-    console.error('Error fetching product:', error)
+    if (fallbackProduct) {
+      return {
+        props: {
+          product: fallbackProduct,
+        },
+        revalidate: 60,
+      }
+    }
     return {
       notFound: true,
     }

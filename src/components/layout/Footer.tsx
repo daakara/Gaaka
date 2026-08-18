@@ -16,7 +16,6 @@ export default function Footer() {
       { name: t('storageBaskets'), href: '/collections/storage-baskets' },
       { name: t('kitchenDining'), href: '/collections/kitchen-dining' },
       { name: t('wallBaskets'), href: '/collections/wall-baskets' },
-      { name: t('giftCards'), href: '/gift-cards' },
     ],
     company: [
       { name: t('about'), href: '/about' },
@@ -80,15 +79,15 @@ export default function Footer() {
             <div className="flex flex-wrap items-center justify-center gap-6 mt-8 text-primary-200 text-sm">
               <div className="flex items-center gap-1.5">
                 <Heart className="w-4 h-4 text-amber-300 fill-current" />
-                <span>Exclusive Stories</span>
+                <span>{t('exclusiveStories')}</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <Sparkles className="w-4 h-4 text-amber-300" />
-                <span>First Access</span>
+                <span>{t('firstAccess')}</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <Globe className="w-4 h-4 text-amber-300" />
-                <span>Artisan Updates</span>
+                <span>{t('artisanUpdates')}</span>
               </div>
             </div>
           </div>
@@ -113,14 +112,13 @@ export default function Footer() {
             </Link>
             
             <p className="text-gray-400 text-sm leading-relaxed max-w-sm">
-              Handcrafted Kenyan storage baskets that combine modern design with traditional craftsmanship. 
-              Each piece tells a story and supports artisan communities across Kenya.
+              {t('footerTagline')}
             </p>
             
             {/* Social Links */}
             <div className="pt-2">
               <h4 className="text-xs font-semibold text-gray-300 uppercase tracking-wider mb-3">
-                Connect With Us
+                {t('connectWithUs')}
               </h4>
               <div className="flex space-x-3">
                 {socialLinks.map((social) => {
@@ -201,7 +199,7 @@ export default function Footer() {
         <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-500">
           <div className="flex items-center gap-2">
             <Heart className="w-4 h-4 text-primary-500 fill-current" />
-            <span>© {new Date().getFullYear()} GAAKA. Handcrafted in Kenya.</span>
+            <span>© {new Date().getFullYear()} {t('footerCopyright')}</span>
           </div>
           
           <div className="flex flex-wrap gap-4 justify-center">

@@ -31,11 +31,11 @@ export default function ProductSections() {
         {/* Section Header */}
         <div className="text-center mb-16 max-w-2xl mx-auto">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight mb-3">
-            Curated Collections
+            {t('curatedCollections')}
           </h2>
           <div className="flex items-center justify-center gap-2 text-primary-700">
             <Star className="w-4 h-4 fill-current" />
-            <p className="text-base sm:text-lg italic font-medium">Each piece with its own story</p>
+            <p className="text-base sm:text-lg italic font-medium">{t('eachPieceStory')}</p>
             <Star className="w-4 h-4 fill-current" />
           </div>
         </div>
@@ -60,7 +60,7 @@ export default function ProductSections() {
                     <div className="flex items-center gap-2 mt-2">
                       <Heart className="w-4 h-4 text-primary-600 fill-current" />
                       <p className="text-sm text-gray-600 italic">
-                        Handcrafted in Kenya
+                        {t('handcraftedInKenya')}
                       </p>
                     </div>
                   </div>
@@ -75,7 +75,7 @@ export default function ProductSections() {
                       </div>
                       <div>
                         <p className="text-xs font-semibold text-gray-900">{t('handwovenByArtisans')}</p>
-                        <p className="text-[11px] text-gray-500">Authentic craft</p>
+                        <p className="text-[11px] text-gray-500">{t('authenticCraft')}</p>
                       </div>
                     </div>
                     
@@ -85,7 +85,7 @@ export default function ProductSections() {
                       </div>
                       <div>
                         <p className="text-xs font-semibold text-gray-900">{t('sustainableMaterials')}</p>
-                        <p className="text-[11px] text-gray-500">Eco-friendly</p>
+                        <p className="text-[11px] text-gray-500">{t('ecoFriendly')}</p>
                       </div>
                     </div>
                     
@@ -95,7 +95,7 @@ export default function ProductSections() {
                       </div>
                       <div>
                         <p className="text-xs font-semibold text-gray-900">{t('uniquePatterns')}</p>
-                        <p className="text-[11px] text-gray-500">One-of-a-kind</p>
+                        <p className="text-[11px] text-gray-500">{t('oneOfAKind')}</p>
                       </div>
                     </div>
                     
@@ -105,7 +105,7 @@ export default function ProductSections() {
                       </div>
                       <div>
                         <p className="text-xs font-semibold text-gray-900">{t('fairTradeCertified')}</p>
-                        <p className="text-[11px] text-gray-500">Fair Wages</p>
+                        <p className="text-[11px] text-gray-500">{t('fairWages')}</p>
                       </div>
                     </div>
                   </div>
@@ -136,7 +136,7 @@ export default function ProductSections() {
                   {/* Floating Handcrafted Badge */}
                   <div className="absolute top-4 left-4 bg-primary-700 text-white px-3.5 py-1 rounded-full text-xs font-bold shadow-md flex items-center gap-1.5">
                     <Sparkles className="w-3.5 h-3.5" />
-                    <span>Handwoven</span>
+                    <span>{t('handwoven')}</span>
                   </div>
                 </div>
               </div>

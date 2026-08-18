@@ -8,6 +8,7 @@ import { fetchGraphQL } from '../../src/lib/wordpress/client'
 import { GET_ALL_PRODUCTS } from '../../src/lib/wordpress/queries'
 import { transformProduct } from '../../src/lib/wordpress/utils'
 import { Product } from '../../src/lib/wordpress/types'
+import { ALL_FALLBACK_PRODUCTS } from '../../src/lib/wordpress/fallbackProducts'
 
 interface AllCollectionsProps {
   products: Product[]
@@ -15,6 +16,7 @@ interface AllCollectionsProps {
 
 const AllCollections: NextPage<AllCollectionsProps> = ({ products }) => {
   const { t } = useLanguage()
+  const displayProducts = products && products.length > 0 ? products : ALL_FALLBACK_PRODUCTS
 
   return (
     <>
@@ -43,7 +45,7 @@ const AllCollections: NextPage<AllCollectionsProps> = ({ products }) => {
         </section>
 
         {/* Products Grid */}
-        <ProductGrid products={products} />
+        <ProductGrid products={displayProducts} />
       </main>
 
       <Footer />
@@ -54,20 +56,29 @@ const AllCollections: NextPage<AllCollectionsProps> = ({ products }) => {
 export const getStaticProps: GetStaticProps<AllCollectionsProps> = async () => {
   try {
     const data = await fetchGraphQL(GET_ALL_PRODUCTS, { first: 100 })
-    const products = data.products.nodes.map(transformProduct)
+    if (data?.products?.nodes && data.products.nodes.length > 0) {
+      const products = data.products.nodes.map(transformProduct)
+      return {
+        props: {
+          products,
+        },
+        revalidate: 60,
+      }
+    }
 
     return {
       props: {
-        products,
+        products: ALL_FALLBACK_PRODUCTS,
       },
-      revalidate: 60, // Re-generate the page every 60 seconds
+      revalidate: 60,
     }
   } catch (error) {
-    console.error('Error fetching all products:', error)
+    console.warn('Error fetching all products, using fallbacks:', error)
     return {
       props: {
-        products: [],
+        products: ALL_FALLBACK_PRODUCTS,
       },
+      revalidate: 60,
     }
   }
 }

@@ -5,6 +5,7 @@ import { useLanguage } from '../../lib/i18n'
 import { useCart } from '../../contexts/CartContext'
 import { useProducts } from '../../hooks/useWordPress'
 import { Product } from '../../lib/wordpress/types'
+import { ALL_FALLBACK_PRODUCTS } from '../../lib/wordpress/fallbackProducts'
 
 const getBadgeStyles = (badge: Product['badge']) => {
   switch (badge) {
@@ -30,34 +31,25 @@ interface ProductGridProps {
 export default function ProductGrid({
   products: initialProducts,
   isLoading: initialIsLoading,
-  error: initialError,
 }: ProductGridProps) {
   const { t } = useLanguage()
   const { addItem } = useCart()
+  const hasInitialProducts = initialProducts !== undefined && initialProducts.length > 0
+  
   const {
     products: fetchedProducts,
     loading: fetchedIsLoading,
-    error: fetchedError,
   } = useProducts({ featured: true })
 
-  const products = initialProducts || fetchedProducts
-  const isLoading = initialIsLoading ?? fetchedIsLoading
-  const error = initialError || fetchedError?.message
+  const rawProducts = hasInitialProducts ? initialProducts : (fetchedProducts && fetchedProducts.length > 0 ? fetchedProducts : ALL_FALLBACK_PRODUCTS)
+  const products = rawProducts && rawProducts.length > 0 ? rawProducts : ALL_FALLBACK_PRODUCTS
+  const isLoading = initialIsLoading ?? (hasInitialProducts ? false : fetchedIsLoading)
 
-  if (isLoading) {
+  if (isLoading && products.length === 0) {
     return (
       <section className="section-padding text-center">
         <h2 className="text-2xl font-bold text-gray-900">Loading our treasures...</h2>
         <p className="text-gray-600 mt-2">Please wait a moment.</p>
-      </section>
-    )
-  }
-
-  if (error) {
-    return (
-      <section className="section-padding text-center text-red-600">
-        <h2 className="text-2xl font-bold">Something went wrong</h2>
-        <p className="mt-2">{error}</p>
       </section>
     )
   }

@@ -8,6 +8,7 @@ import { fetchGraphQL } from '../../src/lib/wordpress/client'
 import { GET_PRODUCTS_BY_CATEGORY } from '../../src/lib/wordpress/queries'
 import { Product } from '../../src/lib/wordpress/types'
 import { transformProduct } from '../../src/lib/wordpress/utils'
+import { FALLBACK_STORAGE_BASKETS } from '../../src/lib/wordpress/fallbackProducts'
 
 interface StorageBasketsPageProps {
   products: Product[]
@@ -15,6 +16,7 @@ interface StorageBasketsPageProps {
 
 const StorageBasketsPage: NextPage<StorageBasketsPageProps> = ({ products }) => {
   const { t } = useLanguage()
+  const displayProducts = products && products.length > 0 ? products : FALLBACK_STORAGE_BASKETS
 
   return (
     <>
@@ -43,11 +45,7 @@ const StorageBasketsPage: NextPage<StorageBasketsPageProps> = ({ products }) => 
         </section>
 
         {/* Products Grid */}
-        <section className="section-padding bg-white">
-          <div className="container-custom">
-            <ProductGrid products={products} />
-          </div>
-        </section>
+        <ProductGrid products={displayProducts} />
       </main>
 
       <Footer />
@@ -61,20 +59,30 @@ export const getStaticProps: GetStaticProps<StorageBasketsPageProps> = async () 
       category: 'storage-baskets',
       first: 100,
     })
-    const products = data.products.nodes.map(transformProduct)
+    
+    if (data?.products?.nodes && data.products.nodes.length > 0) {
+      const products = data.products.nodes.map(transformProduct)
+      return {
+        props: {
+          products,
+        },
+        revalidate: 60,
+      }
+    }
 
     return {
       props: {
-        products,
+        products: FALLBACK_STORAGE_BASKETS,
       },
       revalidate: 60,
     }
   } catch (error) {
-    console.error('Error fetching storage baskets:', error)
+    console.warn('Error fetching storage baskets, using fallbacks:', error)
     return {
       props: {
-        products: [],
+        products: FALLBACK_STORAGE_BASKETS,
       },
+      revalidate: 60,
     }
   }
 }

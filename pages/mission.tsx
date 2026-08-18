@@ -43,10 +43,10 @@ export default function Mission() {
           <div className="container-custom">
             <div className="text-center mb-16">
               <h2 className="text-3xl sm:text-4xl font-heading font-bold text-gray-900 mb-4">
-                Our Mission Pillars
+                {t('ourMissionPillars')}
               </h2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Four key areas where we focus our efforts to create lasting positive impact in artisan communities.
+                {t('ourMissionPillarsDesc')}
               </p>
             </div>
 
@@ -54,26 +54,26 @@ export default function Mission() {
               {[
                 {
                   icon: <Handshake className="h-8 w-8" />,
-                  title: 'Fair Employment',
-                  description: 'We provide steady, well-paid work that allows artisans to support their families while practicing their traditional crafts.',
+                  title: t('fairEmployment'),
+                  description: t('fairEmploymentDesc'),
                   color: 'bg-blue-100 text-blue-600'
                 },
                 {
                   icon: <GraduationCap className="h-8 w-8" />,
-                  title: 'Education Support',
-                  description: '15% of our profits fund educational programs, with a focus on girls\' education and literacy in rural communities.',
+                  title: t('educationSupport'),
+                  description: t('educationSupportDesc'),
                   color: 'bg-green-100 text-green-600'
                 },
                 {
                   icon: <Globe className="h-8 w-8" />,
-                  title: 'Cultural Preservation',
-                  description: 'We help preserve traditional weaving techniques and patterns that have been passed down for generations.',
+                  title: t('culturalPreservation'),
+                  description: t('culturalPreservationDesc'),
                   color: 'bg-purple-100 text-purple-600'
                 },
                 {
                   icon: <Target className="h-8 w-8" />,
-                  title: 'Sustainable Growth',
-                  description: 'Our partnerships are built for long-term success, creating sustainable economic opportunities in remote areas.',
+                  title: t('sustainableGrowth'),
+                  description: t('sustainableGrowthDesc'),
                   color: 'bg-orange-100 text-orange-600'
                 }
               ].map((pillar, index) => (
@@ -103,29 +103,29 @@ export default function Mission() {
                 />
                 <div className="absolute -bottom-6 -right-6 bg-white p-6 rounded-xl shadow-lg">
                   <div className="text-2xl font-bold text-primary-600">200+</div>
-                  <div className="text-sm text-gray-600">Artisans Supported</div>
+                  <div className="text-sm text-gray-600">{t('artisansSupportedLabel')}</div>
                 </div>
               </div>
               
               <div>
                 <h2 className="text-3xl sm:text-4xl font-heading font-bold text-gray-900 mb-6">
-                  Real Stories, Real Impact
+                  {t('realStoriesRealImpact')}
                 </h2>
                 <div className="space-y-6">
                   <p className="text-lg text-gray-600 leading-relaxed">
-                    Meet Grace, a master weaver from Kenya who has been creating baskets for over 20 years. Through our partnership, she now employs 8 women in her village and has been able to send all three of her daughters to university.
+                    {t('graceStoryP1')}
                   </p>
                   <p className="text-lg text-gray-600 leading-relaxed">
-                    "Before GAAKA, I could only make baskets when there were tourists. Now I have steady work all year, and my daughters have opportunities I never had," says Grace.
+                    {t('graceStoryQuote')}
                   </p>
                   <p className="text-lg text-gray-600 leading-relaxed">
-                    Stories like Grace's are happening across all our partner communities. When you choose GAAKA, you become part of these success stories.
+                    {t('graceStoryP3')}
                   </p>
                 </div>
                 <div className="mt-8">
                   <Link href="/artisan-stories">
                     <a className="btn-primary group inline-flex items-center">
-                      Read More Stories
+                      {t('readMoreStories')}
                       <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
                     </a>
                   </Link>
@@ -141,32 +141,32 @@ export default function Mission() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
                 <h2 className="text-3xl sm:text-4xl font-heading font-bold text-gray-900 mb-6">
-                  Investing in Education
+                  {t('investingInEducation')}
                 </h2>
                 <div className="space-y-6">
                   <p className="text-lg text-gray-600 leading-relaxed">
-                    Education is the key to breaking cycles of poverty. That's why 15% of every purchase goes directly to educational initiatives in our partner communities.
+                    {t('investingInEducationP1')}
                   </p>
                   <div className="space-y-4">
                     <div className="flex items-start gap-4">
                       <div className="w-2 h-2 bg-primary-600 rounded-full mt-2"></div>
                       <div>
-                        <h4 className="font-semibold text-gray-900 mb-1">Girls' Education Program</h4>
-                        <p className="text-gray-600">Scholarships and school supplies for girls in rural communities</p>
+                        <h4 className="font-semibold text-gray-900 mb-1">{t('girlsEducationProgram')}</h4>
+                        <p className="text-gray-600">{t('girlsEducationProgramDesc')}</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-4">
                       <div className="w-2 h-2 bg-primary-600 rounded-full mt-2"></div>
                       <div>
-                        <h4 className="font-semibold text-gray-900 mb-1">Adult Literacy Classes</h4>
-                        <p className="text-gray-600">Reading and writing programs for artisan parents</p>
+                        <h4 className="font-semibold text-gray-900 mb-1">{t('adultLiteracyClasses')}</h4>
+                        <p className="text-gray-600">{t('adultLiteracyClassesDesc')}</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-4">
                       <div className="w-2 h-2 bg-primary-600 rounded-full mt-2"></div>
                       <div>
-                        <h4 className="font-semibold text-gray-900 mb-1">Skill Development</h4>
-                        <p className="text-gray-600">Training in business skills and modern weaving techniques</p>
+                        <h4 className="font-semibold text-gray-900 mb-1">{t('skillDevelopment')}</h4>
+                        <p className="text-gray-600">{t('skillDevelopmentDesc')}</p>
                       </div>
                     </div>
                   </div>
@@ -183,7 +183,7 @@ export default function Mission() {
                 />
                 <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-xl shadow-lg">
                   <div className="text-2xl font-bold text-green-600">500+</div>
-                  <div className="text-sm text-gray-600">Students Supported</div>
+                  <div className="text-sm text-gray-600">{t('studentsSupported')}</div>
                 </div>
               </div>
             </div>
@@ -194,27 +194,27 @@ export default function Mission() {
         <section className="section-padding bg-primary-50">
           <div className="container-custom text-center">
             <h2 className="text-3xl sm:text-4xl font-heading font-bold text-gray-900 mb-6">
-              Sustainable by Design
+              {t('sustainableByDesign')}
             </h2>
             <p className="text-xl text-gray-600 leading-relaxed mb-12 max-w-3xl mx-auto">
-              We believe in creating beautiful products that don't compromise our planet's future. Every aspect of our business is designed with sustainability in mind.
+              {t('sustainableByDesignDesc')}
             </p>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[
                 {
-                  title: 'Natural Materials',
-                  description: 'All our baskets are made from sustainably harvested grasses, reeds, and natural dyes.',
+                  title: t('naturalMaterials'),
+                  description: t('naturalMaterialsDesc'),
                   image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
                 },
                 {
-                  title: 'Zero Waste Production',
-                  description: 'Traditional techniques use every part of the plant, creating no manufacturing waste.',
+                  title: t('zeroWasteProduction'),
+                  description: t('zeroWasteProductionDesc'),
                   image: 'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
                 },
                 {
-                  title: 'Carbon Neutral Shipping',
-                  description: 'We offset all shipping emissions and use recycled packaging materials.',
+                  title: t('carbonNeutralShipping'),
+                  description: t('carbonNeutralShippingDesc'),
                   image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
                 }
               ].map((item, index) => (
@@ -240,10 +240,10 @@ export default function Mission() {
         <section className="section-padding bg-primary-600 text-white">
           <div className="container-custom text-center">
             <h2 className="text-3xl sm:text-4xl font-heading font-bold mb-6">
-              Be Part of the Change
+              {t('bePartOfChange')}
             </h2>
             <p className="text-xl text-primary-100 leading-relaxed mb-8 max-w-2xl mx-auto">
-              Every basket you purchase creates ripple effects of positive change across African communities. Join us in building a more equitable world, one handcrafted piece at a time.
+              {t('bePartOfChangeDesc')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/collections/all">
@@ -254,7 +254,7 @@ export default function Mission() {
               </Link>
               <Link href="/contact">
                 <a className="border-2 border-white text-white hover:bg-white hover:text-primary-600 px-8 py-3 rounded-lg font-semibold transition-colors duration-300">
-                  Partner with Us
+                   {t('partnerWithUs')}
                 </a>
               </Link>
             </div>

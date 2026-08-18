@@ -24,10 +24,10 @@ export default function Contact() {
           <div className="container-custom">
             <div className="text-center max-w-3xl mx-auto">
               <h1 className="text-4xl sm:text-5xl font-heading font-bold text-gray-900 mb-6">
-                Get in Touch
+                {t('getInTouch')}
               </h1>
               <p className="text-xl text-gray-600 leading-relaxed">
-                We'd love to hear from you. Whether you have questions about our products, want to learn more about our mission, or need assistance with your order, we're here to help.
+                {t('getInTouchDesc')}
               </p>
             </div>
           </div>
@@ -40,30 +40,30 @@ export default function Contact() {
               {[
                 {
                   icon: <Mail className="h-8 w-8" />,
-                  title: 'Email Us',
+                  title: t('emailUs'),
                   content: 'hello@gaaka.de',
-                  description: 'Send us an email anytime',
+                  description: t('emailUsDesc'),
                   color: 'bg-blue-100 text-blue-600'
                 },
                 {
                   icon: <Phone className="h-8 w-8" />,
-                  title: 'Call Us',
+                  title: t('callUs'),
                   content: '+49 30 1234 5678',
-                  description: 'Mon-Fri, 9AM-6PM CET',
+                  description: t('callUsHours'),
                   color: 'bg-green-100 text-green-600'
                 },
                 {
                   icon: <MessageCircle className="h-8 w-8" />,
-                  title: 'Live Chat',
+                  title: t('liveChat'),
                   content: 'Chat with us',
-                  description: 'Available during business hours',
+                  description: t('liveChatAvailable'),
                   color: 'bg-purple-100 text-purple-600'
                 },
                 {
                   icon: <MapPin className="h-8 w-8" />,
-                  title: 'Visit Us',
+                  title: t('visitUs'),
                   content: 'Berlin, Germany',
-                  description: 'By appointment only',
+                  description: t('byAppointmentOnly'),
                   color: 'bg-orange-100 text-orange-600'
                 }
               ].map((option, index) => (
@@ -83,39 +83,39 @@ export default function Contact() {
               {/* Contact Form */}
               <div className="bg-white">
                 <h2 className="text-2xl font-heading font-bold text-gray-900 mb-6">
-                  Send us a Message
+                  {t('sendUsMessage')}
                 </h2>
                 
                 <form className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        First Name *
+                        {t('firstNameLabel')}
                       </label>
                       <input
                         type="text"
                         required
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary-600"
-                        placeholder="Your first name"
+                        placeholder={t('firstNamePlaceholder')}
                       />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Last Name *
+                        {t('lastNameLabel')}
                       </label>
                       <input
                         type="text"
                         required
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary-600"
-                        placeholder="Your last name"
+                        placeholder={t('lastNamePlaceholder')}
                       />
                     </div>
                   </div>
                   
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Email Address *
-                    </label>
+                    {t('emailAddressLabel')}
+                  </label>
                     <input
                       type="email"
                       required
@@ -126,8 +126,8 @@ export default function Contact() {
                   
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Phone Number
-                    </label>
+                    {t('phoneNumberLabel')}
+                  </label>
                     <input
                       type="tel"
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary-600"
@@ -137,32 +137,32 @@ export default function Contact() {
                   
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Subject *
-                    </label>
-                    <select
-                      required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary-600"
-                    >
-                      <option value="">Select a subject</option>
-                      <option value="order">Order Question</option>
-                      <option value="product">Product Information</option>
-                      <option value="shipping">Shipping & Returns</option>
-                      <option value="wholesale">Wholesale Inquiries</option>
-                      <option value="press">Press & Media</option>
-                      <option value="other">Other</option>
-                    </select>
+                    {t('subjectLabel')}
+                  </label>
+                  <select
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary-600"
+                  >
+                    <option value="">{t('selectSubject')}</option>
+                    <option value="order">{t('orderQuestion')}</option>
+                    <option value="product">{t('productInformation')}</option>
+                    <option value="shipping">{t('shippingReturnsOption')}</option>
+                    <option value="wholesale">{t('wholesaleInquiries')}</option>
+                    <option value="press">{t('pressMedia')}</option>
+                    <option value="other">{t('otherOption')}</option>
+                  </select>
                   </div>
                   
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Message *
-                    </label>
-                    <textarea
-                      rows={6}
-                      required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary-600"
-                      placeholder="Tell us how we can help you..."
-                    ></textarea>
+                    {t('messageLabel')}
+                  </label>
+                  <textarea
+                    rows={6}
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary-600"
+                    placeholder={t('messagePlaceholder')}
+                  ></textarea>
                   </div>
                   
                   <div className="flex items-start gap-3">
@@ -172,7 +172,7 @@ export default function Contact() {
                       className="mt-1 rounded border-gray-300 text-primary-600 focus:ring-primary-600"
                     />
                     <label htmlFor="newsletter" className="text-sm text-gray-600">
-                      I would like to receive updates about new products and special offers
+                      {t('newsletterOptIn')}
                     </label>
                   </div>
                   
@@ -180,7 +180,7 @@ export default function Contact() {
                     type="submit"
                     className="w-full btn-primary py-4 text-lg"
                   >
-                    Send Message
+                    {t('sendMessage')}
                   </button>
                 </form>
               </div>
@@ -189,14 +189,14 @@ export default function Contact() {
               <div className="space-y-8">
                 <div>
                   <h2 className="text-2xl font-heading font-bold text-gray-900 mb-6">
-                    Company Information
+                    {t('companyInformation')}
                   </h2>
                   
                   <div className="space-y-6">
                     <div className="flex items-start gap-4">
                       <MapPin className="h-6 w-6 text-primary-600 mt-1" />
                       <div>
-                        <h4 className="font-semibold text-gray-900 mb-1">Address</h4>
+                        <h4 className="font-semibold text-gray-900 mb-1">{t('addressLabel')}</h4>
                         <p className="text-gray-600">
                           GAAKA GmbH<br />
                           Friedrichstraße 123<br />
@@ -208,11 +208,11 @@ export default function Contact() {
                     <div className="flex items-start gap-4">
                       <Clock className="h-6 w-6 text-primary-600 mt-1" />
                       <div>
-                        <h4 className="font-semibold text-gray-900 mb-1">Business Hours</h4>
+                        <h4 className="font-semibold text-gray-900 mb-1">{t('businessHours')}</h4>
                         <p className="text-gray-600">
-                          Monday - Friday: 9:00 AM - 6:00 PM CET<br />
-                          Saturday: 10:00 AM - 4:00 PM CET<br />
-                          Sunday: Closed
+                          {t('businessHoursLine1')}<br />
+                          {t('businessHoursLine2')}<br />
+                          {t('businessHoursClosed')}
                         </p>
                       </div>
                     </div>
@@ -220,7 +220,7 @@ export default function Contact() {
                     <div className="flex items-start gap-4">
                       <Mail className="h-6 w-6 text-primary-600 mt-1" />
                       <div>
-                        <h4 className="font-semibold text-gray-900 mb-1">Email Departments</h4>
+                        <h4 className="font-semibold text-gray-900 mb-1">{t('emailDepartments')}</h4>
                         <div className="text-gray-600 space-y-1">
                           <p>General: hello@gaaka.de</p>
                           <p>Orders: orders@gaaka.de</p>
@@ -235,23 +235,23 @@ export default function Contact() {
                 {/* FAQ Quick Links */}
                 <div className="bg-gray-50 rounded-2xl p-6">
                   <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                    Quick Help
+                    {t('quickHelp')}
                   </h3>
                   <p className="text-gray-600 mb-4">
-                    Looking for quick answers? Check out our frequently asked questions.
+                    {t('quickHelpDesc')}
                   </p>
                   <div className="space-y-3">
                     <a href="/faq#shipping" className="block text-primary-600 hover:text-primary-700 transition-colors duration-200">
-                      → Shipping & Delivery Information
+                      {t('shippingDeliveryInfo')}
                     </a>
                     <a href="/faq#returns" className="block text-primary-600 hover:text-primary-700 transition-colors duration-200">
-                      → Returns & Exchange Policy
+                      {t('returnsExchangePolicy')}
                     </a>
                     <a href="/faq#care" className="block text-primary-600 hover:text-primary-700 transition-colors duration-200">
-                      → Product Care Instructions
+                      {t('productCareInstructions')}
                     </a>
                     <a href="/faq#wholesale" className="block text-primary-600 hover:text-primary-700 transition-colors duration-200">
-                      → Wholesale & Bulk Orders
+                      {t('wholesaleBulkOrders')}
                     </a>
                   </div>
                 </div>
@@ -259,10 +259,10 @@ export default function Contact() {
                 {/* Social Media */}
                 <div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                    Follow Our Journey
+                    {t('followOurJourney')}
                   </h3>
                   <p className="text-gray-600 mb-6">
-                    Stay connected with us on social media for artisan stories, behind-the-scenes content, and new product launches.
+                    {t('followOurJourneyDesc')}
                   </p>
                   <div className="flex gap-4">
                     {['Instagram', 'Facebook', 'Pinterest', 'LinkedIn'].map((social) => (

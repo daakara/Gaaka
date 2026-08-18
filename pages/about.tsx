@@ -26,10 +26,10 @@ export default function About() {
           <div className="container-custom">
             <div className="text-center max-w-4xl mx-auto">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-bold text-gray-900 mb-6">
-                Our Story
+                {t('ourStory')}
               </h1>
               <p className="text-xl text-gray-600 leading-relaxed mb-8">
-                GAAKA was born from a simple belief: that beautiful, functional art should empower the communities that create it. We bridge continents to bring you authentic African craftsmanship while supporting the artisans behind every piece.
+                {t('fromAfricaP1')}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link href="/mission">
@@ -53,10 +53,10 @@ export default function About() {
           <div className="container-custom">
             <div className="text-center mb-16">
               <h2 className="text-3xl sm:text-4xl font-heading font-bold text-gray-900 mb-4">
-                What Drives Us
+                {t('whatDrivesUs')}
               </h2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Every decision we make is guided by our core values of authenticity, sustainability, and community empowerment.
+                {t('whatDrivesUsDesc')}
               </p>
             </div>
 
@@ -64,18 +64,18 @@ export default function About() {
               {[
                 {
                   icon: <Heart className="h-8 w-8" />,
-                  title: 'Authentic Craftsmanship',
-                  description: 'We work exclusively with skilled artisans who have mastered traditional weaving techniques passed down through generations, ensuring each piece carries authentic cultural heritage.'
+                  title: t('authenticCraftsmanship'),
+                  description: t('authenticCraftsmanshipDesc')
                 },
                 {
                   icon: <Users className="h-8 w-8" />,
-                  title: 'Community First',
-                  description: 'Our partnerships create sustainable employment opportunities, providing fair wages and supporting education initiatives that strengthen entire communities across Africa.'
+                  title: t('communityFirst'),
+                  description: t('communityFirstDesc')
                 },
                 {
                   icon: <Award className="h-8 w-8" />,
-                  title: 'Sustainable Practices',
-                  description: 'From sourcing natural materials responsibly to supporting eco-friendly production methods, sustainability is woven into every aspect of our business.'
+                  title: t('sustainablePractices'),
+                  description: t('sustainablePracticesDesc')
                 }
               ].map((value, index) => (
                 <div key={index} className="text-center">
@@ -96,17 +96,17 @@ export default function About() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
                 <h2 className="text-3xl sm:text-4xl font-heading font-bold text-gray-900 mb-6">
-                  From Africa to Germany
+                  {t('fromAfricaToGermany')}
                 </h2>
                 <div className="space-y-6">
                   <p className="text-lg text-gray-600 leading-relaxed">
-                    Founded by a Kenyan living in Germany, passionate about my culture and heritage, GAAKA began as a mission to create meaningful connections between Kenyan artisans and European consumers.
+                    {t('fromAfricaP1')}
                   </p>
                   <p className="text-lg text-gray-600 leading-relaxed">
-                    I have traveled extensively across Kenya, building relationships with artisan communities and learning about traditional basket-making techniques that have been refined over generations.
+                    {t('fromAfricaP2')}
                   </p>
                   <p className="text-lg text-gray-600 leading-relaxed">
-                    Today, I work with over 20 women primarily based in Nairobi, providing them with steady income and helping preserve cultural traditions that might otherwise be lost to modernization.
+                    {t('fromAfricaP3')}
                   </p>
                 </div>
               </div>
@@ -164,10 +164,10 @@ export default function About() {
           <div className="container-custom">
             <div className="text-center mb-12">
               <h2 className="text-3xl sm:text-4xl font-heading font-bold mb-4">
-                Our Impact Together
+                {t('ourImpactTogether')}
               </h2>
               <p className="text-xl text-primary-100 max-w-2xl mx-auto">
-                Thanks to customers like you, we're making a real difference in artisan communities across Africa.
+                {t('ourImpactDesc')}
               </p>
             </div>
 
@@ -176,7 +176,7 @@ export default function About() {
                 { number: '200+', label: t('artisansSupported'), description: t('creatingEmployment') },
                 { number: '15%', label: t('profitsToEducation'), description: t('fundingEducation') },
                 { number: '5000+', label: t('happyCustomers'), description: t('bringingBeauty') },
-                { number: '8', label: 'Countries', description: 'Across West and East Africa' }
+                { number: '8', label: t('countriesLabel'), description: t('acrossAfricaDesc') }
               ].map((stat, index) => (
                 <div key={index}>
                   <div className="text-4xl sm:text-5xl font-heading font-bold text-secondary-400 mb-2">
@@ -198,10 +198,10 @@ export default function About() {
         <section className="section-padding bg-white">
           <div className="container-custom text-center">
             <h2 className="text-3xl sm:text-4xl font-heading font-bold text-gray-900 mb-6">
-              Join Our Mission
+              {t('joinOurMission')}
             </h2>
             <p className="text-xl text-gray-600 leading-relaxed mb-8 max-w-2xl mx-auto">
-              Every purchase you make supports artisan families and helps preserve traditional African craftsmanship for future generations.
+              {t('joinOurMissionDesc')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/collections/all">
@@ -212,7 +212,7 @@ export default function About() {
               </Link>
               <Link href="/artisan-stories">
                 <a className="btn-outline">
-                  Read Artisan Stories
+                  {t('readArtisanStories')}
                 </a>
               </Link>
             </div>

@@ -36,15 +36,15 @@ export default function MissionSection() {
             <div className="space-y-3">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-semibold uppercase tracking-wider">
                 <Globe className="w-3.5 h-3.5 text-primary-700" />
-                Our Sustainable Purpose
+                {t('sustainablePurpose')}
               </span>
               
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight leading-tight">
-                Empowering Communities Through Artistry
+                {t('empoweringCommunities')}
               </h2>
               
               <p className="text-base sm:text-lg text-gray-600 italic">
-                Weaving hope and economic opportunity across continents
+                {t('weavingHope')}
               </p>
             </div>
 
@@ -65,9 +65,9 @@ export default function MissionSection() {
                   <Heart className="w-5 h-5 fill-current" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-gray-900 text-base mb-1">Our Ethical Promise</h3>
+                  <h3 className="font-bold text-gray-900 text-base mb-1">{t('ethicalPromise')}</h3>
                   <p className="text-sm text-gray-700 leading-relaxed">
-                    Every purchase creates tangible change—from the artisan's hands to community education, preserving centuries-old traditions while securing future generations.
+                    {t('ethicalPromiseBody')}
                   </p>
                 </div>
               </div>
@@ -118,7 +118,7 @@ export default function MissionSection() {
                 <div className="absolute bottom-3 left-3 bg-white/95 rounded-lg px-3 py-1.5 shadow-sm">
                   <div className="flex items-center gap-1.5">
                     <Star className="w-4 h-4 text-primary-600 fill-current" />
-                    <span className="text-xs font-bold text-gray-900">Master Artisan at Work</span>
+                    <span className="text-xs font-bold text-gray-900">{t('masterArtisanAtWork')}</span>
                   </div>
                 </div>
               </div>
@@ -134,7 +134,7 @@ export default function MissionSection() {
                     className="object-cover w-full h-full"
                   />
                   <div className="absolute top-2.5 right-2.5 bg-primary-800 text-white px-2.5 py-0.5 rounded-full text-xs font-semibold">
-                    Education
+                    {t('educationLabel')}
                   </div>
                 </div>
                 
@@ -147,7 +147,7 @@ export default function MissionSection() {
                     className="object-cover w-full h-full"
                   />
                   <div className="absolute top-2.5 left-2.5 bg-amber-600 text-white px-2.5 py-0.5 rounded-full text-xs font-semibold">
-                    Handcrafted
+                    {t('handcrafted')}
                   </div>
                 </div>
               </div>
@@ -155,8 +155,8 @@ export default function MissionSection() {
 
             {/* Fair Trade Badge */}
             <div className="absolute -top-3 -right-3 bg-emerald-700 text-white rounded-2xl shadow-lg px-4 py-2.5 text-center">
-              <span className="text-sm font-black block">Fair Trade</span>
-              <span className="text-xs opacity-90 block">Certified Ethical</span>
+              <span className="text-sm font-black block">{t('fairTrade')}</span>
+              <span className="text-xs opacity-90 block">{t('certifiedEthical')}</span>
             </div>
           </div>
         </div>
