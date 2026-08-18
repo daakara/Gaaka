@@ -1,0 +1,40 @@
+# Robots.txt for GAAKA (https://gaaka.com)
+# Allow search engines and Generative AI search crawlers
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /checkout
+Disallow: /cart
+Disallow: /_next/
+
+# Generative AI Search Crawlers (GEO Optimization)
+User-agent: GPTBot
+Allow: /
+Disallow: /api/
+Disallow: /checkout
+Disallow: /cart
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /api/
+Disallow: /checkout
+Disallow: /cart
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /api/
+Disallow: /checkout
+Disallow: /cart
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /api/
+Disallow: /checkout
+Disallow: /cart
+
+User-agent: Google-Extended
+Allow: /
+
+# Sitemap
+Sitemap: https://gaaka.com/sitemap.xml

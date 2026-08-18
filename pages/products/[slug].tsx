@@ -86,7 +86,8 @@ const ProductPage: NextPage<ProductPageProps> = ({ product, relatedProducts }) =
     rating: {
       ratingValue: product.rating ?? 5,
       reviewCount: product.reviewCount ?? 1
-    }
+    },
+    slug: product.slug
   })
 
   const breadcrumbsSchema = generateBreadcrumbData([

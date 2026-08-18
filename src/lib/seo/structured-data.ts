@@ -95,27 +95,70 @@ export function generateProductData(product: {
     ratingValue: number
     reviewCount: number
   }
+  slug?: string
 }) {
+  const productUrl = product.slug ? `https://gaaka.com/products/${product.slug}` : 'https://gaaka.com'
+
   return generateStructuredData({
     type: 'Product',
     data: {
       name: product.name,
       description: product.description,
-      image: product.image,
+      image: [product.image],
+      url: productUrl,
+      sku: `GAAKA-${product.id}`,
       brand: {
         '@type': 'Brand',
-        name: product.brand
+        name: product.brand || 'GAAKA'
       },
       category: product.category,
       offers: {
         '@type': 'Offer',
-        price: product.price.toString(),
-        priceCurrency: product.currency,
+        url: productUrl,
+        price: product.price.toFixed(2),
+        priceCurrency: product.currency || 'EUR',
+        priceValidUntil: '2027-12-31',
         availability: `https://schema.org/${product.availability}`,
         itemCondition: `https://schema.org/${product.condition}`,
         seller: {
           '@type': 'Organization',
-          name: 'GAAKA'
+          name: 'GAAKA',
+          url: 'https://gaaka.com'
+        },
+        hasMerchantReturnPolicy: {
+          '@type': 'MerchantReturnPolicy',
+          applicableCountry: 'DE',
+          returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
+          merchantReturnDays: 30,
+          returnMethod: 'https://schema.org/ReturnByMail',
+          returnFees: 'https://schema.org/FreeReturn'
+        },
+        shippingDetails: {
+          '@type': 'OfferShippingDetails',
+          shippingRate: {
+            '@type': 'MonetaryAmount',
+            value: '4.90',
+            currency: 'EUR'
+          },
+          shippingDestination: {
+            '@type': 'DefinedRegion',
+            addressCountry: 'DE'
+          },
+          deliveryTime: {
+            '@type': 'ShippingDeliveryTime',
+            handlingTime: {
+              '@type': 'QuantitativeValue',
+              minValue: 1,
+              maxValue: 2,
+              unitCode: 'DAY'
+            },
+            transitTime: {
+              '@type': 'QuantitativeValue',
+              minValue: 2,
+              maxValue: 4,
+              unitCode: 'DAY'
+            }
+          }
         }
       },
       ...(product.rating && {
@@ -131,17 +174,17 @@ export function generateProductData(product: {
         {
           '@type': 'PropertyValue',
           name: 'Material',
-          value: 'Handwoven Natural Fibers'
+          value: '100% Handwoven Natural Sisal & Sweetgrass'
         },
         {
           '@type': 'PropertyValue',
           name: 'Origin',
-          value: 'Africa'
+          value: 'Kenya'
         },
         {
           '@type': 'PropertyValue',
           name: 'Certification',
-          value: 'Fair Trade'
+          value: 'Fair Trade Certified'
         }
       ]
     }
