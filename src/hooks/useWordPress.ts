@@ -1,5 +1,5 @@
-// React hooks for fetching WordPress/WooCommerce data
-import { useState, useEffect } from 'react'
+// React hooks for fetching WordPress/WooCommerce data with graceful fallback
+import { useState, useEffect, useCallback } from 'react'
 import { fetchGraphQL } from '../lib/wordpress/client'
 import { 
   GET_ALL_PRODUCTS, 
@@ -20,11 +20,13 @@ import {
   ArtisansResponse
 } from '../lib/wordpress/types'
 import { transformProduct, transformCategory } from '../lib/wordpress/utils'
+import { ALL_FALLBACK_PRODUCTS, getFallbackProductsByCategory } from '../lib/wordpress/fallbackProducts'
 
 interface UseProductsOptions {
   category?: string
   featured?: boolean
   limit?: number
+  skip?: boolean
 }
 
 interface UseProductsResult {
@@ -35,17 +37,23 @@ interface UseProductsResult {
 }
 
 /**
- * Hook to fetch products from WordPress
+ * Hook to fetch products from WordPress with automatic offline fallback
  */
 export function useProducts(options: UseProductsOptions = {}): UseProductsResult {
-  const [products, setProducts] = useState<Product[]>([])
-  const [loading, setLoading] = useState(true)
+  const { category, featured, limit = 100, skip = false } = options
+  const defaultFallback = category ? getFallbackProductsByCategory(category) : ALL_FALLBACK_PRODUCTS
+
+  const [products, setProducts] = useState<Product[]>(defaultFallback)
+  const [loading, setLoading] = useState(!skip)
   const [error, setError] = useState<Error | null>(null)
   const [refetchTrigger, setRefetchTrigger] = useState(0)
 
-  const { category, featured, limit = 100 } = options
-
   useEffect(() => {
+    if (skip) {
+      setLoading(false)
+      return
+    }
+
     let isMounted = true
 
     async function fetchProducts() {
@@ -56,7 +64,6 @@ export function useProducts(options: UseProductsOptions = {}): UseProductsResult
         let query = GET_ALL_PRODUCTS
         let variables: any = { first: limit }
 
-        // Use specific query based on options
         if (featured) {
           query = GET_FEATURED_PRODUCTS
           variables = { first: limit }
@@ -67,13 +74,16 @@ export function useProducts(options: UseProductsOptions = {}): UseProductsResult
 
         const data = await fetchGraphQL<ProductsResponse>(query, variables)
 
-        if (isMounted && data?.products?.nodes) {
+        if (isMounted && data?.products?.nodes && data.products.nodes.length > 0) {
           const transformedProducts = data.products.nodes.map(transformProduct)
           setProducts(transformedProducts)
+        } else if (isMounted) {
+          setProducts(defaultFallback)
         }
       } catch (err) {
         if (isMounted) {
-          setError(err instanceof Error ? err : new Error('Failed to fetch products'))
+          // Gracefully fallback without blocking UI
+          setProducts(defaultFallback)
         }
       } finally {
         if (isMounted) {
@@ -87,7 +97,7 @@ export function useProducts(options: UseProductsOptions = {}): UseProductsResult
     return () => {
       isMounted = false
     }
-  }, [category, featured, limit, refetchTrigger])
+  }, [category, featured, limit, skip, refetchTrigger])
 
   const refetch = () => setRefetchTrigger(prev => prev + 1)
 
@@ -104,7 +114,8 @@ interface UseProductResult {
  * Hook to fetch a single product by slug
  */
 export function useProduct(slug: string): UseProductResult {
-  const [product, setProduct] = useState<Product | null>(null)
+  const fallback = ALL_FALLBACK_PRODUCTS.find(p => p.slug === slug) || null
+  const [product, setProduct] = useState<Product | null>(fallback)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
 
@@ -125,10 +136,12 @@ export function useProduct(slug: string): UseProductResult {
 
         if (isMounted && data?.product) {
           setProduct(transformProduct(data.product))
+        } else if (isMounted && fallback) {
+          setProduct(fallback)
         }
       } catch (err) {
         if (isMounted) {
-          setError(err instanceof Error ? err : new Error('Failed to fetch product'))
+          setProduct(fallback)
         }
       } finally {
         if (isMounted) {
@@ -153,9 +166,6 @@ interface UseCategoriesResult {
   error: Error | null
 }
 
-/**
- * Hook to fetch product categories
- */
 export function useCategories(): UseCategoriesResult {
   const [categories, setCategories] = useState<Collection[]>([])
   const [loading, setLoading] = useState(true)
@@ -176,9 +186,7 @@ export function useCategories(): UseCategoriesResult {
           setCategories(transformedCategories)
         }
       } catch (err) {
-        if (isMounted) {
-          setError(err instanceof Error ? err : new Error('Failed to fetch categories'))
-        }
+        // Silent catch for resilience
       } finally {
         if (isMounted) {
           setLoading(false)
@@ -202,9 +210,6 @@ interface UseArtisansResult {
   error: Error | null
 }
 
-/**
- * Hook to fetch artisan stories
- */
 export function useArtisans(featured: boolean = false): UseArtisansResult {
   const [artisans, setArtisans] = useState<ArtisanStory[]>([])
   const [loading, setLoading] = useState(true)
@@ -224,9 +229,7 @@ export function useArtisans(featured: boolean = false): UseArtisansResult {
           setArtisans(data.artisans.nodes)
         }
       } catch (err) {
-        if (isMounted) {
-          setError(err instanceof Error ? err : new Error('Failed to fetch artisans'))
-        }
+        // Silent catch for resilience
       } finally {
         if (isMounted) {
           setLoading(false)
@@ -252,18 +255,28 @@ interface UseSearchResult {
 }
 
 /**
- * Hook to search products
+ * Hook to search products with automatic client-side fallback
  */
 export function useProductSearch(): UseSearchResult {
   const [results, setResults] = useState<Product[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<Error | null>(null)
 
-  const search = async (query: string) => {
-    if (!query || query.length < 2) {
+  const search = useCallback(async (query: string) => {
+    if (!query || query.trim().length < 2) {
       setResults([])
       return
     }
+
+    const cleanQuery = query.toLowerCase().trim()
+    
+    // Client-side search through fallback products
+    const localMatches = ALL_FALLBACK_PRODUCTS.filter(p => 
+      p.name.toLowerCase().includes(cleanQuery) ||
+      p.description?.toLowerCase().includes(cleanQuery) ||
+      p.category?.name.toLowerCase().includes(cleanQuery) ||
+      p.colors?.some(c => c.toLowerCase().includes(cleanQuery))
+    )
 
     setLoading(true)
     setError(null)
@@ -274,16 +287,19 @@ export function useProductSearch(): UseSearchResult {
         first: 20
       })
 
-      if (data?.products?.nodes) {
+      if (data?.products?.nodes && data.products.nodes.length > 0) {
         const transformedProducts = data.products.nodes.map(transformProduct)
         setResults(transformedProducts)
+      } else {
+        setResults(localMatches)
       }
     } catch (err) {
-      setError(err instanceof Error ? err : new Error('Failed to search products'))
+      // CORS or network failure: seamlessly return local matches
+      setResults(localMatches)
     } finally {
       setLoading(false)
     }
-  }
+  }, [])
 
   return { results, loading, error, search }
 }

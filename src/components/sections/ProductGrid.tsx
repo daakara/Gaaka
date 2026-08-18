@@ -3,7 +3,6 @@ import Image from 'next/image'
 import { Star, Heart, Eye, ShoppingBag } from 'lucide-react'
 import { useLanguage } from '../../lib/i18n'
 import { useCart } from '../../contexts/CartContext'
-import { useProducts } from '../../hooks/useWordPress'
 import { Product } from '../../lib/wordpress/types'
 import { ALL_FALLBACK_PRODUCTS } from '../../lib/wordpress/fallbackProducts'
 
@@ -30,20 +29,12 @@ interface ProductGridProps {
 
 export default function ProductGrid({
   products: initialProducts,
-  isLoading: initialIsLoading,
+  isLoading = false,
 }: ProductGridProps) {
   const { t } = useLanguage()
   const { addItem } = useCart()
-  const hasInitialProducts = initialProducts !== undefined && initialProducts.length > 0
-  
-  const {
-    products: fetchedProducts,
-    loading: fetchedIsLoading,
-  } = useProducts({ featured: true })
 
-  const rawProducts = hasInitialProducts ? initialProducts : (fetchedProducts && fetchedProducts.length > 0 ? fetchedProducts : ALL_FALLBACK_PRODUCTS)
-  const products = rawProducts && rawProducts.length > 0 ? rawProducts : ALL_FALLBACK_PRODUCTS
-  const isLoading = initialIsLoading ?? (hasInitialProducts ? false : fetchedIsLoading)
+  const products = initialProducts && initialProducts.length > 0 ? initialProducts : ALL_FALLBACK_PRODUCTS
 
   if (isLoading && products.length === 0) {
     return (
