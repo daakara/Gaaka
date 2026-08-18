@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import { Facebook, Instagram, Twitter, Mail, Heart, Sparkles, Star, Globe } from 'lucide-react'
 import { useLanguage } from '../../lib/i18n'
 
@@ -38,122 +37,103 @@ export default function Footer() {
       { name: t('gdpr'), href: '/gdpr' },
     ],
   }
-  return (
-    <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white relative overflow-hidden">
-      {/* Artistic Background Elements */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-20 right-20 w-96 h-96 bg-amber-400 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-40 left-10 w-64 h-64 bg-orange-400 rounded-full blur-2xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 w-48 h-48 bg-red-400 rounded-full blur-xl animate-pulse delay-500"></div>
-      </div>
 
-      {/* Artistic Newsletter Section */}
-      <div className="relative bg-gradient-to-r from-amber-600 via-orange-600 to-red-600 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-pulse"></div>
-        <div className="container-custom py-16 relative z-10">
-          <div className="text-center">
-            <div className="flex items-center justify-center gap-3 mb-6">
-              <Star className="w-6 h-6 animate-pulse" />
-              <h2 className="text-3xl sm:text-4xl font-bold">{t('joinCommunity')}</h2>
-              <Star className="w-6 h-6 animate-pulse" />
+  return (
+    <footer className="bg-gray-900 text-white relative">
+      {/* Newsletter Section */}
+      <div className="bg-primary-800 border-b border-primary-700">
+        <div className="container-custom py-16">
+          <div className="text-center max-w-2xl mx-auto">
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <Star className="w-5 h-5 text-amber-300" />
+              <h2 className="text-3xl font-bold text-white tracking-tight">{t('joinCommunity')}</h2>
+              <Star className="w-5 h-5 text-amber-300" />
             </div>
-            <p className="text-orange-100 mb-8 max-w-2xl mx-auto text-lg leading-relaxed">
+            <p className="text-primary-100 mb-8 text-base sm:text-lg leading-relaxed">
               {t('newsletterDescription')}
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
+            <form 
+              onSubmit={(e) => e.preventDefault()}
+              className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
+            >
+              <label htmlFor="newsletter-email" className="sr-only">
+                {t('enterEmail')}
+              </label>
               <input
+                id="newsletter-email"
                 type="email"
+                required
                 placeholder={t('enterEmail')}
-                className="flex-1 px-6 py-4 rounded-2xl bg-white/20 backdrop-blur-sm border border-white/30 text-white placeholder-orange-200 focus:outline-none focus:ring-2 focus:ring-white/50 focus:bg-white/30 transition-all duration-300"
+                className="flex-1 px-5 py-3.5 rounded-xl bg-primary-900/60 border border-primary-600 text-white placeholder-primary-200 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:bg-primary-900"
               />
-              <button className="bg-white text-orange-600 font-bold px-8 py-4 rounded-2xl hover:bg-orange-50 hover:scale-105 transform transition-all duration-300 shadow-lg hover:shadow-xl whitespace-nowrap flex items-center gap-2">
-                <Mail className="w-5 h-5" />
-                {t('subscribe')}
+              <button 
+                type="submit"
+                className="bg-amber-500 hover:bg-amber-400 text-gray-900 font-bold px-6 py-3.5 rounded-xl transition-colors shadow-md flex items-center justify-center gap-2"
+                aria-label={t('subscribe')}
+              >
+                <Mail className="w-4 h-4" />
+                <span>{t('subscribe')}</span>
               </button>
-            </div>
+            </form>
             
             {/* Newsletter benefits */}
-            <div className="flex items-center justify-center gap-8 mt-8 text-orange-100">
-              <div className="flex items-center gap-2">
-                <Heart className="w-4 h-4 fill-current" />
-                <span className="text-sm">Exclusive Stories</span>
+            <div className="flex flex-wrap items-center justify-center gap-6 mt-8 text-primary-200 text-sm">
+              <div className="flex items-center gap-1.5">
+                <Heart className="w-4 h-4 text-amber-300 fill-current" />
+                <span>Exclusive Stories</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4" />
-                <span className="text-sm">First Access</span>
+              <div className="flex items-center gap-1.5">
+                <Sparkles className="w-4 h-4 text-amber-300" />
+                <span>First Access</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Globe className="w-4 h-4" />
-                <span className="text-sm">Artisan Updates</span>
+              <div className="flex items-center gap-1.5">
+                <Globe className="w-4 h-4 text-amber-300" />
+                <span>Artisan Updates</span>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Artistic Main Footer Content */}
-      <div className="container-custom py-20 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
-          {/* Artistic Brand Column */}
-          <div className="lg:col-span-2">
+      {/* Main Footer Links */}
+      <div className="container-custom py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
+          {/* Brand Column */}
+          <div className="lg:col-span-2 space-y-6">
             <Link href="/">
-              <a className="flex items-center space-x-4 mb-8 group">
-                <div className="relative">
-                  <div className="w-16 h-16 bg-gradient-to-br from-amber-500 via-orange-500 to-red-600 rounded-3xl flex items-center justify-center shadow-xl group-hover:shadow-2xl transform group-hover:scale-105 transition-all duration-300">
-                    <span className="text-white font-black text-2xl">G</span>
-                  </div>
-                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full animate-pulse"></div>
+              <a className="flex items-center space-x-3 group">
+                <div className="w-12 h-12 bg-primary-600 rounded-xl flex items-center justify-center font-black text-xl text-white">
+                  G
                 </div>
                 <div>
-                  <span className="text-4xl font-black bg-gradient-to-r from-amber-400 via-orange-400 to-red-400 bg-clip-text text-transparent">
-                    GAAKA
-                  </span>
-                  <p className="text-gray-400 text-sm -mt-1">african artistry</p>
+                  <span className="text-2xl font-black text-white tracking-tight">GAAKA</span>
+                  <p className="text-xs text-amber-400 font-medium">african artistry</p>
                 </div>
               </a>
             </Link>
             
-            {/* Artistic Description */}
-            <div className="bg-gray-800/50 backdrop-blur-sm rounded-3xl p-6 mb-8 border border-gray-700">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl flex items-center justify-center flex-shrink-0">
-                  <Heart className="w-6 h-6 text-white fill-current" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-lg mb-3 text-amber-400">Our Story</h4>
-                  <p className="text-gray-300 leading-relaxed">
-                    Handcrafted Kenyan storage baskets that combine modern design with traditional craftsmanship. 
-                    Each piece tells a story and supports artisan communities across Kenya.
-                  </p>
-                </div>
-              </div>
-            </div>
+            <p className="text-gray-400 text-sm leading-relaxed max-w-sm">
+              Handcrafted Kenyan storage baskets that combine modern design with traditional craftsmanship. 
+              Each piece tells a story and supports artisan communities across Kenya.
+            </p>
             
-            {/* Artistic Social Links */}
-            <div className="space-y-4">
-              <h4 className="font-bold text-amber-400 flex items-center gap-2">
-                <Sparkles className="w-5 h-5" />
+            {/* Social Links */}
+            <div className="pt-2">
+              <h4 className="text-xs font-semibold text-gray-300 uppercase tracking-wider mb-3">
                 Connect With Us
               </h4>
-              <div className="flex space-x-4">
-                {socialLinks.map((social, index) => {
+              <div className="flex space-x-3">
+                {socialLinks.map((social) => {
                   const Icon = social.icon
-                  const gradients = [
-                    'from-blue-500 to-blue-600',
-                    'from-pink-500 to-purple-600',
-                    'from-blue-400 to-cyan-500'
-                  ]
                   return (
-                    <Link
-                      key={social.name}
-                      href={social.href}
-                    >
+                    <Link key={social.name} href={social.href}>
                       <a
-                        className={`w-12 h-12 bg-gradient-to-br ${gradients[index]} rounded-2xl flex items-center justify-center hover:scale-110 transform transition-all duration-300 shadow-lg hover:shadow-xl group`}
+                        className="w-10 h-10 bg-gray-800 hover:bg-primary-600 rounded-xl flex items-center justify-center transition-colors text-gray-300 hover:text-white"
                         target="_blank"
                         rel="noopener noreferrer"
+                        aria-label={`Follow GAAKA on ${social.name}`}
                       >
-                        <Icon className="h-6 w-6 text-white group-hover:animate-pulse" />
+                        <Icon className="h-5 w-5" />
                       </a>
                     </Link>
                   )
@@ -162,18 +142,16 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Artistic Shop Links */}
-          <div className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-6 border border-gray-700">
-            <h3 className="font-bold text-amber-400 mb-6 flex items-center gap-2">
-              <div className="w-2 h-2 bg-amber-400 rounded-full animate-pulse"></div>
+          {/* Shop Links */}
+          <div>
+            <h3 className="text-sm font-semibold text-amber-400 uppercase tracking-wider mb-4">
               {t('shop')}
             </h3>
-            <ul className="space-y-4">
+            <ul className="space-y-3">
               {footerLinks.shop.map((link) => (
                 <li key={link.name}>
                   <Link href={link.href}>
-                    <a className="text-gray-300 hover:text-amber-400 transition-all duration-300 flex items-center gap-2 group">
-                      <div className="w-1.5 h-1.5 bg-orange-400 rounded-full group-hover:scale-150 transition-transform duration-300"></div>
+                    <a className="text-gray-400 hover:text-white text-sm transition-colors">
                       {link.name}
                     </a>
                   </Link>
@@ -182,18 +160,16 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Artistic Company Links */}
-          <div className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-6 border border-gray-700">
-            <h3 className="font-bold text-orange-400 mb-6 flex items-center gap-2">
-              <div className="w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
+          {/* Company Links */}
+          <div>
+            <h3 className="text-sm font-semibold text-amber-400 uppercase tracking-wider mb-4">
               {t('company')}
             </h3>
-            <ul className="space-y-4">
+            <ul className="space-y-3">
               {footerLinks.company.map((link) => (
                 <li key={link.name}>
                   <Link href={link.href}>
-                    <a className="text-gray-300 hover:text-orange-400 transition-all duration-300 flex items-center gap-2 group">
-                      <div className="w-1.5 h-1.5 bg-red-400 rounded-full group-hover:scale-150 transition-transform duration-300"></div>
+                    <a className="text-gray-400 hover:text-white text-sm transition-colors">
                       {link.name}
                     </a>
                   </Link>
@@ -202,18 +178,16 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Artistic Support Links */}
-          <div className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-6 border border-gray-700">
-            <h3 className="font-bold text-red-400 mb-6 flex items-center gap-2">
-              <div className="w-2 h-2 bg-red-400 rounded-full animate-pulse"></div>
+          {/* Support Links */}
+          <div>
+            <h3 className="text-sm font-semibold text-amber-400 uppercase tracking-wider mb-4">
               {t('support')}
             </h3>
-            <ul className="space-y-4">
+            <ul className="space-y-3">
               {footerLinks.support.map((link) => (
                 <li key={link.name}>
                   <Link href={link.href}>
-                    <a className="text-gray-300 hover:text-red-400 transition-all duration-300 flex items-center gap-2 group">
-                      <div className="w-1.5 h-1.5 bg-pink-400 rounded-full group-hover:scale-150 transition-transform duration-300"></div>
+                    <a className="text-gray-400 hover:text-white text-sm transition-colors">
                       {link.name}
                     </a>
                   </Link>
@@ -223,53 +197,21 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Artistic Bottom Bar */}
-        <div className="border-t border-gray-700 mt-16 pt-12">
-          <div className="bg-gray-800/50 backdrop-blur-sm rounded-3xl p-8 border border-gray-700">
-            <div className="flex flex-col lg:flex-row justify-between items-center space-y-6 lg:space-y-0">
-              <div className="flex flex-col sm:flex-row items-center gap-4">
-                <div className="flex items-center gap-2">
-                  <Heart className="w-5 h-5 text-red-400 fill-current animate-pulse" />
-                  <p className="text-gray-300">
-                    © 2025 GAAKA. Crafted with love.
-                  </p>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-gray-400">
-                  <Sparkles className="w-4 h-4 text-amber-400" />
-                  <span>Supporting 200+ artisan families</span>
-                </div>
-              </div>
-              
-              <div className="flex flex-wrap gap-6 justify-center lg:justify-end">
-                {footerLinks.legal.map((link, index) => (
-                  <Link
-                    key={link.name}
-                    href={link.href}
-                  >
-                    <a className="text-gray-400 hover:text-amber-400 text-sm transition-all duration-300 flex items-center gap-1 group">
-                      <div className={`w-1 h-1 ${
-                        index % 4 === 0 ? 'bg-amber-400' :
-                        index % 4 === 1 ? 'bg-orange-400' :
-                        index % 4 === 2 ? 'bg-red-400' :
-                        'bg-pink-400'
-                      } rounded-full group-hover:scale-150 transition-transform duration-300`}></div>
-                      {link.name}
-                    </a>
-                  </Link>
-                ))}
-              </div>
-            </div>
-            
-            {/* Artisan dedication */}
-            <div className="text-center mt-8 pt-6 border-t border-gray-600">
-              <div className="flex items-center justify-center gap-3 text-gray-400 italic">
-                <Globe className="w-4 h-4 text-amber-400 animate-pulse" />
-                <span className="text-sm">
-                  Every purchase weaves a story of tradition, community, and hope
-                </span>
-                <Globe className="w-4 h-4 text-amber-400 animate-pulse" />
-              </div>
-            </div>
+        {/* Bottom Bar */}
+        <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-500">
+          <div className="flex items-center gap-2">
+            <Heart className="w-4 h-4 text-primary-500 fill-current" />
+            <span>© {new Date().getFullYear()} GAAKA. Handcrafted in Kenya.</span>
+          </div>
+          
+          <div className="flex flex-wrap gap-4 justify-center">
+            {footerLinks.legal.map((link) => (
+              <Link key={link.name} href={link.href}>
+                <a className="hover:text-gray-300 transition-colors">
+                  {link.name}
+                </a>
+              </Link>
+            ))}
           </div>
         </div>
       </div>

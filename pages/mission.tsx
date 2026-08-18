@@ -22,7 +22,7 @@ export default function Mission() {
       
       <main>
         {/* Hero Section */}
-        <section className="bg-gradient-to-br from-primary-50 to-secondary-50 py-20">
+        <section className="bg-amber-50/50 py-20 border-b border-amber-100/80">
           <div className="container-custom">
             <div className="text-center max-w-4xl mx-auto">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-bold text-gray-900 mb-6">

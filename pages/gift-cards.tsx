@@ -28,7 +28,7 @@ export default function GiftCards() {
       
       <main>
         {/* Hero Section */}
-        <section className="bg-gradient-to-br from-primary-50 to-secondary-50 py-20">
+        <section className="bg-amber-50/50 py-20 border-b border-amber-100/80">
           <div className="container-custom">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
@@ -55,7 +55,7 @@ export default function GiftCards() {
               </div>
               
               <div className="relative">
-                <div className="relative bg-gradient-to-br from-primary-600 to-secondary-600 rounded-2xl p-8 text-white shadow-2xl">
+                <div className="relative bg-primary-700 rounded-2xl p-8 text-white shadow-xl">
                   <div className="flex justify-between items-start mb-8">
                     <div>
                       <h3 className="text-2xl font-heading font-bold">GAAKA</h3>

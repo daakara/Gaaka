@@ -19,7 +19,7 @@ export default function ArtisanStories() {
       
       <main>
         {/* Hero Section */}
-        <section className="bg-gradient-to-br from-primary-50 to-secondary-50 py-16">
+        <section className="bg-amber-50/50 py-16 border-b border-amber-100/80">
           <div className="container-custom">
             <div className="text-center max-w-3xl mx-auto">
               <h1 className="text-4xl sm:text-5xl font-heading font-bold text-gray-900 mb-6">

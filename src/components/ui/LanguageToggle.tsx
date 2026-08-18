@@ -22,7 +22,7 @@ export default function LanguageToggle({ variant = 'default' }: LanguageTogglePr
         aria-label={`Switch to ${language === 'en' ? 'German' : 'English'}`}
       >
         <Globe className="h-5 w-5" />
-        <span className="absolute -bottom-1 -right-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white text-[10px] font-bold rounded-full px-1.5 py-0.5 shadow-sm">
+        <span className="absolute -bottom-1 -right-1 bg-primary-700 text-white text-[10px] font-bold rounded-full px-1.5 py-0.5 shadow-sm">
           {language.toUpperCase()}
         </span>
       </button>

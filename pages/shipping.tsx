@@ -51,7 +51,7 @@ export default function ShippingPage() {
               You can track your order through your WooCommerce account or using the tracking link provided.
             </p>
             <Link href="https://www.gaaka.com/dev/my-account/orders/">
-              <a className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-amber-600 to-orange-600 text-white rounded-lg hover:shadow-lg transition-all">
+              <a className="inline-flex items-center px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg shadow-sm transition-colors">
                 View My Orders
                 <ArrowLeft className="ml-2 h-4 w-4 rotate-180" />
               </a>

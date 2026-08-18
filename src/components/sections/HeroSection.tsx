@@ -22,83 +22,74 @@ export default function HeroSection({ content }: HeroSectionProps) {
   const ctaLink = content?.ctaLink || '/collections/all';
   
   return (
-    <section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-amber-50 via-orange-50 to-red-50">
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-20 left-10 w-32 h-32 bg-amber-400 rounded-full blur-xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-20 w-48 h-48 bg-orange-400 rounded-full blur-2xl animate-pulse"></div>
-      </div>
-
-      <div className="relative z-10 container mx-auto px-4 min-h-screen flex items-center">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center w-full">
-          <div className="space-y-12">
-            <div className="relative">
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight">
-                <span className="block bg-gradient-to-r from-amber-600 via-orange-600 to-red-600 bg-clip-text text-transparent font-black">
-                  {headline}
-                </span>
+    <section className="relative min-h-[85vh] bg-amber-50/50 flex items-center py-16 sm:py-24 border-b border-amber-100/80">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          {/* Left Column: Messaging */}
+          <div className="space-y-8 max-w-xl">
+            <div className="space-y-4">
+              <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-100 text-primary-800 text-xs font-semibold uppercase tracking-wider">
+                <Sparkles className="w-3.5 h-3.5 text-primary-600" />
+                Ethically Handwoven in Kenya
+              </span>
+              
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 tracking-tight leading-tight capitalize">
+                {headline}
               </h1>
-              <div className="flex items-center gap-2 mt-6">
-                <Heart className="w-5 h-5 text-red-500 fill-current animate-pulse" />
-                <p className="text-xl text-gray-700 italic font-light">
+              
+              <div className="flex items-center gap-2 text-gray-600">
+                <Heart className="w-4 h-4 text-primary-600 fill-current flex-shrink-0" />
+                <p className="text-lg italic font-normal">
                   {subheadline}
                 </p>
               </div>
             </div>
             
-            <div className="relative">
-              <div className="border-l-4 border-amber-400 pl-6">
-                <p className="text-xl text-gray-700 leading-relaxed font-light">
-                  From the vibrant markets of <span className="font-semibold text-amber-700">Kenya</span> to your home—
-                  <br />
-                  <span className="text-2xl font-medium text-gray-900">functional art</span> woven with centuries of tradition
-                </p>
-              </div>
+            <div className="border-l-4 border-primary-500 pl-5">
+              <p className="text-base sm:text-lg text-gray-700 leading-relaxed">
+                From the vibrant artisan communities of <span className="font-semibold text-primary-800">Kenya</span> to your living space—functional art woven with centuries of sustainable heritage.
+              </p>
             </div>
             
-            <div className="flex flex-col sm:flex-row gap-6">
+            {/* Call to Actions */}
+            <div className="flex flex-col sm:flex-row gap-4 pt-2">
               <Link href={ctaLink}>
-                <a className="group relative overflow-hidden bg-gradient-to-r from-amber-600 to-orange-600 text-white px-8 py-4 rounded-full font-semibold text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300">
-                  <span className="relative z-10 flex items-center">
-                    {ctaText}
-                    <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
-                  </span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-orange-600 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <a className="inline-flex items-center justify-center bg-primary-600 hover:bg-primary-700 text-white px-8 py-4 rounded-xl font-semibold text-base shadow-md hover:shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2">
+                  <span>{ctaText}</span>
+                  <ArrowRight className="ml-2 w-5 h-5" />
                 </a>
               </Link>
               <Link href="/about">
-                <a className="group border-2 border-amber-600 text-amber-700 px-8 py-4 rounded-full font-semibold text-lg hover:bg-amber-600 hover:text-white transition-all duration-300 flex items-center justify-center">
-                  <Sparkles className="mr-2 w-5 h-5 group-hover:animate-spin" />
-                  our artisan story
+                <a className="inline-flex items-center justify-center border-2 border-gray-300 hover:border-primary-600 text-gray-800 hover:text-primary-700 px-8 py-4 rounded-xl font-semibold text-base bg-white transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500">
+                  <span>Our Artisan Story</span>
                 </a>
               </Link>
             </div>
           </div>
           
-          <div className="relative lg:h-screen flex items-center justify-center">
-            <div className="relative group">
-              <div className="absolute -top-8 -left-8 w-24 h-24 border-4 border-amber-300 rounded-full opacity-60 group-hover:scale-110 transition-transform duration-700"></div>
-              <div className="relative overflow-hidden rounded-3xl shadow-2xl group-hover:shadow-3xl transition-shadow duration-500">
-                <div className="w-96 h-[500px] bg-gradient-to-br from-amber-200 to-orange-200 flex items-center justify-center">
-                  <div className="text-center p-8">
-                    <div className="w-24 h-24 bg-gradient-to-br from-amber-500 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Sparkles className="w-12 h-12 text-white" />
-                    </div>
-                    <h3 className="text-2xl font-bold text-gray-800 mb-2">Artisan Crafted</h3>
-                    <p className="text-gray-600">Traditional Weaving</p>
+          {/* Right Column: Hero Visual Feature */}
+          <div className="flex items-center justify-center">
+            <div className="relative w-full max-w-md">
+              <div className="bg-white p-6 rounded-3xl shadow-xl border border-amber-100 relative">
+                <div className="aspect-[4/5] bg-amber-100 rounded-2xl flex flex-col items-center justify-center p-8 text-center border border-amber-200">
+                  <div className="w-20 h-20 bg-primary-600 rounded-2xl flex items-center justify-center mb-6 shadow-md">
+                    <Sparkles className="w-10 h-10 text-white" />
                   </div>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                    Artisan Crafted
+                  </h2>
+                  <p className="text-sm text-gray-600 max-w-xs">
+                    100% natural sisal & sweetgrass fibers, crafted by master weavers.
+                  </p>
                 </div>
-              </div>
-              <div className="absolute -top-4 -right-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-2 rounded-full shadow-lg transform rotate-3 group-hover:rotate-6 transition-transform duration-500">
-                <span className="text-sm font-bold">Authentic</span>
+                
+                {/* Floating Authentic Badge */}
+                <div className="absolute -top-3 -right-3 bg-primary-700 text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-md">
+                  100% Fair Trade
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <div className="w-6 h-10 border-2 border-amber-400 rounded-full flex justify-center">
-          <div className="w-1 h-3 bg-amber-400 rounded-full mt-2 animate-pulse"></div>
         </div>
       </div>
     </section>

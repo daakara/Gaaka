@@ -23,50 +23,47 @@ export default function Header() {
   ]
 
   return (
-    <header className="bg-white/95 backdrop-blur-md shadow-lg sticky top-0 z-50 border-b border-amber-100">
-      {/* Artistic Top Banner */}
-      <div className="bg-gradient-to-r from-amber-600 via-orange-600 to-red-600 text-white text-center py-3 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-pulse"></div>
+    <header className="bg-white sticky top-0 z-50 border-b border-amber-100 shadow-sm">
+      {/* Top Banner */}
+      <div className="bg-primary-700 text-white text-center py-2.5 px-4">
         <Link href="/collections/all">
-          <a className="relative z-10 hover:underline flex items-center justify-center gap-2 font-medium">
-            <Sparkles className="w-4 h-4 animate-pulse" />
-            {t('freeShipping')}
-            <Heart className="w-4 h-4 animate-pulse fill-current" />
+          <a className="inline-flex items-center justify-center gap-2 text-sm font-medium hover:underline focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-1 focus:ring-offset-primary-700 rounded">
+            <Sparkles className="w-4 h-4 text-amber-300" />
+            <span>{t('freeShipping')}</span>
+            <Heart className="w-4 h-4 text-red-300 fill-current" />
           </a>
         </Link>
       </div>
 
-      {/* Artistic Main Header */}
+      {/* Main Header */}
       <div className="container-custom">
         <div className="flex items-center justify-between h-20">
-          {/* Artistic Mobile menu button */}
+          {/* Mobile menu button */}
           <div className="flex items-center lg:hidden">
             <button
               type="button"
-              className="p-3 rounded-full text-gray-600 hover:text-amber-600 hover:bg-amber-50 transition-all duration-300"
+              className="p-3 rounded-xl text-gray-700 hover:text-primary-700 hover:bg-amber-50 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500"
               onClick={() => setMobileMenuOpen(true)}
-              aria-label="Open main menu"
+              aria-label="Open main navigation menu"
+              aria-expanded={mobileMenuOpen}
             >
               <Menu className="h-6 w-6" />
             </button>
           </div>
 
-          {/* Artistic Logo */}
+          {/* Brand Logo */}
           <div className="flex items-center">
             <Link href="/">
-              <a className="flex items-center space-x-3 group">
-              <div className="relative">
-                <div className="w-12 h-12 bg-gradient-to-br from-amber-500 via-orange-500 to-red-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-xl transform group-hover:scale-105 transition-all duration-300">
-                  <span className="text-white font-black text-xl">G</span>
+              <a className="flex items-center space-x-3 group focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-xl p-1">
+                <div className="w-12 h-12 bg-primary-600 text-white rounded-2xl flex items-center justify-center shadow-md group-hover:bg-primary-700 transition-colors">
+                  <span className="font-black text-xl tracking-wider">G</span>
                 </div>
-                <div className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full animate-pulse"></div>
-              </div>
-              <div>
-                <span className="text-3xl font-black bg-gradient-to-r from-amber-600 via-orange-600 to-red-600 bg-clip-text text-transparent">
-                  GAAKA
-                </span>
-                <p className="text-xs text-gray-600 font-medium -mt-1">african artistry</p>
-              </div>
+                <div>
+                  <span className="text-2xl sm:text-3xl font-black text-gray-900 tracking-tight block">
+                    GAAKA
+                  </span>
+                  <p className="text-xs text-primary-700 font-medium tracking-wide -mt-1">african artistry</p>
+                </div>
               </a>
             </Link>
           </div>
@@ -76,23 +73,19 @@ export default function Header() {
             <SearchComponent />
           </div>
 
-          {/* Artistic Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-1">
-            {navigation.map((item, index) => (
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center space-x-1" aria-label="Main Navigation">
+            {navigation.map((item) => (
               <Link key={item.name} href={item.href}>
-                <a className="relative group px-4 py-2 rounded-full text-gray-700 hover:text-amber-700 font-semibold transition-all duration-300 hover:bg-amber-50">
+                <a className="relative px-4 py-2 rounded-lg text-gray-700 hover:text-primary-700 font-medium transition-colors hover:bg-amber-50 focus:outline-none focus:ring-2 focus:ring-primary-500">
                   {item.name}
-                  <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-amber-500 to-orange-500 group-hover:w-full transition-all duration-300"></span>
-                  {index === 0 && (
-                    <div className="absolute -top-1 -right-1 w-2 h-2 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full animate-pulse"></div>
-                  )}
                 </a>
               </Link>
             ))}
           </nav>
 
-          {/* Artistic Right side icons */}
-          <div className="flex items-center space-x-3">
+          {/* Right side controls */}
+          <div className="flex items-center space-x-2">
             {/* Desktop Language Toggle */}
             <div className="hidden sm:block">
               <LanguageToggle />
@@ -101,200 +94,123 @@ export default function Header() {
             <div className="sm:hidden">
               <LanguageToggle variant="icon-only" />
             </div>
-            <button 
-              className="p-3 text-gray-600 hover:text-amber-600 hover:bg-amber-50 rounded-full transition-all duration-300 hover:scale-105 lg:hidden"
-              aria-label="Search"
-            >
-              <Search className="h-5 w-5" />
-            </button>
-            <button 
-              className="p-3 text-gray-600 hover:text-orange-600 hover:bg-orange-50 rounded-full transition-all duration-300 hover:scale-105"
-              aria-label="Account"
-            >
-              <User className="h-5 w-5" />
-            </button>
+            <Link href="/collections/all">
+              <a 
+                className="p-3 text-gray-700 hover:text-primary-700 hover:bg-amber-50 rounded-xl transition-colors lg:hidden focus:outline-none focus:ring-2 focus:ring-primary-500"
+                aria-label="Search all products"
+              >
+                <Search className="h-5 w-5" />
+              </a>
+            </Link>
             <button 
               onClick={toggleCart}
-              className="relative p-3 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-full transition-all duration-300 hover:scale-105 group"
-              aria-label="Shopping cart"
+              className="relative p-3 text-gray-700 hover:text-primary-700 hover:bg-amber-50 rounded-xl transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500"
+              aria-label={`Shopping cart with ${state.itemCount} items`}
             >
               <ShoppingBag className="h-6 w-6" />
               {state.itemCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-gradient-to-r from-red-500 to-pink-600 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center font-bold animate-pulse shadow-lg">
+                <span className="absolute -top-1 -right-1 bg-primary-600 text-white text-xs rounded-full h-5 min-w-[1.25rem] px-1 flex items-center justify-center font-bold shadow-sm">
                   {state.itemCount}
                 </span>
               )}
-              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-red-400 to-pink-500 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
             </button>
           </div>
         </div>
       </div>
 
-      {/* Artistic Mobile menu */}
+      {/* Mobile menu */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 lg:hidden animate-fadeIn">
-          <div className="fixed inset-y-0 left-0 w-80 bg-gradient-to-br from-white via-amber-25 to-orange-25 shadow-2xl transform animate-slideInLeft relative overflow-hidden">
-            {/* Artistic Background Pattern */}
-            <div className="absolute inset-0 opacity-5">
-              <div className="absolute top-20 right-10 w-32 h-32 bg-amber-400 rounded-full blur-xl animate-pulse"></div>
-              <div className="absolute bottom-40 left-10 w-24 h-24 bg-orange-400 rounded-full blur-lg animate-pulse delay-1000"></div>
-              <div className="absolute top-60 right-20 w-16 h-16 bg-red-400 rounded-full blur-md animate-pulse delay-500"></div>
-            </div>
-            {/* Enhanced Mobile Header */}
-            <div className="flex items-center justify-between p-6 border-b border-amber-100 bg-white/90 backdrop-blur-md relative z-10">
+        <div 
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 lg:hidden"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Mobile Navigation Menu"
+        >
+          <div className="fixed inset-y-0 left-0 w-80 max-w-full bg-white shadow-2xl z-50 flex flex-col h-full">
+            {/* Mobile Header */}
+            <div className="flex items-center justify-between p-5 border-b border-gray-200">
               <Link href="/">
-                <a className="flex items-center space-x-3 group">
-                <div className="relative">
-                  <div className="w-12 h-12 bg-gradient-to-br from-amber-500 via-orange-500 to-red-600 rounded-3xl flex items-center justify-center shadow-xl group-hover:shadow-2xl transform group-hover:scale-105 transition-all duration-300">
-                    <span className="text-white font-black text-xl">G</span>
+                <a 
+                  className="flex items-center space-x-3"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <div className="w-10 h-10 bg-primary-600 text-white rounded-xl flex items-center justify-center font-black">
+                    G
                   </div>
-                  <div className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full animate-pulse"></div>
-                  {/* Artistic sparkle effect */}
-                  <div className="absolute -bottom-1 -left-1 w-3 h-3 bg-gradient-to-br from-pink-400 to-red-400 rounded-full animate-pulse delay-500"></div>
-                </div>
-                <div>
-                  <span className="text-2xl font-black bg-gradient-to-r from-amber-600 via-orange-600 to-red-600 bg-clip-text text-transparent">
-                    GAAKA
-                  </span>
-                  <p className="text-xs text-gray-600 font-medium -mt-1 flex items-center gap-1">
-                    <Sparkles className="w-3 h-3 text-amber-500" />
-                    african artistry
-                  </p>
-                </div>
+                  <div>
+                    <span className="text-xl font-black text-gray-900">GAAKA</span>
+                    <p className="text-xs text-primary-700 font-medium">african artistry</p>
+                  </div>
                 </a>
               </Link>
               <button
                 onClick={() => setMobileMenuOpen(false)}
-                className="p-3 rounded-full text-gray-600 hover:text-red-600 hover:bg-red-50 transition-all duration-300 hover:scale-110 group"
-                aria-label="Close menu"
+                className="p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500"
+                aria-label="Close navigation menu"
               >
-                <X className="h-6 w-6 group-hover:rotate-90 transition-transform duration-300" />
+                <X className="h-6 w-6" />
               </button>
             </div>
             
-            {/* Enhanced Mobile Navigation */}
-            <nav className="p-6 relative z-10 h-full overflow-y-auto">
-              <div className="space-y-4">
-                {/* Mobile Search */}
-                <div className="px-2 pb-4">
-                  <SearchComponent />
-                </div>
+            {/* Mobile Navigation Content */}
+            <nav className="p-5 flex-1 overflow-y-auto space-y-4" aria-label="Mobile Navigation">
+              {/* Search */}
+              <div className="pb-2">
+                <SearchComponent />
+              </div>
 
-                {/* Welcome Message */}
-                <div className="bg-gradient-to-r from-amber-500/20 to-orange-500/20 backdrop-blur-sm rounded-3xl p-4 mb-6 border border-amber-200">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl flex items-center justify-center">
-                      <Heart className="w-4 h-4 text-white fill-current" />
-                    </div>
-                    <div>
-                      <p className="font-bold text-gray-900 text-sm">Welcome to GAAKA</p>
-                      <p className="text-xs text-gray-600">Discover African artistry</p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Enhanced Navigation Items */}
-                {navigation.map((item, index) => (
+              {/* Navigation Items */}
+              <div className="space-y-1">
+                {navigation.map((item) => (
                   <Link key={item.name} href={item.href}>
                     <a
-                      className="flex items-center gap-4 text-gray-700 hover:text-amber-700 font-semibold py-4 px-5 rounded-3xl hover:bg-white/80 hover:shadow-lg transition-all duration-300 group transform hover:-translate-y-1"
+                      className="flex items-center justify-between text-gray-800 hover:text-primary-700 font-medium py-3 px-4 rounded-xl hover:bg-amber-50 transition-colors"
                       onClick={() => setMobileMenuOpen(false)}
                     >
-                    <div className="relative">
-                      <div className={`w-10 h-10 rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 ${
-                        index % 4 === 0 ? 'bg-gradient-to-br from-amber-400 to-orange-500' :
-                        index % 4 === 1 ? 'bg-gradient-to-br from-orange-400 to-red-500' :
-                        index % 4 === 2 ? 'bg-gradient-to-br from-red-400 to-pink-500' :
-                        'bg-gradient-to-br from-pink-400 to-purple-500'
-                      } group-hover:scale-110`}>
-                        <div className={`w-2 h-2 rounded-full bg-white group-hover:scale-150 transition-transform duration-300`}></div>
-                      </div>
-                      {index === 0 && (
-                        <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full animate-pulse"></div>
-                      )}
-                    </div>
-                    <div className="flex-1">
-                      <span className="text-base">{item.name}</span>
-                      <div className="flex items-center gap-1 mt-1">
-                        <div className={`w-1 h-1 rounded-full ${
-                          index % 4 === 0 ? 'bg-amber-400' :
-                          index % 4 === 1 ? 'bg-orange-400' :
-                          index % 4 === 2 ? 'bg-red-400' :
-                          'bg-pink-400'
-                        }`}></div>
-                        <div className={`w-1 h-1 rounded-full ${
-                          index % 4 === 0 ? 'bg-amber-300' :
-                          index % 4 === 1 ? 'bg-orange-300' :
-                          index % 4 === 2 ? 'bg-red-300' :
-                          'bg-pink-300'
-                        }`}></div>
-                        <div className={`w-1 h-1 rounded-full ${
-                          index % 4 === 0 ? 'bg-amber-200' :
-                          index % 4 === 1 ? 'bg-orange-200' :
-                          index % 4 === 2 ? 'bg-red-200' :
-                          'bg-pink-200'
-                        }`}></div>
-                      </div>
-                    </div>
-                    <Sparkles className="w-4 h-4 text-gray-400 group-hover:text-amber-500 opacity-0 group-hover:opacity-100 transition-all duration-300" />
+                      <span>{item.name}</span>
                     </a>
                   </Link>
                 ))}
-                
-                {/* Enhanced Language Toggle Section */}
-                <div className="pt-8 mt-8 border-t border-amber-200">
-                  <div className="bg-gradient-to-r from-white/90 to-amber-50/90 backdrop-blur-sm rounded-3xl p-6 border border-amber-200 shadow-lg">
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center">
-                        <span className="text-white text-xs font-bold">🌍</span>
-                      </div>
-                      <div>
-                        <p className="font-bold text-gray-900 text-sm">{t('language')}</p>
-                        <p className="text-xs text-gray-600">{t('chooseLanguage')}</p>
-                      </div>
-                    </div>
-                    <div className="flex gap-3">
-                      <button
-                        onClick={() => { setLanguage('en'); setMobileMenuOpen(false); }}
-                        className={`flex-1 py-3 px-4 rounded-xl font-semibold transition-all duration-300 ${
-                          language === 'en'
-                            ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg'
-                            : 'bg-white text-gray-700 border border-gray-300 hover:border-blue-400'
-                        }`}
-                      >
-                        🇬🇧 English
-                      </button>
-                      <button
-                        onClick={() => { setLanguage('de'); setMobileMenuOpen(false); }}
-                        className={`flex-1 py-3 px-4 rounded-xl font-semibold transition-all duration-300 ${
-                          language === 'de'
-                            ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg'
-                            : 'bg-white text-gray-700 border border-gray-300 hover:border-blue-400'
-                        }`}
-                      >
-                        🇩🇪 Deutsch
-                      </button>
-                    </div>
-                  </div>
+              </div>
+              
+              {/* Language Selection */}
+              <div className="pt-6 border-t border-gray-200">
+                <p className="font-semibold text-gray-900 text-sm mb-3">{t('chooseLanguage')}</p>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => { setLanguage('en'); setMobileMenuOpen(false); }}
+                    className={`flex-1 py-2.5 px-3 rounded-lg text-sm font-semibold transition-colors ${
+                      language === 'en'
+                        ? 'bg-primary-600 text-white'
+                        : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
+                    }`}
+                    aria-label="Switch to English"
+                  >
+                    🇬🇧 English
+                  </button>
+                  <button
+                    onClick={() => { setLanguage('de'); setMobileMenuOpen(false); }}
+                    className={`flex-1 py-2.5 px-3 rounded-lg text-sm font-semibold transition-colors ${
+                      language === 'de'
+                        ? 'bg-primary-600 text-white'
+                        : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
+                    }`}
+                    aria-label="Switch to German"
+                  >
+                    🇩🇪 Deutsch
+                  </button>
                 </div>
-                
-                {/* Enhanced Artistic Mobile Footer */}
-                <div className="mt-8 text-center pb-8">
-                  <div className="bg-gradient-to-r from-gray-50 to-amber-50 rounded-3xl p-6 border border-amber-100">
-                    <div className="flex items-center justify-center gap-3 mb-3">
-                      <Heart className="w-5 h-5 text-red-400 fill-current animate-pulse" />
-                      <span className="text-sm font-medium text-gray-700">{t('handcraftedWithLove')}</span>
-                      <Sparkles className="w-5 h-5 text-amber-400 animate-pulse" />
-                    </div>
-                    <div className="flex items-center justify-center gap-2 text-xs text-gray-500">
-                      <div className="w-1 h-1 bg-amber-400 rounded-full animate-pulse"></div>
-                      <span>{t('supportingCommunities')}</span>
-                      <div className="w-1 h-1 bg-orange-400 rounded-full animate-pulse delay-300"></div>
-                      <span>{t('preservingTraditions')}</span>
-                      <div className="w-1 h-1 bg-red-400 rounded-full animate-pulse delay-600"></div>
-                    </div>
-                  </div>
+              </div>
+              
+              {/* Mobile Mission Note */}
+              <div className="mt-6 bg-amber-50 rounded-xl p-4 border border-amber-100">
+                <div className="flex items-center gap-2 mb-1">
+                  <Heart className="w-4 h-4 text-primary-600 fill-current" />
+                  <span className="text-xs font-semibold text-primary-900">{t('handcraftedWithLove')}</span>
                 </div>
+                <p className="text-xs text-gray-600 leading-relaxed">
+                  {t('supportingCommunities')} • {t('preservingTraditions')}
+                </p>
               </div>
             </nav>
           </div>

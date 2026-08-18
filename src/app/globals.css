@@ -48,8 +48,8 @@
     @apply py-16 sm:py-20 lg:py-24;
   }
   
-  .text-gradient {
-    @apply bg-gradient-to-r from-primary-600 to-accent-600 bg-clip-text text-transparent;
+  .text-brand {
+    @apply text-primary-700 font-semibold;
   }
 }
 
