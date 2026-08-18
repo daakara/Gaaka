@@ -10,6 +10,7 @@ import { useLanguage } from '../../src/lib/i18n'
 import Header from '../../src/components/layout/Header'
 import Footer from '../../src/components/layout/Footer'
 import ProductGrid from '../../src/components/sections/ProductGrid'
+import { getFallbackProductsByCategory } from '../../src/lib/wordpress/fallbackProducts'
 
 interface CategoryPageProps {
   products: Product[]
@@ -20,18 +21,48 @@ interface IParams extends ParsedUrlQuery {
   categorySlug: string
 }
 
+const FALLBACK_CATEGORIES: Record<string, Collection> = {
+  'storage-baskets': {
+    id: 'cat-storage-baskets',
+    databaseId: 1,
+    name: 'Storage Baskets',
+    slug: 'storage-baskets',
+    description: 'Handcrafted lidded baskets that double as functional art',
+    count: 4,
+  },
+  'kitchen-dining': {
+    id: 'cat-kitchen-dining',
+    databaseId: 2,
+    name: 'Kitchen & Dining',
+    slug: 'kitchen-dining',
+    description: 'Art and function combined for endless uses for your kitchen & dining space',
+    count: 3,
+  },
+  'wall-baskets': {
+    id: 'cat-wall-baskets',
+    databaseId: 3,
+    name: 'Wall Baskets',
+    slug: 'wall-baskets',
+    description: 'Decorative wall baskets that transform any space into a work of art',
+    count: 3,
+  },
+}
+
 const CategoryPage: NextPage<CategoryPageProps> = ({ products, category }) => {
   const { t } = useLanguage()
 
-  if (!category) {
-    return <div>Loading...</div> // Or a proper 404 component
+  const safeCategory = category || {
+    name: t('allProducts'),
+    description: t('allProductsDescription'),
+    slug: 'all',
   }
+  const safeProducts = products && products.length > 0 ? products : getFallbackProductsByCategory(safeCategory.slug)
 
   return (
     <>
       <Head>
-        <title>{category.name} - GAAKA</title>
-        <meta name="description" content={category.description || `Explore our collection of ${category.name}.`} />
+        <title>{safeCategory.name} - GAAKA</title>
+        <meta name="description" content={safeCategory.description || `Explore our collection of ${safeCategory.name}.`} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/images/GAAKA.png" />
       </Head>
@@ -44,11 +75,11 @@ const CategoryPage: NextPage<CategoryPageProps> = ({ products, category }) => {
           <div className="container-custom">
             <div className="text-center max-w-3xl mx-auto">
               <h1 className="text-4xl sm:text-5xl font-heading font-bold text-gray-900 mb-6">
-                {category.name}
+                {safeCategory.name}
               </h1>
-              {category.description && (
+              {safeCategory.description && (
                 <p className="text-xl text-gray-600 leading-relaxed">
-                  {category.description}
+                  {safeCategory.description}
                 </p>
               )}
             </div>
@@ -56,18 +87,7 @@ const CategoryPage: NextPage<CategoryPageProps> = ({ products, category }) => {
         </section>
 
         {/* Products Grid */}
-        <section className="section-padding bg-white">
-          <div className="container-custom">
-            {products.length > 0 ? (
-              <ProductGrid products={products} />
-            ) : (
-              <div className="text-center py-12">
-                <h2 className="text-2xl font-bold text-gray-800 mb-4">No Products Found</h2>
-                <p className="text-gray-600">There are currently no products available in this collection.</p>
-              </div>
-            )}
-          </div>
-        </section>
+        <ProductGrid products={safeProducts} />
       </main>
 
       <Footer />
@@ -76,13 +96,16 @@ const CategoryPage: NextPage<CategoryPageProps> = ({ products, category }) => {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
+  const fallbackPaths = Object.keys(FALLBACK_CATEGORIES).map((slug) => ({
+    params: { categorySlug: slug },
+  }))
+
   try {
     const data = await fetchGraphQL(GET_ALL_CATEGORIES, {})
     
-    if (!data || !data.productCategories || !data.productCategories.nodes) {
-      console.warn('No categories found in WordPress. Using empty paths.')
+    if (!data || !data.productCategories || !data.productCategories.nodes || data.productCategories.nodes.length === 0) {
       return {
-        paths: [],
+        paths: fallbackPaths,
         fallback: 'blocking',
       }
     }
@@ -92,13 +115,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
     }))
 
     return {
-      paths,
+      paths: [...fallbackPaths, ...paths],
       fallback: 'blocking',
     }
   } catch (error) {
-    console.error('Error fetching categories for static paths:', error)
+    console.warn('Error fetching categories for static paths, using fallback paths:', error)
     return {
-      paths: [],
+      paths: fallbackPaths,
       fallback: 'blocking',
     }
   }
@@ -106,29 +129,49 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps<CategoryPageProps, IParams> = async (context) => {
   const { categorySlug } = context.params!
-  
+  const fallbackCategory = FALLBACK_CATEGORIES[categorySlug]
+  const fallbackProducts = getFallbackProductsByCategory(categorySlug)
+
   try {
     const categoryData = await fetchGraphQL(GET_CATEGORY_DETAILS, { id: categorySlug })
     const productsData = await fetchGraphQL(GET_PRODUCTS_BY_CATEGORY, { category: categorySlug, first: 100 })
     
-    if (!categoryData.productCategory) {
+    if (categoryData?.productCategory) {
+      const category = transformCategory(categoryData.productCategory)
+      const products = productsData?.products?.nodes ? productsData.products.nodes.map(transformProduct) : fallbackProducts
+
       return {
-        notFound: true,
+        props: {
+          products: products.length > 0 ? products : fallbackProducts,
+          category,
+        },
+        revalidate: 60,
       }
     }
 
-    const category = transformCategory(categoryData.productCategory)
-    const products = productsData.products.nodes.map(transformProduct)
+    if (fallbackCategory) {
+      return {
+        props: {
+          products: fallbackProducts,
+          category: fallbackCategory,
+        },
+        revalidate: 60,
+      }
+    }
 
     return {
-      props: {
-        products,
-        category,
-      },
-      revalidate: 60, // In seconds
+      notFound: true,
     }
   } catch (error) {
-    console.error(`Error fetching data for category ${categorySlug}:`, error)
+    if (fallbackCategory) {
+      return {
+        props: {
+          products: fallbackProducts,
+          category: fallbackCategory,
+        },
+        revalidate: 60,
+      }
+    }
     return {
       notFound: true,
     }
