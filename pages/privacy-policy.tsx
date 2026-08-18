@@ -13,11 +13,12 @@ export default function PrivacyPolicy() {
         <meta name="description" content="Read GAAKA's privacy policy to understand how we collect, use, and protect your personal information." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/images/GAAKA.png" />
+        <link rel="canonical" href="https://gaaka.com/privacy-policy" />
       </Head>
 
       <Header />
       
-      <main>
+      <main id="main-content">
         {/* Hero Section */}
         <section className="bg-amber-50/50 py-16 border-b border-amber-100/80">
           <div className="container-custom">

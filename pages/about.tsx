@@ -16,11 +16,12 @@ export default function About() {
         <meta name="description" content="Learn about GAAKA's mission to support African artisans and preserve traditional craftsmanship while creating beautiful, functional home accessories." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/images/GAAKA.png" />
+        <link rel="canonical" href="https://gaaka.com/about" />
       </Head>
 
       <Header />
       
-      <main>
+      <main id="main-content">
         {/* Hero Section */}
         <section className="bg-amber-50/50 py-20 border-b border-amber-100/80">
           <div className="container-custom">

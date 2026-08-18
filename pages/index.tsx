@@ -26,16 +26,17 @@ export default function HomePage({ heroContent }: HomePageProps) {
   return (
     <div className="min-h-screen">
       <Head>
-        <title>GAAKA - Handcrafted Kenyan Storage Baskets</title>
-        <meta name="description" content="Discover beautiful handwoven Kenyan storage baskets that combine modern design with traditional craftsmanship. Ethically sourced and artisan-made." />
-        <meta name="keywords" content="handcrafted baskets, Kenyan baskets, storage solutions, home decor, artisan made, sustainable" />
+        <title>GAAKA - Handcrafted Kenyan Storage Baskets & Home Decor</title>
+        <meta name="description" content="Discover beautiful handwoven Kenyan storage baskets that combine modern design with traditional craftsmanship. Ethically sourced, fair trade certified, artisan-made." />
+        <meta name="keywords" content="handcrafted baskets, Kenyan baskets, storage solutions, home decor, artisan made, sustainable, fair trade" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/images/GAAKA.png" />
+        <link rel="canonical" href="https://gaaka.com" />
         
         {/* Open Graph */}
         <meta property="og:title" content="GAAKA - Handcrafted Kenyan Storage Baskets" />
         <meta property="og:description" content="Modern design meets traditional craftsmanship. Discover our collection of handwoven Kenyan storage baskets." />
-        <meta property="og:image" content="/og-image.jpg" />
+        <meta property="og:image" content="https://gaaka.com/images/GAAKA.png" />
         <meta property="og:url" content="https://gaaka.com" />
         <meta property="og:type" content="website" />
         
@@ -43,7 +44,7 @@ export default function HomePage({ heroContent }: HomePageProps) {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="GAAKA - Handcrafted African Storage Baskets" />
         <meta name="twitter:description" content="Modern design meets traditional craftsmanship" />
-        <meta name="twitter:image" content="/twitter-image.jpg" />
+        <meta name="twitter:image" content="https://gaaka.com/images/GAAKA.png" />
         
         {/* Structured Data */}
         <script
@@ -61,7 +62,7 @@ export default function HomePage({ heroContent }: HomePageProps) {
       </Head>
       
       <Header />
-      <main>
+      <main id="main-content">
         <HeroSection content={heroContent} />
         <ProductSections />
         <MissionSection />

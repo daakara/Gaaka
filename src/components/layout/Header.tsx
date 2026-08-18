@@ -22,20 +22,29 @@ export default function Header() {
   ]
 
   return (
-    <header className="bg-white sticky top-0 z-50 border-b border-amber-100 shadow-sm">
-      {/* Top Banner */}
-      <div className="bg-primary-700 text-white text-center py-2.5 px-4">
-        <Link href="/collections/all">
-          <a className="inline-flex items-center justify-center gap-2 text-sm font-medium hover:underline focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-1 focus:ring-offset-primary-700 rounded">
-            <Sparkles className="w-4 h-4 text-amber-300" />
-            <span>{t('freeShipping')}</span>
-            <Heart className="w-4 h-4 text-red-300 fill-current" />
-          </a>
-        </Link>
-      </div>
+    <>
+      {/* Skip to Main Content for Accessibility */}
+      <a 
+        href="#main-content" 
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-5 focus:py-2.5 focus:bg-primary-700 focus:text-white focus:rounded-xl focus:shadow-xl focus:font-semibold focus:outline-none focus:ring-2 focus:ring-amber-300"
+      >
+        Skip to main content
+      </a>
 
-      {/* Main Header */}
-      <div className="container-custom">
+      <header className="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-amber-100/80 shadow-sm transition-all duration-200">
+        {/* Top Banner */}
+        <div className="bg-primary-800 text-white text-center py-2 px-4 text-xs sm:text-sm font-medium tracking-wide">
+          <Link href="/collections/all">
+            <a className="inline-flex items-center justify-center gap-2 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 rounded-md py-0.5 px-2">
+              <Sparkles className="w-4 h-4 text-amber-300 shrink-0" />
+              <span>{t('freeShipping')}</span>
+              <Heart className="w-3.5 h-3.5 text-red-300 fill-current shrink-0" />
+            </a>
+          </Link>
+        </div>
+
+        {/* Main Header */}
+        <div className="container-custom">
         <div className="flex items-center justify-between h-20">
           {/* Mobile menu button */}
           <div className="flex items-center lg:hidden">
@@ -215,6 +224,7 @@ export default function Header() {
           </div>
         </div>
       )}
-    </header>
+      </header>
+    </>
   )
 }

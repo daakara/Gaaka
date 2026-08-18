@@ -16,11 +16,12 @@ export default function Mission() {
         <meta name="description" content="Discover GAAKA's mission to empower African artisan communities through fair trade, education support, and sustainable employment opportunities." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/images/GAAKA.png" />
+        <link rel="canonical" href="https://gaaka.com/mission" />
       </Head>
 
       <Header />
       
-      <main>
+      <main id="main-content">
         {/* Hero Section */}
         <section className="bg-amber-50/50 py-20 border-b border-amber-100/80">
           <div className="container-custom">

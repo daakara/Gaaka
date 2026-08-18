@@ -14,11 +14,12 @@ export default function ShippingPage() {
         <title>{t('shippingDelivery')} | GAAKA</title>
         <meta name="description" content="Learn about GAAKA's shipping methods, delivery times, and international shipping options. Track your order and get detailed shipping information." />
         <meta name="keywords" content="shipping, delivery, international shipping, tracking, DHL, Hermes, UPS" />
+        <link rel="canonical" href="https://gaaka.com/shipping" />
       </Head>
 
       <Header />
       
-      <main className="min-h-screen bg-gray-50">
+      <main id="main-content" className="min-h-screen bg-gray-50">
         {/* Header Section */}
         <div className="bg-white border-b border-gray-200">
           <div className="container mx-auto px-4 py-6">

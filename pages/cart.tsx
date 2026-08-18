@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Trash2, Plus, Minus, ArrowRight, ShoppingBag, Loader2, ArrowLeft } from 'lucide-react'
+import { Trash2, Plus, Minus, ArrowRight, ShoppingBag, Loader2, ArrowLeft, ShieldCheck, Sparkles, Truck } from 'lucide-react'
 import Header from '../src/components/layout/Header'
 import Footer from '../src/components/layout/Footer'
 import { useLanguage } from '../src/lib/i18n'
+import { useCart } from '../src/contexts/CartContext'
 import {
   getCart,
   updateCartItemQuantity,
@@ -16,6 +17,7 @@ import {
 
 export default function CartPage() {
   const { t } = useLanguage()
+  const { state: localCart, removeItem: removeLocalItem, updateQuantity: updateLocalQuantity } = useCart()
   const [cart, setCart] = useState<WooCommerceCart | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -27,12 +29,19 @@ export default function CartPage() {
 
   async function loadCart() {
     setLoading(true)
-    const result = await getCart()
-    if (result.success && result.cart) {
-      setCart(result.cart)
+    try {
+      const result = await getCart()
+      if (result.success && result.cart && result.cart.items.length > 0) {
+        setCart(result.cart)
+        setError(null)
+      } else {
+        // Fallback to local cart context smoothly without raw error banner
+        setCart(null)
+        setError(null)
+      }
+    } catch {
+      setCart(null)
       setError(null)
-    } else {
-      setError(result.error || 'Failed to load cart')
     }
     setLoading(false)
   }
@@ -77,72 +86,91 @@ export default function CartPage() {
     window.location.href = getCheckoutUrl()
   }
 
-  const isCartEmpty = !cart || cart.items_count === 0
+  const hasLocalItems = localCart && localCart.items && localCart.items.length > 0
+  const hasWooItems = cart && cart.items && cart.items.length > 0
+  const isCartEmpty = !hasWooItems && !hasLocalItems
+
+  const subtotal = hasWooItems 
+    ? parseFloat(cart.totals.total_price) 
+    : localCart.total
+
+  const itemsCount = hasWooItems 
+    ? cart.items_count 
+    : localCart.itemCount
+
+  const shippingRemaining = Math.max(0, 75 - subtotal)
 
   return (
     <>
       <Head>
-        <title>{t('shoppingCart')} - GAAKA</title>
+        <title>{t('shoppingCart')} - Handcrafted African Baskets | GAAKA</title>
         <meta name="description" content="Review your selected handwoven African baskets and proceed to checkout." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/images/GAAKA.png" />
+        <link rel="canonical" href="https://gaaka.com/cart" />
       </Head>
 
       <Header />
 
-      <main className="min-h-screen bg-gray-50">
-        <div className="container mx-auto px-4 py-12">
+      <main id="main-content" className="min-h-screen bg-[#faf8f5]">
+        <div className="container-custom py-12">
           <div className="mb-8">
             <Link href="/collections/all">
-              <a className="inline-flex items-center text-amber-600 hover:text-amber-700 font-medium">
+              <a className="inline-flex items-center text-primary-700 hover:text-primary-800 font-semibold text-sm transition-colors">
                 <ArrowLeft className="w-4 h-4 mr-2" />
-                Continue Shopping
+                Continue Exploring Collections
               </a>
             </Link>
           </div>
 
-          <h1 className="text-4xl font-bold mb-8">Shopping Cart</h1>
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-8">
+            Shopping Cart ({itemsCount})
+          </h1>
 
-          {loading ? (
-            <div className="flex justify-center items-center py-20">
-              <Loader2 className="w-8 h-8 animate-spin text-amber-600" />
+          {/* Free Shipping Notification */}
+          <div className="bg-amber-50 border border-amber-200/80 rounded-2xl p-4 mb-8 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Truck className="w-5 h-5 text-primary-700 shrink-0" />
+              <p className="text-xs sm:text-sm text-amber-950 font-medium">
+                {shippingRemaining === 0 ? (
+                  <span className="text-emerald-800 font-bold">🎉 Congratulations! You qualify for Free Germany Shipping.</span>
+                ) : (
+                  <span>Add <strong className="text-primary-700">€{shippingRemaining.toFixed(2)}</strong> more to get <strong>Free Germany Shipping</strong>!</span>
+                )}
+              </p>
             </div>
-          ) : error ? (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
-              <p className="text-red-600">{error}</p>
-              <button
-                onClick={loadCart}
-                className="mt-4 px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
-              >
-                Retry
-              </button>
+          </div>
+
+          {loading && !hasLocalItems ? (
+            <div className="flex justify-center items-center py-20">
+              <Loader2 className="w-8 h-8 animate-spin text-primary-700" />
             </div>
           ) : isCartEmpty ? (
-            <div className="bg-white rounded-xl shadow-sm p-12 text-center">
-              <ShoppingBag className="w-16 h-16 mx-auto text-gray-300 mb-4" />
-              <h2 className="text-2xl font-semibold text-gray-700 mb-2">Your cart is empty</h2>
-              <p className="text-gray-500 mb-6">Add some beautiful handwoven baskets to get started!</p>
+            <div className="bg-white rounded-3xl border border-amber-100 shadow-sm p-12 text-center max-w-lg mx-auto">
+              <ShoppingBag className="w-16 h-16 mx-auto text-amber-300 mb-4" />
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">Your cart is empty</h2>
+              <p className="text-gray-600 mb-6 text-sm">Discover our fair-trade Kenyan storage and decor baskets to get started.</p>
               <Link href="/collections/all">
-                <a className="inline-flex items-center px-6 py-3 bg-amber-600 text-white rounded-lg hover:bg-amber-700 font-medium">
-                  Browse Collection
-                  <ArrowRight className="ml-2 w-5 h-5" />
+                <a className="btn-primary inline-flex items-center gap-2">
+                  <span>Browse Collections</span>
+                  <ArrowRight className="w-4 h-4" />
                 </a>
               </Link>
             </div>
           ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
               {/* Cart Items */}
-              <div className="lg:col-span-2">
-                <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-                  <div className="divide-y divide-gray-200">
-                    {cart.items.map((item) => {
+              <div className="lg:col-span-8 space-y-4">
+                <div className="bg-white rounded-3xl border border-amber-100/80 shadow-sm overflow-hidden divide-y divide-gray-100">
+                  {hasWooItems ? (
+                    cart.items.map((item) => {
                       const isUpdating = updatingItems.has(item.key)
-                      const itemImage = item.images[0]?.src || '/images/placeholder.jpg'
+                      const itemImage = item.images[0]?.src || '/images/placeholder.png'
 
                       return (
-                        <div key={item.key} className={`p-6 ${isUpdating ? 'opacity-50' : ''}`}>
-                          <div className="flex gap-6">
-                            <div className="relative w-24 h-24 flex-shrink-0 bg-gray-100 rounded-lg overflow-hidden">
+                        <div key={item.key} className={`p-6 flex flex-col sm:flex-row gap-6 items-start sm:items-center justify-between ${isUpdating ? 'opacity-50' : ''}`}>
+                          <div className="flex gap-4 items-center">
+                            <div className="relative w-20 h-20 flex-shrink-0 bg-amber-50 rounded-2xl overflow-hidden border border-amber-100">
                               <Image
                                 src={itemImage}
                                 alt={item.name}
@@ -150,110 +178,141 @@ export default function CartPage() {
                                 objectFit="cover"
                               />
                             </div>
+                            <div>
+                              <h3 className="font-bold text-base text-gray-900">{item.name}</h3>
+                              <p className="text-primary-700 font-bold text-sm">€{parseFloat(item.price).toFixed(2)}</p>
+                            </div>
+                          </div>
 
-                            <div className="flex-1">
-                              <h3 className="font-semibold text-lg mb-1">{item.name}</h3>
-                              <p className="text-amber-600 font-medium">€{parseFloat(item.price).toFixed(2)}</p>
-
-                              <div className="flex items-center gap-4 mt-4">
-                                <div className="flex items-center border border-gray-300 rounded-lg">
-                                  <button
-                                    onClick={() => handleUpdateQuantity(item.key, item.quantity - 1)}
-                                    disabled={isUpdating || item.quantity <= 1}
-                                    className="p-2 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
-                                  >
-                                    <Minus className="w-4 h-4" />
-                                  </button>
-                                  <span className="px-4 py-2 min-w-[3rem] text-center font-medium">
-                                    {item.quantity}
-                                  </span>
-                                  <button
-                                    onClick={() => handleUpdateQuantity(item.key, item.quantity + 1)}
-                                    disabled={isUpdating}
-                                    className="p-2 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
-                                  >
-                                    <Plus className="w-4 h-4" />
-                                  </button>
-                                </div>
-
-                                <button
-                                  onClick={() => handleRemoveItem(item.key)}
-                                  disabled={isUpdating}
-                                  className="text-red-600 hover:text-red-700 disabled:opacity-50 disabled:cursor-not-allowed"
-                                >
-                                  <Trash2 className="w-5 h-5" />
-                                </button>
-                              </div>
+                          <div className="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-end">
+                            <div className="flex items-center border border-gray-200 rounded-xl bg-gray-50 p-1">
+                              <button
+                                onClick={() => handleUpdateQuantity(item.key, item.quantity - 1)}
+                                disabled={isUpdating || item.quantity <= 1}
+                                className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white disabled:opacity-40 transition-colors"
+                                aria-label="Decrease quantity"
+                              >
+                                <Minus className="w-3.5 h-3.5" />
+                              </button>
+                              <span className="w-8 text-center text-xs font-bold text-gray-900">{item.quantity}</span>
+                              <button
+                                onClick={() => handleUpdateQuantity(item.key, item.quantity + 1)}
+                                disabled={isUpdating}
+                                className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white disabled:opacity-40 transition-colors"
+                                aria-label="Increase quantity"
+                              >
+                                <Plus className="w-3.5 h-3.5" />
+                              </button>
                             </div>
 
-                            <div className="text-right">
-                              <p className="font-semibold text-lg">
-                                €{parseFloat(item.totals.line_total).toFixed(2)}
-                              </p>
-                            </div>
+                            <button
+                              onClick={() => handleRemoveItem(item.key)}
+                              disabled={isUpdating}
+                              className="text-gray-400 hover:text-red-600 transition-colors p-2"
+                              aria-label="Remove item"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
                           </div>
                         </div>
                       )
-                    })}
-                  </div>
+                    })
+                  ) : (
+                    localCart.items.map((item) => (
+                      <div key={item.id} className="p-6 flex flex-col sm:flex-row gap-6 items-start sm:items-center justify-between">
+                        <div className="flex gap-4 items-center">
+                          <div className="relative w-20 h-20 flex-shrink-0 bg-amber-50 rounded-2xl overflow-hidden border border-amber-100">
+                            <Image
+                              src={item.image || '/images/placeholder.png'}
+                              alt={item.name}
+                              layout="fill"
+                              objectFit="cover"
+                            />
+                          </div>
+                          <div>
+                            <h3 className="font-bold text-base text-gray-900">{item.name}</h3>
+                            {item.color && (
+                              <p className="text-xs text-gray-500 font-medium">Color: {item.color}</p>
+                            )}
+                            <p className="text-primary-700 font-bold text-sm mt-0.5">€{item.price.toFixed(2)}</p>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-end">
+                          <div className="flex items-center border border-gray-200 rounded-xl bg-gray-50 p-1">
+                            <button
+                              onClick={() => updateLocalQuantity(item.id, item.quantity - 1)}
+                              disabled={item.quantity <= 1}
+                              className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white disabled:opacity-40 transition-colors"
+                              aria-label="Decrease quantity"
+                            >
+                              <Minus className="w-3.5 h-3.5" />
+                            </button>
+                            <span className="w-8 text-center text-xs font-bold text-gray-900">{item.quantity}</span>
+                            <button
+                              onClick={() => updateLocalQuantity(item.id, item.quantity + 1)}
+                              className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white transition-colors"
+                              aria-label="Increase quantity"
+                            >
+                              <Plus className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
+
+                          <button
+                            onClick={() => removeLocalItem(item.id)}
+                            className="text-gray-400 hover:text-red-600 transition-colors p-2"
+                            aria-label="Remove item"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </div>
+                    ))
+                  )}
                 </div>
               </div>
 
-              {/* Order Summary */}
-              <div className="lg:col-span-1">
-                <div className="bg-white rounded-xl shadow-sm p-6 sticky top-24">
-                  <h2 className="text-xl font-semibold mb-6">Order Summary</h2>
+              {/* Summary Card */}
+              <div className="lg:col-span-4">
+                <div className="bg-white rounded-3xl border border-amber-100/80 shadow-sm p-6 space-y-6 sticky top-28">
+                  <h2 className="text-lg font-bold text-gray-900">Order Summary</h2>
 
-                  <div className="space-y-3 mb-6">
+                  <div className="space-y-3 text-sm">
                     <div className="flex justify-between text-gray-600">
-                      <span>Subtotal ({cart.items_count} items)</span>
-                      <span>€{parseFloat(cart.totals.total_items).toFixed(2)}</span>
+                      <span>Subtotal ({itemsCount} items)</span>
+                      <span className="font-semibold text-gray-900">€{subtotal.toFixed(2)}</span>
                     </div>
 
-                    {parseFloat(cart.totals.total_discount) > 0 && (
-                      <div className="flex justify-between text-green-600">
-                        <span>Discount</span>
-                        <span>-€{parseFloat(cart.totals.total_discount).toFixed(2)}</span>
-                      </div>
-                    )}
-
-                    {cart.needs_shipping && (
-                      <div className="flex justify-between text-gray-600">
-                        <span>Shipping</span>
-                        <span>
-                          {parseFloat(cart.totals.total_shipping) > 0
-                            ? `€${parseFloat(cart.totals.total_shipping).toFixed(2)}`
-                            : 'Calculated at checkout'}
-                        </span>
-                      </div>
-                    )}
-
                     <div className="flex justify-between text-gray-600">
-                      <span>Tax</span>
-                      <span>€{parseFloat(cart.totals.total_tax).toFixed(2)}</span>
+                      <span>Germany Shipping</span>
+                      <span className="font-semibold text-gray-900">
+                        {subtotal >= 75 ? <span className="text-emerald-700 font-bold">FREE</span> : '€4.90'}
+                      </span>
                     </div>
 
-                    <div className="border-t border-gray-200 pt-3">
-                      <div className="flex justify-between text-xl font-bold">
-                        <span>Total</span>
-                        <span className="text-amber-600">
-                          €{parseFloat(cart.totals.total_price).toFixed(2)}
-                        </span>
-                      </div>
+                    <div className="border-t border-gray-100 pt-3 flex justify-between text-base font-extrabold text-gray-900">
+                      <span>Total (incl. VAT)</span>
+                      <span className="text-xl text-primary-700">
+                        €{(subtotal >= 75 ? subtotal : subtotal + 4.9).toFixed(2)}
+                      </span>
                     </div>
                   </div>
 
                   <button
                     onClick={handleCheckout}
-                    className="w-full bg-amber-600 text-white px-6 py-4 rounded-lg font-semibold hover:bg-amber-700 transition-colors flex items-center justify-center gap-2"
+                    className="w-full btn-primary py-4 text-base shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+                    type="button"
                   >
-                    Proceed to Checkout
-                    <ArrowRight className="w-5 h-5" />
+                    <span>Proceed to Checkout</span>
+                    <ArrowRight className="w-4 h-4" />
                   </button>
 
-                  <p className="text-sm text-gray-500 text-center mt-4">
-                    Secure checkout powered by WooCommerce
-                  </p>
+                  <div className="space-y-2 pt-2 border-t border-gray-100 text-center">
+                    <div className="flex items-center justify-center gap-1.5 text-xs text-gray-500 font-medium">
+                      <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                      <span>Encrypted SSL 256-bit Secure Checkout</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

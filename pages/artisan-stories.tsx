@@ -13,11 +13,12 @@ export default function ArtisanStories() {
         <meta name="description" content="Meet the talented artisans behind GAAKA's beautiful handcrafted baskets and learn their inspiring stories." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/images/GAAKA.png" />
+        <link rel="canonical" href="https://gaaka.com/artisan-stories" />
       </Head>
 
       <Header />
       
-      <main>
+      <main id="main-content">
         {/* Hero Section */}
         <section className="bg-amber-50/50 py-16 border-b border-amber-100/80">
           <div className="container-custom">

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useId } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Search as SearchIcon, X, Loader } from 'lucide-react'
@@ -24,6 +24,7 @@ export default function Search() {
   const debouncedQuery = useDebounce(query, 300)
   const { results, loading, search, error } = useProductSearch()
   const searchRef = useRef<HTMLDivElement>(null)
+  const listboxId = useId()
 
   useEffect(() => {
     if (debouncedQuery.trim()) {
@@ -34,70 +35,92 @@ export default function Search() {
     }
   }, [debouncedQuery, search])
 
-  // Close dropdown when clicking outside
+  // Close dropdown on outside click or Escape key
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
         setIsOpen(false)
       }
     }
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === 'Escape') {
+        setIsOpen(false)
+      }
+    }
+
     document.addEventListener('mousedown', handleClickOutside)
+    document.addEventListener('keydown', handleKeyDown)
     return () => {
       document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('keydown', handleKeyDown)
     }
   }, [searchRef])
 
   return (
     <div className="relative w-full max-w-md" ref={searchRef}>
-      <div className="relative">
+      <div 
+        className="relative"
+        role="combobox"
+        aria-expanded={isOpen}
+        aria-haspopup="listbox"
+        aria-owns={listboxId}
+      >
         <input
-          type="text"
-          placeholder="Search for products..."
+          type="search"
+          placeholder="Search handcrafted baskets..."
           aria-label="Search products"
+          aria-autocomplete="list"
+          aria-controls={listboxId}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          onFocus={() => query && setIsOpen(true)}
-          className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-full focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all text-sm"
+          onFocus={() => query.trim() && setIsOpen(true)}
+          className="w-full pl-10 pr-10 py-2.5 bg-gray-50/80 hover:bg-white focus:bg-white border border-gray-200 rounded-full focus:ring-2 focus:ring-primary-600 focus:border-primary-600 transition-all text-sm shadow-inner"
         />
-        <div className="absolute left-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
-          <SearchIcon className="w-4 h-4 text-gray-400" />
+        <div className="absolute left-3.5 top-1/2 transform -translate-y-1/2 pointer-events-none text-gray-400">
+          <SearchIcon className="w-4 h-4" />
         </div>
         {query && !loading && (
           <button
             onClick={() => setQuery('')}
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-1 focus:ring-primary-500 rounded-full"
-            aria-label="Clear search input"
+            className="absolute right-3.5 top-1/2 transform -translate-y-1/2 p-1 text-gray-400 hover:text-gray-700 focus:outline-none focus-visible:ring-1 focus-visible:ring-primary-600 rounded-full"
+            aria-label="Clear search query"
+            type="button"
           >
             <X className="w-4 h-4" />
           </button>
         )}
         {loading && (
-           <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-             <Loader className="w-5 h-5 text-gray-400 animate-spin" />
-           </div>
+          <div className="absolute right-3.5 top-1/2 transform -translate-y-1/2" aria-label="Searching...">
+            <Loader className="w-4 h-4 text-primary-600 animate-spin" />
+          </div>
         )}
       </div>
 
       {isOpen && (
-        <div className="absolute top-full mt-2 w-full bg-white rounded-lg shadow-2xl z-50 overflow-hidden border">
-          {error && <div className="p-4 text-center text-red-500">{error.message}</div>}
+        <div 
+          id={listboxId}
+          role="listbox"
+          className="absolute top-full mt-2 w-full bg-white rounded-2xl shadow-xl z-50 overflow-hidden border border-amber-100 animate-fadeIn"
+        >
+          {error && <div className="p-4 text-center text-sm text-red-600">{error.message}</div>}
           
           {!loading && results.length === 0 && debouncedQuery && !error && (
-            <div className="p-4 text-center text-gray-500">
-              No results found for "{debouncedQuery}"
+            <div className="p-5 text-center text-sm text-gray-500">
+              No baskets found for &ldquo;<span className="font-semibold text-gray-700">{debouncedQuery}</span>&rdquo;
             </div>
           )}
 
           {!loading && results.length > 0 && (
-            <ul className="max-h-[60vh] overflow-y-auto divide-y">
+            <ul className="max-h-[60vh] overflow-y-auto divide-y divide-gray-100">
               {results.map((product) => (
-                <li key={product.id}>
+                <li key={product.id} role="option" aria-selected="false">
                   <Link href={`/products/${product.slug}`}>
                     <a
-                      className="flex items-center p-3 hover:bg-amber-50 transition-colors"
+                      className="flex items-center p-3.5 hover:bg-amber-50/80 transition-colors group"
                       onClick={() => setIsOpen(false)}
                     >
-                      <div className="relative w-16 h-16 rounded-md overflow-hidden mr-4 flex-shrink-0">
+                      <div className="relative w-14 h-14 rounded-xl overflow-hidden mr-3.5 flex-shrink-0 bg-gray-100 border border-gray-100">
                         <Image
                           src={product.image ?? '/images/placeholder.png'}
                           alt={product.imageAlt ?? product.name}
@@ -105,9 +128,11 @@ export default function Search() {
                           objectFit="cover"
                         />
                       </div>
-                      <div className="flex-grow">
-                        <p className="font-semibold text-gray-800">{product.name}</p>
-                        <p className="text-sm text-gray-600">€{product.price}</p>
+                      <div className="flex-grow min-w-0">
+                        <p className="font-semibold text-sm text-gray-900 group-hover:text-primary-700 transition-colors truncate">
+                          {product.name}
+                        </p>
+                        <p className="text-xs font-bold text-primary-800 mt-0.5">€{product.price}</p>
                       </div>
                     </a>
                   </Link>

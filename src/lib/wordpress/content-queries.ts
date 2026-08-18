@@ -193,8 +193,13 @@ export async function fetchSiteContent(
   contentType: string,
   fallback: Partial<SiteContent['siteContentFields']>
 ): Promise<SiteContent['siteContentFields']> {
+  const apiUrl = process.env.WORDPRESS_API_URL;
+  if (!apiUrl) {
+    return { contentType, ...fallback };
+  }
+
   try {
-    const response = await fetch(process.env.WORDPRESS_API_URL || '', {
+    const response = await fetch(apiUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -210,7 +215,6 @@ export async function fetchSiteContent(
       return content.siteContentFields;
     }
 
-    // Return fallback if no WordPress content found
     return { contentType, ...fallback };
   } catch (error) {
     console.warn(`Failed to fetch ${contentType} content, using fallback:`, error);
@@ -222,8 +226,13 @@ export async function fetchSiteContent(
  * Fetch artisan stories with error handling
  */
 export async function fetchArtisanStories(first: number = 10): Promise<ArtisanStory[]> {
+  const apiUrl = process.env.WORDPRESS_API_URL;
+  if (!apiUrl) {
+    return [];
+  }
+
   try {
-    const response = await fetch(process.env.WORDPRESS_API_URL || '', {
+    const response = await fetch(apiUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -244,8 +253,13 @@ export async function fetchArtisanStories(first: number = 10): Promise<ArtisanSt
  * Fetch category with long description
  */
 export async function fetchCategoryWithDescription(slug: string): Promise<CategoryWithDescription | null> {
+  const apiUrl = process.env.WORDPRESS_API_URL;
+  if (!apiUrl) {
+    return null;
+  }
+
   try {
-    const response = await fetch(process.env.WORDPRESS_API_URL || '', {
+    const response = await fetch(apiUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

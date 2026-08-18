@@ -14,11 +14,12 @@ export default function Returns() {
         <meta name="description" content="Learn about GAAKA's return and exchange policy. Easy 30-day returns on all handcrafted basket purchases." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/images/GAAKA.png" />
+        <link rel="canonical" href="https://gaaka.com/returns" />
       </Head>
 
       <Header />
       
-      <main>
+      <main id="main-content">
         {/* Hero Section */}
         <section className="bg-amber-50/50 py-16 border-b border-amber-100/80">
           <div className="container-custom">
