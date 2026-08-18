@@ -1,10 +1,11 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight, Heart, Users, Award } from 'lucide-react'
+import { ArrowRight, Heart, Users, Award, Sparkles } from 'lucide-react'
 import Header from '../src/components/layout/Header'
 import Footer from '../src/components/layout/Footer'
 import { useLanguage } from '../src/lib/i18n'
+import { StatCounter } from '../src/components/ui/StatCounter'
 
 export default function About() {
   const { t } = useLanguage()
@@ -161,36 +162,49 @@ export default function About() {
         </section>
 
         {/* Impact Stats */}
-        <section className="section-padding bg-primary-600 text-white">
+        <section className="section-padding bg-[#fcfaf7] border-y border-amber-200/60">
           <div className="container-custom">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl sm:text-4xl font-heading font-bold mb-4">
+            <div className="text-center mb-14 max-w-2xl mx-auto">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-primary-800 border border-amber-200 mb-3">
+                <span>Direct Social Impact</span>
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-heading font-extrabold text-gray-900 mb-4 tracking-tight">
                 {t('ourImpactTogether')}
               </h2>
-              <p className="text-xl text-primary-100 max-w-2xl mx-auto">
+              <p className="text-base sm:text-lg text-gray-600 leading-relaxed">
                 {t('ourImpactDesc')}
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
-              {[
-                { number: '200+', label: t('artisansSupported'), description: t('creatingEmployment') },
-                { number: '15%', label: t('profitsToEducation'), description: t('fundingEducation') },
-                { number: '5000+', label: t('happyCustomers'), description: t('bringingBeauty') },
-                { number: '8', label: t('countriesLabel'), description: t('acrossAfricaDesc') }
-              ].map((stat, index) => (
-                <div key={index}>
-                  <div className="text-4xl sm:text-5xl font-heading font-bold text-secondary-400 mb-2">
-                    {stat.number}
-                  </div>
-                  <div className="text-lg font-semibold text-white mb-2">
-                    {stat.label}
-                  </div>
-                  <div className="text-primary-100 text-sm">
-                    {stat.description}
-                  </div>
-                </div>
-              ))}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <StatCounter
+                number="200+"
+                label={t('artisansSupported')}
+                description={t('creatingEmployment')}
+                badge="100% Fair Pay"
+                icon={<Users className="w-6 h-6" />}
+              />
+              <StatCounter
+                number="15%"
+                label={t('profitsToEducation')}
+                description={t('fundingEducation')}
+                badge="Reinvested"
+                icon={<Award className="w-6 h-6" />}
+              />
+              <StatCounter
+                number="5,000+"
+                label={t('happyCustomers')}
+                description={t('bringingBeauty')}
+                badge="Verified"
+                icon={<Heart className="w-6 h-6" />}
+              />
+              <StatCounter
+                number="8"
+                label={t('countriesLabel')}
+                description={t('acrossAfricaDesc')}
+                badge="Global"
+                icon={<Sparkles className="w-6 h-6" />}
+              />
             </div>
           </div>
         </section>

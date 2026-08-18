@@ -6,6 +6,8 @@ import { useLanguage } from '../../lib/i18n'
 import { useCart } from '../../contexts/CartContext'
 import { Product } from '../../lib/wordpress/types'
 import { ALL_FALLBACK_PRODUCTS } from '../../lib/wordpress/fallbackProducts'
+import { QuickViewModal } from '../ui/QuickViewModal'
+import { Toast, ToastNotification } from '../ui/Toast'
 
 const getBadgeStyles = (badge: Product['badge']) => {
   switch (badge) {
@@ -37,8 +39,10 @@ export default function ProductGrid({
   subtitle,
 }: ProductGridProps) {
   const { t } = useLanguage()
-  const { addItem } = useCart()
+  const { addItem, toggleCart } = useCart()
   const [addedIds, setAddedIds] = useState<Record<string, boolean>>({})
+  const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null)
+  const [toast, setToast] = useState<ToastNotification | null>(null)
 
   const products = initialProducts && initialProducts.length > 0 ? initialProducts : ALL_FALLBACK_PRODUCTS
 
@@ -76,13 +80,28 @@ export default function ProductGrid({
       color: product.colors?.[0] ?? ''
     })
     setAddedIds(prev => ({ ...prev, [product.id]: true }))
+    setToast({
+      id: product.id,
+      title: product.name,
+      description: 'Added to your shopping cart',
+      image: product.image,
+      price: product.price,
+      onAction: () => {
+        setToast(null)
+        toggleCart()
+      },
+      onClose: () => setToast(null)
+    })
     setTimeout(() => {
       setAddedIds(prev => ({ ...prev, [product.id]: false }))
     }, 1800)
+    setTimeout(() => {
+      setToast(null)
+    }, 4500)
   }
 
   return (
-    <section className="section-padding bg-gradient-to-b from-gray-50/50 to-amber-50/30 overflow-hidden border-b border-gray-100">
+    <section className="section-padding bg-gradient-to-b from-gray-50/50 to-amber-50/30 overflow-hidden border-b border-gray-100 relative">
       <div className="container-custom">
         {/* Section Header */}
         <div className="text-center mb-16 max-w-2xl mx-auto">
@@ -127,16 +146,16 @@ export default function ProductGrid({
                   )}
                   
                   {/* Quick View Button */}
-                  <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
-                    <Link href={`/products/${product.slug}`}>
-                      <a 
-                        className="bg-white/95 text-gray-900 px-5 py-2.5 rounded-full font-bold text-sm shadow-lg hover:bg-white transition-all transform hover:scale-105 flex items-center gap-2"
-                        aria-label={`Quick view details of ${product.name}`}
-                      >
-                        <Eye className="w-4 h-4 text-primary-700" />
-                        <span>{t('quickView')}</span>
-                      </a>
-                    </Link>
+                  <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setQuickViewProduct(product)}
+                      className="bg-white/95 text-gray-900 px-4 py-2.5 rounded-full font-bold text-xs shadow-lg hover:bg-white transition-all transform hover:scale-105 flex items-center gap-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-600"
+                      aria-label={`Quick view details of ${product.name}`}
+                    >
+                      <Eye className="w-4 h-4 text-primary-700" />
+                      <span>{t('quickView')}</span>
+                    </button>
                   </div>
                 </div>
                 
@@ -263,6 +282,16 @@ export default function ProductGrid({
           </Link>
         </div>
       </div>
+
+      {/* Quick View Modal */}
+      <QuickViewModal
+        product={quickViewProduct}
+        isOpen={!!quickViewProduct}
+        onClose={() => setQuickViewProduct(null)}
+      />
+
+      {/* Toast Notification */}
+      {toast && <Toast {...toast} />}
     </section>
   )
 }

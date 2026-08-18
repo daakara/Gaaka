@@ -17,6 +17,7 @@ import Footer from '../../src/components/layout/Footer'
 import ProductGrid from '../../src/components/sections/ProductGrid'
 import { ALL_FALLBACK_PRODUCTS } from '../../src/lib/wordpress/fallbackProducts'
 import { generateProductData, generateBreadcrumbData } from '../../src/lib/seo/structured-data'
+import { Tabs } from '../../src/components/ui/Tabs'
 
 interface ProductPageProps {
   product: Product
@@ -384,48 +385,16 @@ const ProductPage: NextPage<ProductPageProps> = ({ product, relatedProducts }) =
               </div>
 
               {/* Tabs for detailed content */}
-              <div className="pt-6 border-t border-gray-200">
-                <div className="flex border-b border-gray-200 gap-4" role="tablist">
-                  <button
-                    onClick={() => setActiveTab('details')}
-                    className={`pb-3 text-xs font-bold uppercase tracking-wider border-b-2 transition-colors ${
-                      activeTab === 'details'
-                        ? 'border-primary-700 text-primary-700'
-                        : 'border-transparent text-gray-500 hover:text-gray-800'
-                    }`}
-                    role="tab"
-                    aria-selected={activeTab === 'details'}
-                    type="button"
-                  >
-                    Artisanship
-                  </button>
-                  <button
-                    onClick={() => setActiveTab('specs')}
-                    className={`pb-3 text-xs font-bold uppercase tracking-wider border-b-2 transition-colors ${
-                      activeTab === 'specs'
-                        ? 'border-primary-700 text-primary-700'
-                        : 'border-transparent text-gray-500 hover:text-gray-800'
-                    }`}
-                    role="tab"
-                    aria-selected={activeTab === 'specs'}
-                    type="button"
-                  >
-                    Specifications
-                  </button>
-                  <button
-                    onClick={() => setActiveTab('care')}
-                    className={`pb-3 text-xs font-bold uppercase tracking-wider border-b-2 transition-colors ${
-                      activeTab === 'care'
-                        ? 'border-primary-700 text-primary-700'
-                        : 'border-transparent text-gray-500 hover:text-gray-800'
-                    }`}
-                    role="tab"
-                    aria-selected={activeTab === 'care'}
-                    type="button"
-                  >
-                    Care Guide
-                  </button>
-                </div>
+              <div className="pt-6 border-t border-gray-200 space-y-4">
+                <Tabs
+                  items={[
+                    { id: 'details', label: 'Artisanship' },
+                    { id: 'specs', label: 'Specifications' },
+                    { id: 'care', label: 'Care Guide' },
+                  ]}
+                  activeId={activeTab}
+                  onChange={(id) => setActiveTab(id as any)}
+                />
 
                 <div className="py-4 text-xs text-gray-600 leading-relaxed">
                   {activeTab === 'details' && (
