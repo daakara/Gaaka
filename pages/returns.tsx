@@ -119,7 +119,7 @@ export default function Returns() {
                 <div>
                   <h4 className="text-lg font-semibold text-gray-900 mb-4">✗ What Cannot Be Returned</h4>
                   <ul className="space-y-2 text-gray-600">
-                    <li>• Gift cards and digital products</li>
+                    <li>• Digital products and custom items</li>
                     <li>• Personalized or custom-made items</li>
                     <li>• Items returned after 30 days</li>
                     <li>• Products showing signs of wear or damage</li>

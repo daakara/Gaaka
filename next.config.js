@@ -19,6 +19,16 @@ const nextConfig = {
       ? 'https://gaaka.com' 
       : 'http://localhost:3000',
   },
+  
+  async redirects() {
+    return [
+      {
+        source: '/gift-cards',
+        destination: '/',
+        permanent: true,
+      },
+    ]
+  },
 }
 
 module.exports = nextConfig

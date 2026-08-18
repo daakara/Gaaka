@@ -5,7 +5,6 @@ export const translations = {
     storageBaskets: 'Storage Baskets',
     kitchenDining: 'Kitchen & Dining',
     wallBaskets: 'Wall Baskets',
-    giftCards: 'Gift Cards',
     about: 'About',
     
     // Header
@@ -338,7 +337,6 @@ export const translations = {
     storageBaskets: 'Aufbewahrungskörbe',
     kitchenDining: 'Küche & Esszimmer',
     wallBaskets: 'Wandkörbe',
-    giftCards: 'Geschenkkarten',
     about: 'Über uns',
     
     // Header
