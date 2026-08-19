@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import Image from 'next/image'
 import { CheckCircle2, ShoppingBag, X } from 'lucide-react'
 
@@ -22,9 +23,17 @@ export function Toast({
   onAction,
   onClose
 }: ToastNotification) {
-  return (
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) return null
+
+  return createPortal(
     <div 
-      className="fixed bottom-6 right-6 z-50 max-w-sm w-full bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-amber-200/90 p-4 animate-slideInUp flex items-center gap-3.5"
+      className="fixed bottom-20 right-4 sm:bottom-6 sm:right-6 z-[9999] max-w-sm w-[calc(100vw-2rem)] sm:w-full bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-amber-200/90 p-4 animate-slideInUp flex items-center gap-3.5"
       role="status"
       aria-live="polite"
     >
@@ -82,6 +91,7 @@ export function Toast({
           <X className="w-4 h-4" />
         </button>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }

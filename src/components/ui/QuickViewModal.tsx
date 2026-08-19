@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import Image from 'next/image'
 import Link from 'next/link'
 import { X, Star, ShoppingBag, ArrowRight, ShieldCheck, Truck, RefreshCw } from 'lucide-react'
@@ -12,7 +13,12 @@ interface QuickViewModalProps {
 }
 
 export function QuickViewModal({ product, isOpen, onClose }: QuickViewModalProps) {
+  const [mounted, setMounted] = useState(false)
   const { addItem, toggleCart } = useCart()
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
@@ -24,7 +30,7 @@ export function QuickViewModal({ product, isOpen, onClose }: QuickViewModalProps
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [isOpen, onClose])
 
-  if (!isOpen || !product) return null
+  if (!mounted || !isOpen || !product) return null
 
   const handleAddToCart = () => {
     addItem({
@@ -37,9 +43,9 @@ export function QuickViewModal({ product, isOpen, onClose }: QuickViewModalProps
     toggleCart()
   }
 
-  return (
+  return createPortal(
     <div 
-      className="fixed inset-0 z-50 overflow-y-auto" 
+      className="fixed inset-0 z-[9999] overflow-y-auto" 
       role="dialog" 
       aria-modal="true" 
       aria-labelledby="quick-view-title"
@@ -53,7 +59,7 @@ export function QuickViewModal({ product, isOpen, onClose }: QuickViewModalProps
 
       {/* Modal Container */}
       <div className="flex min-h-screen items-center justify-center p-4 text-center sm:p-0">
-        <div className="relative transform overflow-hidden rounded-3xl bg-white text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-3xl border border-amber-100 animate-scaleUp">
+        <div className="relative transform overflow-hidden rounded-3xl bg-white text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-3xl border border-amber-100 animate-scaleUp z-10">
           <button
             onClick={onClose}
             aria-label="Close product preview"
@@ -143,6 +149,7 @@ export function QuickViewModal({ product, isOpen, onClose }: QuickViewModalProps
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }

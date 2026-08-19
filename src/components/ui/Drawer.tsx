@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { X } from 'lucide-react'
 
 interface DrawerProps {
@@ -16,6 +17,12 @@ export function Drawer({
   children,
   side = 'left'
 }: DrawerProps) {
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
   // Lock body scroll when drawer is open
   useEffect(() => {
     if (isOpen) {
@@ -39,18 +46,18 @@ export function Drawer({
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [isOpen, onClose])
 
-  if (!isOpen) return null
+  if (!mounted || !isOpen) return null
 
-  return (
+  return createPortal(
     <div 
-      className="fixed inset-0 z-[60] overflow-hidden"
+      className="fixed inset-0 z-[9999] overflow-hidden"
       role="dialog"
       aria-modal="true"
       aria-labelledby="drawer-title"
     >
       {/* Backdrop */}
       <div 
-        className="fixed inset-0 bg-gray-900/60 backdrop-blur-sm transition-opacity animate-fadeIn"
+        className="fixed inset-0 bg-gray-900/60 backdrop-blur-sm transition-opacity duration-300 animate-fadeIn"
         onClick={onClose}
         aria-hidden="true"
       />
@@ -59,10 +66,10 @@ export function Drawer({
       <div 
         className={`fixed inset-y-0 ${
           side === 'left' ? 'left-0 animate-slideInRight' : 'right-0 animate-slideInLeft'
-        } w-full max-w-sm sm:max-w-md bg-white shadow-2xl z-[60] flex flex-col h-full`}
+        } w-full max-w-[85vw] sm:max-w-md bg-white shadow-2xl z-[9999] flex flex-col h-full h-screen`}
       >
         {/* Drawer Header */}
-        <div className="flex items-center justify-between p-5 sm:p-6 border-b border-amber-100 bg-amber-50/70">
+        <div className="flex items-center justify-between p-5 sm:p-6 border-b border-amber-100 bg-amber-50/70 shrink-0">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-xl bg-primary-700 text-white font-black flex items-center justify-center text-sm shadow-sm">
               G
@@ -82,10 +89,11 @@ export function Drawer({
         </div>
 
         {/* Drawer Content */}
-        <div className="flex-1 overflow-y-auto p-5 sm:p-6 space-y-6 pb-32 sm:pb-12">
+        <div className="flex-1 overflow-y-auto p-5 sm:p-6 space-y-6 pb-36 sm:pb-12 overscroll-contain">
           {children}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }
