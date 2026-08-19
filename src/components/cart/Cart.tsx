@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import Image from 'next/image'
 import Link from 'next/link'
 import { X, Plus, Minus, ShoppingBag, Trash2, ArrowRight, Sparkles, CheckCircle2 } from 'lucide-react'
@@ -6,8 +7,25 @@ import { useCart } from '../../contexts/CartContext'
 import { useLanguage } from '../../lib/i18n'
 
 export default function Cart() {
+  const [mounted, setMounted] = useState(false)
   const { state, removeItem, updateQuantity, toggleCart } = useCart()
   const { t } = useLanguage()
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  // Lock body scroll when cart is open
+  useEffect(() => {
+    if (state.isOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [state.isOpen])
 
   // Close on Escape key
   useEffect(() => {
@@ -20,11 +38,11 @@ export default function Cart() {
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [state.isOpen, toggleCart])
 
-  if (!state.isOpen) return null
+  if (!mounted || !state.isOpen) return null
 
-  return (
+  return createPortal(
     <div 
-      className="fixed inset-0 z-50 overflow-hidden" 
+      className="fixed inset-0 z-[9999] overflow-hidden" 
       role="dialog" 
       aria-modal="true" 
       aria-labelledby="cart-title"
@@ -37,9 +55,9 @@ export default function Cart() {
       />
       
       {/* Cart Panel */}
-      <div className="fixed right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl z-50 flex flex-col animate-slideInLeft sm:rounded-l-3xl">
+      <div className="fixed right-0 top-0 h-full h-screen w-full max-w-[85vw] sm:max-w-md bg-white shadow-2xl z-[9999] flex flex-col animate-slideInLeft sm:rounded-l-3xl">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-100 bg-amber-50/40">
+        <div className="flex items-center justify-between p-6 border-b border-gray-100 bg-amber-50/40 shrink-0">
           <div>
             <h2 id="cart-title" className="text-xl font-bold text-gray-900">
               {t('shoppingCart')}
@@ -59,7 +77,7 @@ export default function Cart() {
         </div>
 
         {/* Cart Items */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-4">
+        <div className="flex-1 overflow-y-auto p-6 space-y-4 overscroll-contain">
           {state.items.length === 0 ? (
             <div className="text-center py-16 px-4">
               <div className="w-20 h-20 bg-amber-50 rounded-3xl flex items-center justify-center mx-auto mb-4 border border-amber-100">
@@ -102,48 +120,47 @@ export default function Cart() {
                     </h3>
                     {item.color && (
                       <p className="text-xs text-gray-500 mt-0.5">
-                        {t('color')}: <span className="font-medium text-gray-700">{item.color}</span>
+                        Color: {item.color}
                       </p>
                     )}
-                    <div className="flex items-center justify-between mt-3">
-                      <span className="font-extrabold text-gray-900 text-sm">
-                        €{item.price}
-                      </span>
-                      
-                      {/* Quantity Controls */}
-                      <div className="flex items-center gap-1 bg-gray-50 border border-gray-200 rounded-xl p-0.5">
+                    <p className="text-sm font-bold text-primary-700 mt-1">
+                      €{item.price.toFixed(2)}
+                    </p>
+
+                    {/* Quantity Controls */}
+                    <div className="flex items-center gap-2 mt-2">
+                      <div className="flex items-center border border-gray-200 rounded-lg bg-gray-50">
                         <button
-                          onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                          className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-white text-gray-700 transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-primary-600"
-                          aria-label={`Decrease quantity of ${item.name}`}
                           type="button"
+                          onClick={() => updateQuantity(item.cartId, item.quantity - 1)}
+                          className="p-1 text-gray-500 hover:text-gray-800 transition-colors"
+                          aria-label="Decrease quantity"
                         >
-                          <Minus className="h-3 w-3" />
+                          <Minus className="w-3.5 h-3.5" />
                         </button>
-                        <span className="w-6 text-center text-xs font-bold text-gray-900">
+                        <span className="px-2.5 text-xs font-bold text-gray-900">
                           {item.quantity}
                         </span>
                         <button
-                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                          className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-white text-gray-700 transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-primary-600"
-                          aria-label={`Increase quantity of ${item.name}`}
                           type="button"
+                          onClick={() => updateQuantity(item.cartId, item.quantity + 1)}
+                          className="p-1 text-gray-500 hover:text-gray-800 transition-colors"
+                          aria-label="Increase quantity"
                         >
-                          <Plus className="h-3 w-3" />
+                          <Plus className="w-3.5 h-3.5" />
                         </button>
                       </div>
+
+                      <button
+                        type="button"
+                        onClick={() => removeItem(item.cartId)}
+                        className="p-1.5 text-gray-400 hover:text-red-600 transition-colors rounded-lg hover:bg-red-50"
+                        aria-label={`Remove ${item.name} from cart`}
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
                     </div>
                   </div>
-
-                  {/* Remove Button */}
-                  <button
-                    onClick={() => removeItem(item.id)}
-                    className="p-2 hover:bg-red-50 rounded-xl transition-colors text-gray-400 hover:text-red-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500"
-                    aria-label={`Remove ${item.name} from cart`}
-                    type="button"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </button>
                 </div>
               ))}
             </div>
@@ -152,7 +169,7 @@ export default function Cart() {
 
         {/* Footer with Total and Checkout */}
         {state.items.length > 0 && (
-          <div className="border-t border-gray-100 p-6 space-y-4 bg-gray-50/80">
+          <div className="border-t border-gray-100 p-6 space-y-4 bg-gray-50/80 shrink-0 pb-12 sm:pb-6">
             {/* Subtotal */}
             <div className="flex justify-between items-baseline text-base font-bold text-gray-900">
               <span>{t('subtotal')}</span>
@@ -168,7 +185,7 @@ export default function Cart() {
             <div className="space-y-2.5 pt-1">
               <Link href="/checkout">
                 <a 
-                  className="w-full btn-primary py-4 text-center font-bold flex items-center justify-center gap-2"
+                  className="w-full btn-primary py-4 text-center font-bold flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
                   onClick={toggleCart}
                 >
                   <span>{t('proceedToCheckout')}</span>
@@ -197,6 +214,7 @@ export default function Cart() {
           </div>
         )}
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }
