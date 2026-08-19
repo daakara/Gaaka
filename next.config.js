@@ -23,11 +23,21 @@ const nextConfig = {
       : 'http://localhost:3000',
   },
   
+  // Force unique build ID per build to bust old browser JS/CSS chunk caches
+  generateBuildId: async () => {
+    return `gaaka-${Date.now()}`
+  },
+  
   async headers() {
     return [
       {
-        source: '/(.*)',
+        // HTML Documents: Always fetch fresh, never cache stale UI
+        source: '/:path*{/}?',
         headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=0, must-revalidate',
+          },
           {
             key: 'X-DNS-Prefetch-Control',
             value: 'on',
@@ -55,6 +65,16 @@ const nextConfig = {
           {
             key: 'Permissions-Policy',
             value: 'camera=(), microphone=(), geolocation=(), interest-cohort=()',
+          },
+        ],
+      },
+      {
+        // Next.js hashed static assets: immutable cache 1 year
+        source: '/_next/static/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
           },
         ],
       },

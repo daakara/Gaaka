@@ -1,0 +1,56 @@
+# ==============================================================================
+# GAAKA (https://gaaka.com) Apache / cPanel / Namecheap Configuration
+# Cache-Control, Security Headers, and HTTPS / WWW Canonical Redirection
+# ==============================================================================
+
+# Enable Rewrite Engine
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # Force HTTPS and Non-WWW (Apex Domain)
+    # Redirect HTTP to HTTPS
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ https://gaaka.com/$1 [R=301,L]
+
+    # Redirect WWW to Non-WWW
+    RewriteCond %{HTTP_HOST} ^www\.gaaka\.com [NC]
+    RewriteRule ^(.*)$ https://gaaka.com/$1 [R=301,L]
+</IfModule>
+
+# ==============================================================================
+# Cache-Control: Force instant HTML updates & Cache immutable hashed assets
+# ==============================================================================
+<IfModule mod_headers.c>
+    # Security Headers
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+    Header set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+    Header set Strict-Transport-Security "max-age=63072000; includeSubDomains; preload" env=HTTPS
+
+    # 1. HTML Documents & JSON Page Data: NEVER CACHE (Always fetch fresh UI)
+    <FilesMatch "\.(html|htm|json)$">
+        Header set Cache-Control "no-cache, no-store, must-revalidate, max-age=0"
+        Header set Pragma "no-cache"
+        Header set Expires "0"
+    </FilesMatch>
+
+    # 2. Next.js Hashed Static Assets in _next/static: Cache 1 Year (Immutable)
+    <FilesMatch "\.(js|css)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+
+    # 3. Media Assets (Images/Fonts)
+    <FilesMatch "\.(jpg|jpeg|png|gif|webp|svg|ico|woff|woff2|ttf|eot)$">
+        Header set Cache-Control "public, max-age=604800, stale-while-revalidate=86400"
+    </FilesMatch>
+</IfModule>
+
+# ==============================================================================
+# Gzip / Deflate Compression
+# ==============================================================================
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json application/xml application/rss+xml image/svg+xml
+</IfModule>
