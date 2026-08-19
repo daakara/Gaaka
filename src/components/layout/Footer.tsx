@@ -196,7 +196,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-500">
+        <div className="border-t border-gray-800 mt-12 pt-8 pb-20 lg:pb-0 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-500">
           <div className="flex items-center gap-2">
             <Heart className="w-4 h-4 text-primary-500 fill-current" />
             <span>© {new Date().getFullYear()} {t('footerCopyright')}</span>

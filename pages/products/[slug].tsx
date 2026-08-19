@@ -18,6 +18,7 @@ import ProductGrid from '../../src/components/sections/ProductGrid'
 import { ALL_FALLBACK_PRODUCTS } from '../../src/lib/wordpress/fallbackProducts'
 import { generateProductData, generateBreadcrumbData } from '../../src/lib/seo/structured-data'
 import { Tabs } from '../../src/components/ui/Tabs'
+import { StickyMobileBar } from '../../src/components/ui/StickyMobileBar'
 
 interface ProductPageProps {
   product: Product
@@ -422,7 +423,7 @@ const ProductPage: NextPage<ProductPageProps> = ({ product, relatedProducts }) =
 
           {/* Related Products Recommendation */}
           {related.length > 0 && (
-            <div className="mt-20 pt-12 border-t border-amber-100">
+            <div className="mt-20 pt-12 border-t border-amber-100 pb-16 lg:pb-0">
               <ProductGrid 
                 products={related} 
                 title="You May Also Love" 
@@ -431,6 +432,16 @@ const ProductPage: NextPage<ProductPageProps> = ({ product, relatedProducts }) =
             </div>
           )}
         </div>
+
+        {/* Sticky Mobile Add to Cart Bar */}
+        <StickyMobileBar
+          title={product.name}
+          price={product.price}
+          image={product.image}
+          inStock={product.inStock}
+          isAdded={isAdded}
+          onAddToCart={handleAddToCart}
+        />
       </main>
 
       <Footer />
