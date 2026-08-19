@@ -16,6 +16,9 @@
 - [x] **Comprehensive SEO, GEO & AI Search Readiness** - Schema.org JSON-LD (Organization, WebSite, BreadcrumbList, Rich Product with MerchantReturnPolicy & ShippingDetails), `robots.txt` with AI crawler directives (GPTBot, ClaudeBot, PerplexityBot), `sitemap.xml` mapping all 30 routes, `llms.txt` for AI indexing, and `hreflang` international tags
 - [x] **Collection Filtering & Sorting** - Category navigation pills (All, Storage, Kitchen & Dining, Wall Baskets), dynamic sorting (Featured, Price: Low-to-High, Price: High-to-Low, Name A-Z)
 - [x] **Watermelon UI Component Suite Integration** - Animated Accordions (`Accordion.tsx`), floating pill tabs (`Tabs.tsx`), quick view preview dialogs (`QuickViewModal.tsx`), floating notification toasts (`Toast.tsx`), and social impact stat counters (`StatCounter.tsx`)
+- [x] **Universal Navigation & React Portal Architecture** - Universal burger menu on desktop/mobile, full categorized site directory (`Drawer.tsx`), and `createPortal(..., document.body)` mounting across all overlays to prevent CSS containing block clipping
+- [x] **Mobile-First Floating Navigation Dock** (`MobileDock.tsx`) - Thumb-friendly bottom dock with Home, Shop, Search, live Cart counter badge, and Menu trigger
+- [x] **Zero-Downtime Cache Invalidation** - Apache `.htaccess` cache-busting headers (`max-age=0, must-revalidate` on HTML) and dynamic timestamped build IDs
 - [x] **100% Test Suite & SSG Build Pass** - Fully green Jest tests (Header, Footer, CartProvider mocks) and clean `next build` static export across all 30 routes without path conflicts
 
 ### 🔄 In Progress
