@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import Link from 'next/link'
-import { Menu, X, Search, Heart, Sparkles, ShoppingBag, Grid, ChevronRight, Package, ShieldCheck, Mail } from 'lucide-react'
+import { Menu, X, Search, Heart, Sparkles, ShoppingBag, Grid, ChevronRight, Package, ShieldCheck, Mail, BookOpen, Users, HelpCircle, Truck, RefreshCw, FileText, Globe } from 'lucide-react'
 import { useLanguage } from '../../lib/i18n'
 import { useCart } from '../../contexts/CartContext'
 import LanguageToggle from '../ui/LanguageToggle'
@@ -11,16 +11,44 @@ import { Drawer } from '../ui/Drawer'
 import { MobileDock } from '../ui/MobileDock'
 
 export default function Header() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
   const { t, language, setLanguage } = useLanguage()
   const { state, toggleCart } = useCart()
 
-  const navigation = [
+  // Primary desktop navbar links
+  const primaryNav = [
     { name: t('home'), href: '/' },
-    { name: t('storageBaskets'), href: '/collections/storage-baskets', badge: 'Popular' },
+    { name: t('storageBaskets'), href: '/collections/storage-baskets' },
     { name: t('kitchenDining'), href: '/collections/kitchen-dining' },
     { name: t('wallBaskets'), href: '/collections/wall-baskets' },
     { name: t('about'), href: '/about' },
+  ]
+
+  // Full comprehensive catalog & site directory for drawer (mobile + desktop)
+  const collectionLinks = [
+    { name: 'All Handwoven Baskets', href: '/collections/all', icon: Grid, badge: 'Full Shop' },
+    { name: t('storageBaskets'), href: '/collections/storage-baskets', icon: Package, badge: 'Popular' },
+    { name: t('kitchenDining'), href: '/collections/kitchen-dining', icon: Sparkles },
+    { name: t('wallBaskets'), href: '/collections/wall-baskets', icon: Heart },
+  ]
+
+  const storyLinks = [
+    { name: t('about'), href: '/about', icon: Users },
+    { name: t('mission'), href: '/mission', icon: ShieldCheck, badge: 'Fair Trade' },
+    { name: t('artisanStories'), href: '/artisan-stories', icon: Heart },
+    { name: t('blog'), href: '/blog', icon: BookOpen },
+  ]
+
+  const customerCareLinks = [
+    { name: t('faq'), href: '/faq', icon: HelpCircle },
+    { name: t('shipping'), href: '/shipping', icon: Truck },
+    { name: t('returns'), href: '/returns', icon: RefreshCw },
+    { name: t('contact'), href: '/contact', icon: Mail },
+  ]
+
+  const legalLinks = [
+    { name: t('termsOfService'), href: '/terms' },
+    { name: t('privacyPolicy'), href: '/privacy-policy' },
   ]
 
   const announcementText = language === 'de'
@@ -52,17 +80,20 @@ export default function Header() {
         {/* Main Header */}
         <div className="container-custom">
           <div className="flex items-center justify-between h-20">
-            {/* Mobile / Tablet Burger Menu Button */}
-            <div className="flex items-center lg:hidden">
+            {/* Universal Burger Menu Button (Visible on Mobile, Tablet & Desktop) */}
+            <div className="flex items-center">
               <button
                 type="button"
-                className="w-11 h-11 rounded-2xl flex items-center justify-center text-gray-700 hover:text-primary-700 bg-amber-50/50 hover:bg-amber-100/70 border border-amber-200/60 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 active:scale-95 shadow-sm"
-                onClick={() => setMobileMenuOpen(true)}
-                aria-label="Open main navigation menu"
-                aria-expanded={mobileMenuOpen}
-                aria-controls="mobile-navigation-drawer"
+                className="h-11 px-3 sm:px-3.5 rounded-2xl flex items-center gap-2 text-gray-700 hover:text-primary-700 bg-amber-50/70 hover:bg-amber-100/80 border border-amber-200/70 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 active:scale-95 shadow-sm"
+                onClick={() => setMenuOpen(true)}
+                aria-label="Open comprehensive site menu"
+                aria-expanded={menuOpen}
+                aria-controls="main-site-drawer"
               >
-                <Menu className="h-6 w-6" />
+                <Menu className="h-5 w-5 text-primary-800" />
+                <span className="hidden sm:inline-block text-xs font-bold uppercase tracking-wider text-gray-800">
+                  Menu
+                </span>
               </button>
             </div>
 
@@ -83,16 +114,16 @@ export default function Header() {
               </Link>
             </div>
 
-            {/* Desktop Search */}
-            <div className="hidden lg:flex flex-1 justify-center px-8">
+            {/* Desktop Search Bar */}
+            <div className="hidden lg:flex flex-1 justify-center px-8 max-w-md">
               <SearchComponent />
             </div>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center space-x-1" aria-label="Main Navigation">
-              {navigation.map((item) => (
+            {/* Desktop Navigation Links */}
+            <nav className="hidden xl:flex items-center space-x-1" aria-label="Main Navigation">
+              {primaryNav.map((item) => (
                 <Link key={item.name} href={item.href}>
-                  <a className="relative px-4 py-2 rounded-xl text-gray-700 hover:text-primary-700 font-medium transition-colors hover:bg-amber-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500">
+                  <a className="relative px-3.5 py-2 rounded-xl text-gray-700 hover:text-primary-700 font-medium transition-colors hover:bg-amber-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500">
                     {item.name}
                   </a>
                 </Link>
@@ -105,7 +136,7 @@ export default function Header() {
               <div className="hidden sm:block">
                 <LanguageToggle />
               </div>
-              {/* Mobile Language Toggle - Icon Only */}
+              {/* Mobile Language Toggle */}
               <div className="sm:hidden">
                 <LanguageToggle variant="icon-only" />
               </div>
@@ -136,95 +167,118 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Mobile & Tablet Drawer (Watermelon UI Sheet) */}
+        {/* Full Comprehensive Drawer (Watermelon UI Sheet - Mobile + Tablet + Desktop) */}
         <Drawer
-          isOpen={mobileMenuOpen}
-          onClose={() => setMobileMenuOpen(false)}
-          title="Menu & Collections"
+          isOpen={menuOpen}
+          onClose={() => setMenuOpen(false)}
+          title="Full Site Directory"
           side="left"
         >
-          {/* Quick Search */}
+          {/* Quick Search inside Drawer */}
           <div>
             <SearchComponent />
           </div>
 
-          {/* Navigation Links */}
-          <div className="space-y-1.5 pt-2">
-            <p className="text-[11px] font-bold uppercase tracking-wider text-gray-400 px-3 mb-2">
-              Explore Collections
+          {/* Section 1: Collections Catalog */}
+          <div className="space-y-1">
+            <p className="text-[11px] font-extrabold uppercase tracking-wider text-primary-800 px-3 mb-2 flex items-center gap-1.5">
+              <Grid className="w-3.5 h-3.5" />
+              <span>Shop Handwoven Baskets</span>
             </p>
-            {navigation.map((item) => (
-              <Link key={item.name} href={item.href}>
-                <a
-                  className="flex items-center justify-between text-gray-800 hover:text-primary-700 font-semibold py-3 px-3.5 rounded-2xl hover:bg-amber-50 transition-colors border border-transparent hover:border-amber-100"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <div className="flex items-center gap-3">
-                    <span className="w-2 h-2 rounded-full bg-primary-500" />
-                    <span>{item.name}</span>
-                  </div>
-                  {item.badge ? (
-                    <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-primary-800 border border-amber-200">
-                      {item.badge}
-                    </span>
-                  ) : (
-                    <ChevronRight className="w-4 h-4 text-gray-400" />
-                  )}
-                </a>
-              </Link>
-            ))}
+            {collectionLinks.map((item) => {
+              const Icon = item.icon
+              return (
+                <Link key={item.name} href={item.href}>
+                  <a
+                    className="flex items-center justify-between text-gray-900 hover:text-primary-700 font-semibold py-2.5 px-3.5 rounded-2xl hover:bg-amber-50 transition-colors border border-transparent hover:border-amber-100"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-xl bg-amber-50 text-primary-700 flex items-center justify-center border border-amber-200/50 shrink-0">
+                        <Icon className="w-4 h-4" />
+                      </div>
+                      <span className="text-sm">{item.name}</span>
+                    </div>
+                    {item.badge ? (
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-primary-800 border border-amber-200">
+                        {item.badge}
+                      </span>
+                    ) : (
+                      <ChevronRight className="w-4 h-4 text-gray-400" />
+                    )}
+                  </a>
+                </Link>
+              )
+            })}
           </div>
 
-          {/* Quick Links */}
+          {/* Section 2: Our Story & Impact */}
+          <div className="pt-4 border-t border-gray-100 space-y-1">
+            <p className="text-[11px] font-extrabold uppercase tracking-wider text-primary-800 px-3 mb-2 flex items-center gap-1.5">
+              <Users className="w-3.5 h-3.5" />
+              <span>Our Story & Impact</span>
+            </p>
+            {storyLinks.map((item) => {
+              const Icon = item.icon
+              return (
+                <Link key={item.name} href={item.href}>
+                  <a
+                    className="flex items-center justify-between text-gray-900 hover:text-primary-700 font-semibold py-2.5 px-3.5 rounded-2xl hover:bg-amber-50 transition-colors border border-transparent hover:border-amber-100"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-xl bg-amber-50 text-primary-700 flex items-center justify-center border border-amber-200/50 shrink-0">
+                        <Icon className="w-4 h-4" />
+                      </div>
+                      <span className="text-sm">{item.name}</span>
+                    </div>
+                    {item.badge ? (
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
+                        {item.badge}
+                      </span>
+                    ) : (
+                      <ChevronRight className="w-4 h-4 text-gray-400" />
+                    )}
+                  </a>
+                </Link>
+              )
+            })}
+          </div>
+
+          {/* Section 3: Customer Care & Policies */}
           <div className="pt-4 border-t border-gray-100 space-y-2">
-            <p className="text-[11px] font-bold uppercase tracking-wider text-gray-400 px-3 mb-1">
-              Customer Care
+            <p className="text-[11px] font-extrabold uppercase tracking-wider text-primary-800 px-3 mb-1 flex items-center gap-1.5">
+              <HelpCircle className="w-3.5 h-3.5" />
+              <span>Customer Care & Policies</span>
             </p>
             <div className="grid grid-cols-2 gap-2 text-xs font-semibold">
-              <Link href="/faq">
-                <a 
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="p-3 bg-amber-50/50 hover:bg-amber-100/50 rounded-xl text-gray-800 text-center transition-colors"
-                >
-                  FAQ & Help
-                </a>
-              </Link>
-              <Link href="/shipping">
-                <a 
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="p-3 bg-amber-50/50 hover:bg-amber-100/50 rounded-xl text-gray-800 text-center transition-colors"
-                >
-                  Shipping Info
-                </a>
-              </Link>
-              <Link href="/returns">
-                <a 
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="p-3 bg-amber-50/50 hover:bg-amber-100/50 rounded-xl text-gray-800 text-center transition-colors"
-                >
-                  Returns Policy
-                </a>
-              </Link>
-              <Link href="/contact">
-                <a 
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="p-3 bg-amber-50/50 hover:bg-amber-100/50 rounded-xl text-gray-800 text-center transition-colors"
-                >
-                  Contact Us
-                </a>
-              </Link>
+              {customerCareLinks.map((item) => {
+                const Icon = item.icon
+                return (
+                  <Link key={item.name} href={item.href}>
+                    <a 
+                      onClick={() => setMenuOpen(false)}
+                      className="p-3 bg-amber-50/60 hover:bg-amber-100/70 rounded-2xl text-gray-800 flex flex-col items-center justify-center gap-1.5 text-center transition-colors border border-amber-100/80"
+                    >
+                      <Icon className="w-4 h-4 text-primary-700" />
+                      <span>{item.name}</span>
+                    </a>
+                  </Link>
+                )
+              })}
             </div>
           </div>
 
-          {/* Language Switcher in Drawer */}
+          {/* Section 4: Language Selection */}
           <div className="pt-4 border-t border-gray-100">
-            <p className="font-bold text-gray-900 text-xs uppercase tracking-wider mb-2.5 px-1">
-              {t('chooseLanguage')}
+            <p className="font-bold text-gray-900 text-xs uppercase tracking-wider mb-2.5 px-1 flex items-center gap-1.5">
+              <Globe className="w-3.5 h-3.5 text-primary-700" />
+              <span>{t('chooseLanguage')}</span>
             </p>
             <div className="flex gap-2">
               <button
                 type="button"
-                onClick={() => { setLanguage('en'); setMobileMenuOpen(false); }}
+                onClick={() => { setLanguage('en'); setMenuOpen(false); }}
                 className={`flex-1 py-2.5 px-3 rounded-xl text-xs font-bold transition-all ${
                   language === 'en'
                     ? 'bg-primary-700 text-white shadow-sm'
@@ -236,7 +290,7 @@ export default function Header() {
               </button>
               <button
                 type="button"
-                onClick={() => { setLanguage('de'); setMobileMenuOpen(false); }}
+                onClick={() => { setLanguage('de'); setMenuOpen(false); }}
                 className={`flex-1 py-2.5 px-3 rounded-xl text-xs font-bold transition-all ${
                   language === 'de'
                     ? 'bg-primary-700 text-white shadow-sm'
@@ -249,21 +303,35 @@ export default function Header() {
             </div>
           </div>
 
-          {/* Artisan Impact Note */}
-          <div className="bg-gradient-to-br from-amber-100/80 to-orange-100/50 rounded-2xl p-4 border border-amber-200/60">
+          {/* Section 5: Legal Links */}
+          <div className="pt-3 border-t border-gray-100 flex items-center justify-between px-2 text-[11px] text-gray-500 font-medium">
+            {legalLinks.map((link) => (
+              <Link key={link.name} href={link.href}>
+                <a 
+                  onClick={() => setMenuOpen(false)}
+                  className="hover:text-primary-700 hover:underline transition-colors"
+                >
+                  {link.name}
+                </a>
+              </Link>
+            ))}
+          </div>
+
+          {/* Section 6: Direct Artisan Impact Card */}
+          <div className="bg-gradient-to-br from-amber-100/90 to-orange-100/60 rounded-2xl p-4 border border-amber-200">
             <div className="flex items-center gap-2 mb-1.5">
               <ShieldCheck className="w-4 h-4 text-primary-700 shrink-0" />
               <span className="text-xs font-bold text-primary-900">Direct Artisan Impact</span>
             </div>
             <p className="text-[11px] text-gray-700 leading-relaxed">
-              100% sustainably handwoven by female artisan cooperatives in rural Kenya with fair living wages.
+              100% sustainably handwoven by female artisan cooperatives in rural Kenya with fair living wages and 15% profits reinvested into community education.
             </p>
           </div>
         </Drawer>
 
         {/* Mobile Floating Bottom Dock (Thumb-friendly Navigation) */}
         <MobileDock 
-          onOpenMenu={() => setMobileMenuOpen(true)}
+          onOpenMenu={() => setMenuOpen(true)}
         />
       </header>
     </>
