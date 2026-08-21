@@ -34,7 +34,10 @@
 - [x] **Animated Tab Glider** (`src/components/ui/Tabs.tsx`): Shared layout active pill tab glider (`layoutId="activeTabGlider"`).
 - [x] **Spring Physics Drawers & Modals** (`Drawer.tsx`, `Cart.tsx`, `QuickViewModal.tsx`): Natural spring physics (`damping: 26, stiffness: 240`) with `<AnimatePresence>` exit transitions.
 - [x] **Swipeable Floating Toast** (`src/components/ui/Toast.tsx`): Mobile swipe-to-dismiss gesture and spring slide-up.
-- [x] **Product Gallery Cross-Fade** (`pages/products/[slug].tsx`): Fluid image cross-fade on color/thumbnail switch and bounce feedback on Add-to-Cart.
+
+### 6. Mobile E-Commerce UX & Touch Gestures
+- [x] **Touch-Swipeable Mobile Product Gallery** (`src/components/ui/ProductGallery.tsx`): Integrated `embla-carousel-react` with momentum swipe, swipe pagination dots, and desktop thumbnail switcher on `pages/products/[slug].tsx`.
+- [x] **UI Ecosystem Audit & Architecture Decisions**: Evaluated Magic UI / Aceternity vs Tailwind UI / Embla Carousel; prioritized lightweight, luxury artisan aesthetic and 100% SSR-safe Core Web Vitals over SaaS gimmicks.
 
 ---
 

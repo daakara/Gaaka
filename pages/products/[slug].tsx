@@ -19,6 +19,7 @@ import { ALL_FALLBACK_PRODUCTS } from '../../src/lib/wordpress/fallbackProducts'
 import { generateProductData, generateBreadcrumbData } from '../../src/lib/seo/structured-data'
 import { Tabs } from '../../src/components/ui/Tabs'
 import { StickyMobileBar } from '../../src/components/ui/StickyMobileBar'
+import { ProductGallery } from '../../src/components/ui/ProductGallery'
 
 import { motion, AnimatePresence } from 'framer-motion'
 
@@ -161,61 +162,14 @@ const ProductPage: NextPage<ProductPageProps> = ({ product, relatedProducts }) =
           </nav>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14">
-            {/* Product Gallery (7 cols) */}
-            <div className="lg:col-span-7 space-y-4">
-              <div className="aspect-square relative rounded-3xl overflow-hidden bg-white shadow-md border border-amber-100/80 group">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={activeImage}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.25 }}
-                    className="relative w-full h-full"
-                  >
-                    <Image
-                      src={activeImage}
-                      alt={product.imageAlt ?? `${product.name} - Handwoven African Basket`}
-                      layout="fill"
-                      objectFit="cover"
-                      priority
-                      className="transition-transform duration-500 group-hover:scale-105"
-                    />
-                  </motion.div>
-                </AnimatePresence>
-
-                {product.badge && (
-                  <div className="absolute top-4 left-4 px-3.5 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-primary-700 text-white shadow-md z-10">
-                    {product.badge.replace('-', ' ')}
-                  </div>
-                )}
-              </div>
-
-              {/* Thumbnails */}
-              {galleryImages.length > 1 && (
-                <div className="flex gap-3 overflow-x-auto pb-2" role="group" aria-label="Product thumbnails">
-                  {galleryImages.map((img, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => setActiveImage(img)}
-                      className={`relative w-20 h-20 rounded-2xl overflow-hidden border-2 transition-all flex-shrink-0 bg-white ${
-                        activeImage === img
-                          ? 'border-primary-700 ring-2 ring-primary-700/20'
-                          : 'border-gray-200 hover:border-gray-300 opacity-80 hover:opacity-100'
-                      }`}
-                      aria-label={`View product image ${idx + 1}`}
-                      type="button"
-                    >
-                      <Image
-                        src={img}
-                        alt={`Thumbnail ${idx + 1}`}
-                        layout="fill"
-                        objectFit="cover"
-                      />
-                    </button>
-                  ))}
-                </div>
-              )}
+            {/* Product Gallery (7 cols) with Touch Swipe Support */}
+            <div className="lg:col-span-7">
+              <ProductGallery
+                images={galleryImages}
+                productName={product.name}
+                badge={product.badge}
+                priority
+              />
             </div>
 
             {/* Product Purchase & Details (5 cols) */}
