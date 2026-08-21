@@ -32,18 +32,9 @@ export function Tabs({ items, activeId, onChange, className = '' }: TabsProps) {
             onClick={() => onChange(tab.id)}
             type="button"
             className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-colors relative focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 ${
-              isActive ? 'text-white' : 'text-gray-600 hover:text-gray-900 hover:bg-white/50'
+              isActive ? 'bg-primary-700 text-white shadow-md shadow-primary-700/20' : 'text-gray-600 hover:text-gray-900 hover:bg-white/50'
             }`}
           >
-            {/* Smooth animated active pill glider */}
-            {isActive && (
-              <motion.div
-                layoutId="activeTabGlider"
-                className="absolute inset-0 bg-primary-700 rounded-xl shadow-md shadow-primary-700/20"
-                transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', damping: 25, stiffness: 300 }}
-              />
-            )}
-
             <span className="relative z-10 flex items-center gap-2">
               {tab.icon && <span className="w-4 h-4">{tab.icon}</span>}
               <span>{tab.label}</span>
