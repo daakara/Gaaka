@@ -1,4 +1,5 @@
 import React from 'react'
+import { motion, useReducedMotion } from 'framer-motion'
 
 export interface TabItem {
   id: string
@@ -15,6 +16,8 @@ interface TabsProps {
 }
 
 export function Tabs({ items, activeId, onChange, className = '' }: TabsProps) {
+  const shouldReduceMotion = useReducedMotion()
+
   return (
     <div className={`flex flex-wrap items-center gap-2 p-1.5 bg-amber-50/80 backdrop-blur-sm rounded-2xl border border-amber-200/80 max-w-fit shadow-inner ${className}`} role="tablist">
       {items.map((tab) => {
@@ -28,23 +31,32 @@ export function Tabs({ items, activeId, onChange, className = '' }: TabsProps) {
             id={`tab-${tab.id}`}
             onClick={() => onChange(tab.id)}
             type="button"
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all duration-300 relative focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 ${
-              isActive
-                ? 'bg-primary-700 text-white shadow-md shadow-primary-700/20 scale-[1.02]'
-                : 'text-gray-600 hover:text-gray-900 hover:bg-white/80'
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-colors relative focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 ${
+              isActive ? 'text-white' : 'text-gray-600 hover:text-gray-900 hover:bg-white/50'
             }`}
           >
-            {tab.icon && <span className="w-4 h-4">{tab.icon}</span>}
-            <span>{tab.label}</span>
-            {tab.badge !== undefined && (
-              <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded-full ${
-                isActive 
-                  ? 'bg-primary-800 text-amber-200' 
-                  : 'bg-amber-100 text-primary-800'
-              }`}>
-                {tab.badge}
-              </span>
+            {/* Smooth animated active pill glider */}
+            {isActive && (
+              <motion.div
+                layoutId="activeTabGlider"
+                className="absolute inset-0 bg-primary-700 rounded-xl shadow-md shadow-primary-700/20"
+                transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', damping: 25, stiffness: 300 }}
+              />
             )}
+
+            <span className="relative z-10 flex items-center gap-2">
+              {tab.icon && <span className="w-4 h-4">{tab.icon}</span>}
+              <span>{tab.label}</span>
+              {tab.badge !== undefined && (
+                <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded-full ${
+                  isActive 
+                    ? 'bg-primary-800 text-amber-200' 
+                    : 'bg-amber-100 text-primary-800'
+                }`}>
+                  {tab.badge}
+                </span>
+              )}
+            </span>
           </button>
         )
       })}

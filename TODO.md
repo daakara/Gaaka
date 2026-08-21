@@ -28,6 +28,14 @@
 - [x] **Sitemap & Hreflang**: 30-route XML sitemap (`public/sitemap.xml`) and canonical `hreflang` tags (`en`, `de`, `x-default`).
 - [x] **Security Headers**: HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy.
 
+### 5. Framer Motion UI Choreography & Micro-Interactions
+- [x] **Hero Section Motion** (`src/components/sections/HeroSection.tsx`): Staggered entrance for headline, artisan badge, subtitle, and CTA buttons with floating badge bobbing.
+- [x] **Product Grid Motion** (`src/components/sections/ProductGrid.tsx`): Staggered scroll-triggered card entrance and spring card hover lifts.
+- [x] **Animated Tab Glider** (`src/components/ui/Tabs.tsx`): Shared layout active pill tab glider (`layoutId="activeTabGlider"`).
+- [x] **Spring Physics Drawers & Modals** (`Drawer.tsx`, `Cart.tsx`, `QuickViewModal.tsx`): Natural spring physics (`damping: 26, stiffness: 240`) with `<AnimatePresence>` exit transitions.
+- [x] **Swipeable Floating Toast** (`src/components/ui/Toast.tsx`): Mobile swipe-to-dismiss gesture and spring slide-up.
+- [x] **Product Gallery Cross-Fade** (`pages/products/[slug].tsx`): Fluid image cross-fade on color/thumbnail switch and bounce feedback on Add-to-Cart.
+
 ---
 
 ## 📋 Upcoming Production Enhancements

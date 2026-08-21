@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Star, Heart, Eye, ShoppingBag, Check } from 'lucide-react'
+import { motion, useReducedMotion, type Variants } from 'framer-motion'
 import { useLanguage } from '../../lib/i18n'
 import { useCart } from '../../contexts/CartContext'
 import { Product } from '../../lib/wordpress/types'
@@ -43,6 +44,7 @@ export default function ProductGrid({
   const [addedIds, setAddedIds] = useState<Record<string, boolean>>({})
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null)
   const [toast, setToast] = useState<ToastNotification | null>(null)
+  const shouldReduceMotion = useReducedMotion()
 
   const products = initialProducts && initialProducts.length > 0 ? initialProducts : ALL_FALLBACK_PRODUCTS
 
@@ -100,11 +102,36 @@ export default function ProductGrid({
     }, 4500)
   }
 
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: shouldReduceMotion ? 0 : 0.08
+      }
+    }
+  }
+
+  const cardVariants: Variants = {
+    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 25 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5 }
+    }
+  }
+
   return (
     <section className="section-padding bg-gradient-to-b from-gray-50/50 to-amber-50/30 overflow-hidden border-b border-gray-100 relative">
       <div className="container-custom">
         {/* Section Header */}
-        <div className="text-center mb-16 max-w-2xl mx-auto">
+        <motion.div 
+          className="text-center mb-16 max-w-2xl mx-auto"
+          initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 tracking-tight mb-3">
             {title || 'Artisan Masterpieces'}
           </h2>
@@ -116,17 +143,26 @@ export default function ProductGrid({
           <p className="text-base text-gray-600 leading-relaxed">
             {t('basketsDescription')}
           </p>
-        </div>
+        </motion.div>
 
         {/* Product Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        <motion.div 
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+        >
           {products.map((product) => {
             const isAdded = !!addedIds[product.id]
 
             return (
-              <div 
+              <motion.div 
                 key={product.id} 
-                className="group flex flex-col bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 border border-amber-100/80 overflow-hidden"
+                variants={cardVariants}
+                whileHover={shouldReduceMotion ? {} : { y: -6 }}
+                transition={{ duration: 0.2 }}
+                className="group flex flex-col bg-white rounded-3xl shadow-sm hover:shadow-xl transition-shadow duration-300 border border-amber-100/80 overflow-hidden"
               >
                 {/* Product Image & Badges */}
                 <div className="relative overflow-hidden aspect-square bg-amber-50/50">
@@ -239,8 +275,9 @@ export default function ProductGrid({
                       )}
                     </div>
                     
-                    <button 
+                    <motion.button 
                       onClick={() => handleAddToCart(product)}
+                      whileTap={{ scale: 0.97 }}
                       className={`w-full py-3 px-4 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 ${
                         !product.inStock
                           ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
@@ -265,22 +302,31 @@ export default function ProductGrid({
                           <span>{t('addToCart')}</span>
                         </>
                       )}
-                    </button>
+                    </motion.button>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             )
           })}
-        </div>
+        </motion.div>
         
         {/* View All Button */}
-        <div className="text-center mt-14">
+        <motion.div 
+          className="text-center mt-14"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+        >
           <Link href="/collections/all">
-            <a className="btn-primary text-base px-9 py-4 shadow-md hover:shadow-lg">
+            <motion.a 
+              className="btn-primary text-base px-9 py-4 shadow-md hover:shadow-lg cursor-pointer"
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+            >
               <span>{t('viewAllProducts')}</span>
-            </a>
+            </motion.a>
           </Link>
-        </div>
+        </motion.div>
       </div>
 
       {/* Quick View Modal */}

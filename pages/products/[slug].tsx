@@ -20,6 +20,8 @@ import { generateProductData, generateBreadcrumbData } from '../../src/lib/seo/s
 import { Tabs } from '../../src/components/ui/Tabs'
 import { StickyMobileBar } from '../../src/components/ui/StickyMobileBar'
 
+import { motion, AnimatePresence } from 'framer-motion'
+
 interface ProductPageProps {
   product: Product
   relatedProducts?: Product[]
@@ -162,17 +164,28 @@ const ProductPage: NextPage<ProductPageProps> = ({ product, relatedProducts }) =
             {/* Product Gallery (7 cols) */}
             <div className="lg:col-span-7 space-y-4">
               <div className="aspect-square relative rounded-3xl overflow-hidden bg-white shadow-md border border-amber-100/80 group">
-                <Image
-                  src={activeImage}
-                  alt={product.imageAlt ?? `${product.name} - Handwoven African Basket`}
-                  layout="fill"
-                  objectFit="cover"
-                  priority
-                  className="transition-transform duration-500 group-hover:scale-105"
-                />
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeImage}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.25 }}
+                    className="relative w-full h-full"
+                  >
+                    <Image
+                      src={activeImage}
+                      alt={product.imageAlt ?? `${product.name} - Handwoven African Basket`}
+                      layout="fill"
+                      objectFit="cover"
+                      priority
+                      className="transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </motion.div>
+                </AnimatePresence>
 
                 {product.badge && (
-                  <div className="absolute top-4 left-4 px-3.5 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-primary-700 text-white shadow-md">
+                  <div className="absolute top-4 left-4 px-3.5 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-primary-700 text-white shadow-md z-10">
                     {product.badge.replace('-', ' ')}
                   </div>
                 )}
@@ -335,9 +348,11 @@ const ProductPage: NextPage<ProductPageProps> = ({ product, relatedProducts }) =
                     </div>
 
                     {/* Add to Cart Button */}
-                    <button
+                    <motion.button
                       onClick={handleAddToCart}
                       disabled={!product.inStock}
+                      whileHover={product.inStock ? { scale: 1.01 } : {}}
+                      whileTap={product.inStock ? { scale: 0.98 } : {}}
                       className={`flex-1 py-4 px-6 rounded-2xl font-bold text-base transition-all flex items-center justify-center gap-3 shadow-md hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 ${
                         !product.inStock
                           ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
@@ -361,7 +376,7 @@ const ProductPage: NextPage<ProductPageProps> = ({ product, relatedProducts }) =
                           <span>{t('addToCart')} • €{(product.price * quantity).toFixed(2)}</span>
                         </>
                       )}
-                    </button>
+                    </motion.button>
                   </div>
 
                   {/* Trust guarantees */}
